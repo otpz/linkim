@@ -8,13 +8,13 @@ const userLoginController = async (req, res) => {
     const user = await selectUser(email)
 
     if (user === undefined){
-        res.json({undefined: "Kullanıcı bulunamadı."})
+        return res.json({undefined: "Kullanıcı bulunamadı."})
     }
 
     if (user.Password !== password){
-        res.json({passwordError: "Şifre eşleşmiyor."})
+        return res.json({passwordError: "Şifre eşleşmiyor."})
     } else {
-        res.json({message: "Giriş başarılı. Yönlendiriliyorsunuz."})
+        return res.json({message: "Giriş başarılı. Yönlendiriliyorsunuz."})
     }
 
     // res.json({email: email, password: password})
