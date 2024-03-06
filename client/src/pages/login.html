@@ -43,7 +43,7 @@
                 <form onsubmit="login(event)" class="form" action="" method="POST">
                     <div class="form-div">
                         <label class="form-label" for="email">Kullanıcı adı veya email</label>
-                        <input class="form-input" type="email" placeholder="otpz@gmail.com" name="email">
+                        <input class="form-input" type="email" placeholder="otpz@gmail.com" name="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" title="Doğru email adresi girdiğinizden emin olunuz.">
                     </div>
                     <div class="form-div">
                         <label class="form-label" for="password">Şifre</label>

@@ -976,6 +976,30 @@ html{
   background-image: url('/linkim/client/src/assets/img/background2.png');
 }
 
+.bg-\[url\(\'\.\.\/assets\/img\/background2\.jpg\'\)\] {
+  background-image: url('../assets/img/background2.jpg');
+}
+
+.bg-\[url\(\'\.\.\/assets\/img\/background\.jpg\'\)\] {
+  background-image: url('../assets/img/background.jpg');
+}
+
+.bg-\[url\(\'\.\.\/assets\/img\/background2\.png\'\)\] {
+  background-image: url('../assets/img/background2.png');
+}
+
+.bg-\[url\(\'linkim\\client\\src\\assets\\img\\background2\.png\'\)\] {
+  background-image: url('linkim\client\src\assets\img\background2.png');
+}
+
+.bg-\[url\(\'linkim\/client\/src\/assets\/img\/background2\.png\'\)\] {
+  background-image: url('linkim/client/src/assets/img/background2.png');
+}
+
+.bg-\[url\(\'assets\/img\/background2\.png\'\)\] {
+  background-image: url('assets/img/background2.png');
+}
+
 .bg-cover {
   background-size: cover;
 }
