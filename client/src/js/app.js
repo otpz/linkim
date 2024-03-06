@@ -40,7 +40,15 @@ const register = async (event) => {
         })
     })
 
-    const response = await data.json()
-    console.log(response)
+    const result = await data.json()
+
+    toastr.options.positionClass = "toast-top-center";
+
+    if (result.error){
+        toastr.error(result.error);
+    } else {
+        toastr.success(result.message);
+    }
+
     // location.href = "./login.html";
 }

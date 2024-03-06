@@ -1,3 +1,7 @@
+const express = require('express')
+
+// const { insertUser } = require('../sql/insertSql')
+const insertUser = require('../sql/insertSql')
 
 // login endpoint
 const loginUser = async (req, res) => {
@@ -11,8 +15,16 @@ const loginUser = async (req, res) => {
 // register endpoint
 const registerUser = async (req, res) => {
     const {name, surname, username, email, password} = req.body
-
-    res.json({name, surname, username, email, password})
+    try {
+        const result = await insertUser(name, surname, username, email, password)
+        if (result.name === "RequestError"){
+            res.json({error: "RequestError"})
+        }
+        res.json({message: "Kayıt başarıyla oluşturuldu"})
+    } catch (error) {
+        console.log(error)
+        res.json({error: error})        
+    }
 }
 
 module.exports = {loginUser, registerUser}
