@@ -3,9 +3,9 @@ const router = express.Router()
 const cors = require('cors')
 const dotenv = require('dotenv').config()
 
-// controller
-const { loginUser, registerUser } = require('../controller/controller')
-
+// controllers
+const { userLoginController } = require('../controllers/userLoginController')
+const { userRegisterController } = require('../controllers/userRegisterController') 
 
 // middleware 
 router.use(
@@ -15,9 +15,7 @@ router.use(
     })
 )
 
-
-router.post("/register.html", registerUser)
-router.post("/login.html", loginUser)
-
+router.post("/register.html", userRegisterController)
+router.post("/login.html", userLoginController)
 
 module.exports = router

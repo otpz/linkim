@@ -1,12 +1,13 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
+const dotenv = require('dotenv').config()
 
 const sql = require('mssql/msnodesqlv8')
 
 const config = {
-  server: "DESKTOP-NH5JSVA",
-  database: "linkim",
+  server: process.env.DB_SERVER,
+  database: process.env.DB,
   driver: "msnodesqlv8",
   options: {
     trustedConnection: true

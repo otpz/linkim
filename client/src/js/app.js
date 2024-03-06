@@ -1,7 +1,9 @@
+const BACKEND_URL = 'http://localhost:3000'
+
 const login = async (event) => {
     event.preventDefault()
 
-    const data = await fetch('http://localhost:3000/login.html', {
+    const data = await fetch(`${BACKEND_URL}/login.html`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -12,21 +14,25 @@ const login = async (event) => {
         })
     })
 
-    const {email, password} = await data.json()
-    console.log(email, password)
-    // location.href = "./profile.html";
+    const result = await data.json()
+
+    toastr.options.positionClass = "toast-top-center"
+
+    if (result.undefined){
+        toastr.error(result.undefined)
+    } else if (result.passwordError){
+        toastr.error(result.passwordError)
+    } else{
+        toastr.success(result.message)
+        // location.href = "./profile.html"
+    }
+
 }
 
 const register = async (event) => {
     event.preventDefault()
-
-    console.log(event.target.name.value,
-        event.target.surname.value,
-        event.target.username.value,
-        event.target.email.value,
-        event.target.password.value)
         
-    const data = await fetch('http://localhost:3000/register.html', {
+    const data = await fetch(`${BACKEND_URL}/register.html`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -42,7 +48,6 @@ const register = async (event) => {
 
     const result = await data.json()
 
-    toastr.options.positionClass = "toast-top-center";
 
     if (result.error){
         toastr.error(result.error);
