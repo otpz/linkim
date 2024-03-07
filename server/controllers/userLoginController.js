@@ -1,6 +1,8 @@
 
 const selectUser = require('../sql/selectSql')
 const {comparePassword} = require('../helpers/auth')
+const jwt = require('jsonwebtoken')
+
 
 // login endpoint
 const userLoginController = async (req, res) => {
@@ -17,7 +19,11 @@ const userLoginController = async (req, res) => {
     if (!comparedPassword){
         return res.json({passwordError: "Şifre eşleşmiyor."})
     } else {
-        return res.json({message: "Giriş başarılı. Yönlendiriliyorsunuz."})
+        jwt.sign({email: user.Email, id: user.Id, name: user.Name}, process.env.JWT_SECRET, {}, (err, token) => {
+            if (err) throw err
+            res.cookie('token', token).json(user)
+        })
+        // return res.json({message: "Giriş başarılı. Yönlendiriliyorsunuz."})
     }
 }
 

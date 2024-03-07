@@ -1,8 +1,7 @@
 const express = require('express')
-const cors = require('cors')
 const app = express()
 const dotenv = require('dotenv').config()
-
+const cookieParser = require('cookie-parser')
 const sql = require('mssql/msnodesqlv8')
 
 const config = {
@@ -29,6 +28,7 @@ connectDB()
 
 // middleware
 app.use(express.json())
+app.use(cookieParser())
 app.use(express.urlencoded({extended: false}))
 
 
