@@ -2,7 +2,7 @@
 const selectUser = require('../sql/selectSql')
 const {comparePassword} = require('../helpers/auth')
 const jwt = require('jsonwebtoken')
-
+const dotenv = require('dotenv').config()
 
 // login endpoint
 const userLoginController = async (req, res) => {
@@ -14,17 +14,16 @@ const userLoginController = async (req, res) => {
         return res.json({undefined: "Kullanıcı bulunamadı."})
     }
 
-    const comparedPassword = await comparePassword(password, user.Password) // bool
-    
+    const comparedPassword = await comparePassword(password, user.Password)
+
     if (!comparedPassword){
         return res.json({passwordError: "Şifre eşleşmiyor."})
     } else {
-        jwt.sign({email: user.Email, id: user.Id, name: user.Name}, process.env.JWT_SECRET, {}, (err, token) => {
+        jwt.sign(user, process.env.JWT_SECRET, {}, (err, token) => {
             if (err) throw err
             res.cookie('token', token).json(user)
         })
-        // return res.json({message: "Giriş başarılı. Yönlendiriliyorsunuz."})
     }
 }
 
-module.exports = {userLoginController}
+module.exports = userLoginController

@@ -6,6 +6,7 @@ const {hashPassword} = require('../helpers/auth')
 // register endpoint
 const userRegisterController = async (req, res) => {
     const {name, surname, username, email, password} = req.body
+    
     try {
         
         const user = await selectUser(email)
@@ -34,4 +35,4 @@ const userRegisterController = async (req, res) => {
     }
 }
 
-module.exports = {userRegisterController}
+module.exports = userRegisterController

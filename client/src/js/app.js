@@ -6,6 +6,7 @@ const login = async (event) => {
     const data = await fetch(`${BACKEND_URL}/login.html`, {
         method: 'POST',
         headers: {
+            'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -26,7 +27,6 @@ const login = async (event) => {
         toastr.success(result.message)
         // location.href = "./profile.html"
     }
-
 }
 
 
@@ -36,6 +36,7 @@ const register = async (event) => {
     const data = await fetch(`${BACKEND_URL}/register.html`, {
         method: 'POST',
         headers: {
+            'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({

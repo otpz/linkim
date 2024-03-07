@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@layer components {
+
+    .main{
+        @apply bg-main h-148 w-240 rounded-md shadow-lg lg:w-full
+    }
+
+    .button{
+        @apply w-28 h-10 border-1 border-gray-800 text-gray-800 rounded-sm transition-all duration-200
+    }
+
+    .button:hover{
+        @apply bg-gray-800 text-white transition-all duration-200
+    }
+
+    .form{
+        @apply w-full flex flex-col items-center justify-center;
+    }
+    
+    .form-div{
+        @apply w-3/5 flex flex-col mb-3;
+    }
+
+    .form-input{
+        @apply rounded-sm p-1 px-3 border-1 border-gray-400;
+    }
+    .form-input::placeholder{
+        @apply text-gray-400 text-sm;
+    }
+
+    .form-label{
+        @apply mb-1.5 text-xs font-medium text-gray-600;
+    }
+
+    .form-forget{
+        @apply text-xs underline text-green-600 font-medium items-end mb-4;
+    }
+
+    .form-button{
+        @apply w-3/5 rounded-sm p-2 border-1 border-gray-400 mb-3 bg-submit-button text-white text-sm;
+    }
+
+
+    .user-avatar{
+        @apply w-20 h-20 rounded-full flex items-center justify-center border-1 border-white;
+    }
+    .user-avatar img{
+        @apply w-full h-full rounded-full;
+    }
+
+    .user-info{
+        @apply w-full min-h-16 flex flex-col items-center justify-center;
+    }
+
+    .user-links{
+        @apply w-full min-h-18 flex items-center justify-center my-4 ;
+    }
+    .user-links .list{
+        @apply w-full h-full flex flex-col items-center justify-center;
+    }
+    .user-links .list li{
+        @apply w-full h-12 flex items-center px-4 bg-purple-800 text-white rounded-md cursor-pointer;
+    } 
+    
+    .navbar{
+        @apply w-full h-12
+    }
+
+    .navbar .nav-list{
+        @apply w-full h-full flex items-center px-4 list-none;
+    }
+
+    .navbar .nav-list .list-item{ 
+        @apply h-full flex items-center px-4 cursor-pointer text-gray-600 text-base;
+    }
+
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@layer base{
+    html{
+        font-family: "Ubuntu", sans-serif;
+    }
+}

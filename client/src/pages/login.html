@@ -40,14 +40,14 @@
             <div class="w-full h-100 flex flex-col items-center">
                 <h1 class="text-2xl font-bold mb-4 text-green-800">Giriş Yap</h1>
 
-                <form onsubmit="login(event)" class="form" action="" method="POST">
+                <form onsubmit="login(event)" class="form" action="">
                     <div class="form-div">
                         <label class="form-label" for="email">Kullanıcı adı veya email</label>
-                        <input class="form-input" type="email" placeholder="otpz@gmail.com" name="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" title="Doğru email adresi girdiğinizden emin olunuz.">
+                        <input class="form-input" type="email" placeholder="otpz@gmail.com" name="email">
                     </div>
                     <div class="form-div">
                         <label class="form-label" for="password">Şifre</label>
-                        <input class="form-input" type="password" placeholder="Şifrenizi giriniz" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Minimum 8 karakter, 1 harf ve 1 sayı içeren şifre giriniz." name="password">
+                        <input class="form-input" type="password" placeholder="Şifrenizi giriniz" name="password">
                     </div>
                     <div class="form-div form-forget">
                         <a class="" href="./forgot.html">Şifreni mi unuttun?</a>
