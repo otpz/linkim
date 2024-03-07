@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-div">
                         <label class="form-label" for="password">Şifre</label>
-                        <input class="form-input" type="password" placeholder="Şifrenizi giriniz" name="password">
+                        <input class="form-input" type="password" placeholder="Şifrenizi giriniz" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Minimum 8 karakter, 1 harf ve 1 sayı içeren şifre giriniz." name="password">
                     </div>
                     <div class="form-div form-forget">
                         <a class="" href="./forgot.html">Şifreni mi unuttun?</a>

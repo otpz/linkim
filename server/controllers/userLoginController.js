@@ -1,5 +1,6 @@
 
 const selectUser = require('../sql/selectSql')
+const {comparePassword} = require('../helpers/auth')
 
 // login endpoint
 const userLoginController = async (req, res) => {
@@ -11,13 +12,13 @@ const userLoginController = async (req, res) => {
         return res.json({undefined: "Kullanıcı bulunamadı."})
     }
 
-    if (user.Password !== password){
+    const comparedPassword = await comparePassword(password, user.Password) // bool
+    
+    if (!comparedPassword){
         return res.json({passwordError: "Şifre eşleşmiyor."})
     } else {
         return res.json({message: "Giriş başarılı. Yönlendiriliyorsunuz."})
     }
-
-    // res.json({email: email, password: password})
 }
 
 module.exports = {userLoginController}

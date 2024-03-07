@@ -1,6 +1,7 @@
 
 const insertUser = require('../sql/insertSql')
 const selectUser = require('../sql/selectSql')
+const {hashPassword} = require('../helpers/auth')
 
 // register endpoint
 const userRegisterController = async (req, res) => {
@@ -17,7 +18,9 @@ const userRegisterController = async (req, res) => {
             }
         }
 
-        const result = await insertUser(name, surname, username, email, password)
+        const hashedPassword = await hashPassword(password)
+
+        const result = await insertUser(name, surname, username, email, hashedPassword)
 
         if (result.name === "RequestError"){
             return res.json({error: "RequestError"})
