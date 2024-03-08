@@ -20,16 +20,21 @@ const userLoginController = async (req, res) => {
         return res.json({passwordError: "Şifre eşleşmiyor."})
     } else {
 
+        const date = new Date(user.JoinDate)
+        const formattedDate = new Intl.DateTimeFormat('tr-TR', { month: 'long', year: 'numeric' }).format(date);
+
         // Session
         req.session.user = {
             email: user.Email,
             name: user.Name,
             surname: user.Surname,
-            username: user.UserName
+            userName: user.UserName,
+            bio: user.Biography,
+            joinDate: formattedDate,
         }
         req.session.auth = true
 
-        return res.json({message: "Giriş başarılı."})
+        res.json({message: "Giriş başarılı.", userName: user.UserName})
     }
 }
 module.exports = userLoginController

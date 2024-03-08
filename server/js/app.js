@@ -17,19 +17,21 @@ const login = async (event) => {
 
     const result = await data.json()
 
+    console.log("result", result)
     toastr.options.positionClass = "toast-top-center"
 
     if (result.undefined){
         toastr.error(result.undefined)
     } else if (result.passwordError){
         toastr.error(result.passwordError)
+    } else if (result.authError){
+        toastr.error(result.authError)
     } else{
-        toastr.success("Giriş başarılı. Yönlendiliyorsunuz..")
-        
+        toastr.success(result.message)
         const redirectInterval = setInterval(() => {
-            window.location.href = "./profile" 
+            window.location.href = `./profile/${result.userName}`
             clearInterval(redirectInterval)
-        }, 1500)
+        }, 500)
     }
 }
 
@@ -57,6 +59,10 @@ const register = async (event) => {
         toastr.error(result.error);
     } else {
         toastr.success(result.message);
+        const redirectInterval = setInterval(() => {
+            window.location.href = `./login`
+            clearInterval(redirectInterval)
+        }, 500)
     }
 
     // location.href = "./login.html";

@@ -54,6 +54,7 @@ app.use(session({
 
 //routes
 app.use('/', require('./routes/routes'))
+app.use('/profile', require('./routes/profileRoutes'))
 
 const port = process.env.PORT
 app.listen(port, () => {
