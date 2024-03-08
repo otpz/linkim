@@ -34,11 +34,6 @@ const connectDB = () => {
 
 connectDB()
 
-// middleware
-app.use(express.json())
-app.use(cookieParser())
-app.use(express.urlencoded({extended: false}))
-
 app.use(session({
   name: 'sessionid',
   secret: process.env.SESSION_SECRET,
@@ -51,17 +46,26 @@ app.use(session({
   },
 }))
 
+const setUserLocals = (req, res, next) => {
+  res.locals.username = req.session.user ? req.session.user.UserName : null 
+  res.locals.auth = req.session.auth === true
+  res.locals.verifiedUrl = req.session.user ? req.session.user.UserName : null
+  next()
+}
+
+// middleware
+app.use(setUserLocals);
+app.use(express.json())
+app.use(cookieParser())
+app.use(express.urlencoded({extended: false}))
 
 //routes
 app.use('/', require('./routes/routes'))
 // app.use('/:username', require('./routes/profileRoutes'))
 
-
-
 const port = process.env.PORT
 app.listen(port, () => {
   console.log(`Server is running on port ${port} 🚀`)
 })
-
 
 module.exports = sql

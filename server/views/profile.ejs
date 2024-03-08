@@ -17,10 +17,10 @@
         </div>
 
         <div class="user-info">
-            <span class="block text-2xl font-bold text-gray-700"><%= user.name %></span>
-            <span class="block text-xs font-semibold text-gray-600">@<%= user.userName %></span>
-            <span class="block text-xs font-semibold text-gray-600"><%= user.bio %></span>
-            <span class="block text-xs font-semibold text-gray-600 mt-2"><%= user.joinDate %> Tarihinde Katıldı</span>
+            <span class="block text-2xl font-bold text-gray-700"><%= user.Name %></span>
+            <span class="block text-xs font-semibold text-gray-600">@<%= user.UserName %></span>
+            <span class="block text-xs font-semibold text-gray-600"><%= user.Biography %></span>
+            <span class="block text-xs font-semibold text-gray-600 mt-2"><%= user.JoinDate %> Tarihinde Katıldı</span>
         </div>
 
         <div class="user-links">
@@ -31,7 +31,11 @@
             </ul>
         </div>
 
-        <button class="w-full h-10 text-center flex justify-center items-center px-4 bg-gray-700 text-white rounded-md cursor-pointer"><span class="text-xl mr-2">+</span> Yeni Ekle</button>
+        <% if (locals.verifiedUrl === user.UserName) { %>
+            <button class="w-full h-10 text-center flex justify-center items-center px-4 bg-gray-700 text-white rounded-md cursor-pointer"><span class="text-xl mr-2">+</span> Yeni Ekle</button>
+        <% } %>
+
+        <!-- <button class="w-full h-10 text-center flex justify-center items-center px-4 bg-gray-700 text-white rounded-md cursor-pointer"><span class="text-xl mr-2">+</span> Yeni Ekle</button> -->
         
         <div class="w-full h-[0.5px] bg-gray-400 mt-6"></div>
 

@@ -3,17 +3,27 @@
         <li class="list-item font-extrabold text-gray-600">
             <a href="/">Link<span class="text-brand-title2">im</span></a>
         </li>
-        <li class="list-item">
-            <a href="/login">Giriş Yap</a>
-        </li>
-        <li class="list-item">
-            <a href="/register">Kayıt Ol</a>
-        </li>
+        <% if (!auth) { %>
+            <li class="list-item">
+                <a href="/login">Giriş Yap</a>
+            </li>
+            <li class="list-item">
+                <a href="/register">Kayıt Ol</a>
+            </li>
+        <% } %>
         <li class="list-item">
             <a href="/about">Hakkımızda</a>
         </li>
-        <li class="list-item ml-auto bg-green-600 rounded-b-xl">
-            <a class="text-white" href="/profile">Profilim</a>
-        </li>
+        
+        <% if (auth) { %>
+            <div class="ml-auto flex flex-row w-40 h-full justify-between bg-gray-600 mr-2">
+                <li class="list-item border-r-1 grid place-items-center">
+                    <a class="text-white" href="@<%=username%>" ><%=username%></a>
+                </li>
+                <li class="list-item grid place-items-center">
+                    <a class="text-white" href="settings">Ayarlar</a>
+                </li>
+            </div>
+        <% } %>
     </ul>
-</nav>
+</nav>  

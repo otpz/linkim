@@ -1,25 +1,22 @@
 const selectUser = require('../sql/selectSql')
 
 const userProfileController = async (req, res) => {
-
     const urlUserName = req.params.username.slice(1)
-    let sessionUserName = req.session.user ? req.session.user.userName : null 
+
+    const user = await selectUser(urlUserName, "UserName")
+
+    let sessionUserName = req.session.user ? req.session.user.UserName : null 
 
     if (urlUserName === sessionUserName){
         if (req.session.auth === true){
-            res.render(`profile`, {user: req.session.user})
+            res.render(`profile`, {user})
         } else {
-            // res.redirect('/login')
+            res.redirect('/login')
             res.render('login', {authError: "Lütfen giriş yapınız."})
             return;
         }
     } else{
-        const user = await selectUser(urlUserName, "UserName")
-        if (user){
-            res.render(`otherProfile`, {user})
-        } else {
-            res.render('error')
-        }
+        res.render(`profile`, {user})
     }
 } 
 

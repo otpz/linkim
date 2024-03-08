@@ -76,7 +76,7 @@
     }
 
     .navbar .nav-list{
-        @apply w-full h-full flex items-center px-4 list-none;
+        @apply w-full h-full flex items-center list-none;
     }
 
     .navbar .nav-list .list-item{ 

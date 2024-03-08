@@ -25,12 +25,12 @@ const userLoginController = async (req, res) => {
 
         // Session
         req.session.user = {
-            email: user.Email,
-            name: user.Name,
-            surname: user.Surname,
-            userName: user.UserName,
-            bio: user.Biography,
-            joinDate: formattedDate,
+            Email: user.Email,
+            Name: user.Name,
+            Surname: user.Surname,
+            UserName: user.UserName,
+            Biography: user.Biography,
+            JoinDate: formattedDate,
         }
         req.session.auth = true
 
