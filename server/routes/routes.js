@@ -19,9 +19,9 @@ router.use(
 
 router.post("/register", userRegisterController)
 router.post("/login", userLoginController)
+
 router.get("/profile", userProfileController)
 
-// ejs deneme
 router.get('/register', (req, res) => {
     res.render('register')
 })
@@ -41,9 +41,6 @@ router.get('/', (req, res) => {
 router.get('/forgot', (req, res) => {
   res.render('forgot')
 })
-
-
-
 
 
 

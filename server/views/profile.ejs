@@ -13,12 +13,12 @@
     <main class="w-110 min-h-125 flex flex-col items-center p-4 m-auto">
 
         <div class="user-avatar">
-            <img src="../assets/img/avatar.png" alt="">
+            <img src="/public/assets/img/avatar.png" alt="">
         </div>
 
         <div class="user-info">
-            <span class="block text-2xl font-bold text-gray-700">Osman</span>
-            <span class="block text-xs font-semibold text-gray-600">@otpz</span>
+            <span class="block text-2xl font-bold text-gray-700"><%= user.name %></span>
+            <span class="block text-xs font-semibold text-gray-600">@<%= user.username %></span>
             <span class="block text-xs font-semibold text-gray-600">Software Engineer</span>
             <span class="block text-xs font-semibold text-gray-600 mt-2">Ocak 2024 tarihinde katıldı</span>
         </div>

@@ -19,11 +19,17 @@ const userLoginController = async (req, res) => {
     if (!comparedPassword){
         return res.json({passwordError: "Şifre eşleşmiyor."})
     } else {
-        jwt.sign(user, process.env.JWT_SECRET, {}, (err, token) => {
-            if (err) throw err
-            res.cookie('token', token).json(user)
-        })
+
+        // Session
+        req.session.user = {
+            email: user.Email,
+            name: user.Name,
+            surname: user.Surname,
+            username: user.UserName
+        }
+        req.session.auth = true
+
+        return res.json({message: "Giriş başarılı."})
     }
 }
-
 module.exports = userLoginController

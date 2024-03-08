@@ -24,8 +24,12 @@ const login = async (event) => {
     } else if (result.passwordError){
         toastr.error(result.passwordError)
     } else{
-        toastr.success(result.message)
-        // location.href = "./profile.html"
+        toastr.success("Giriş başarılı. Yönlendiliyorsunuz..")
+        
+        const redirectInterval = setInterval(() => {
+            window.location.href = "./profile" 
+            clearInterval(redirectInterval)
+        }, 1500)
     }
 }
 
