@@ -9,7 +9,7 @@ const userRegisterController = async (req, res) => {
     
     try {
         
-        const user = await selectUser(email)
+        const user = await selectUser(email, "Email")
 
         if (user){
             if (user.UserName === username){

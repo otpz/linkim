@@ -7,6 +7,7 @@ const path = require('path')
 // controllers
 const userLoginController = require('../controllers/userLoginController')
 const userRegisterController = require('../controllers/userRegisterController') 
+const userProfileController = require('../controllers/userProfileController') 
 
 // middleware 
 router.use(
@@ -16,9 +17,15 @@ router.use(
     })
 )
 
-
+//POST routes
 router.post("/register", userRegisterController)
 router.post("/login", userLoginController)
+
+
+//GET routes
+router.get('/', (req, res) => {
+  res.render('main')
+})
 
 router.get('/register', (req, res) => {
     res.render('register')
@@ -32,15 +39,13 @@ router.get('/login', (req, res) => {
   res.render('login')
 })
 
-router.get('/', (req, res) => {
-  res.render('main')
-})
-
 router.get('/forgot', (req, res) => {
   res.render('forgot')
 })
 
-// router.get('/*' , (req, res) => {
+router.get('/:username', userProfileController)
+
+// router.get('*' , (req, res) => {
 //   res.render('error')
 // })
 

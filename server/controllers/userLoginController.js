@@ -8,7 +8,7 @@ const dotenv = require('dotenv').config()
 const userLoginController = async (req, res) => {
     const {email, password} = req.body
 
-    const user = await selectUser(email)
+    const user = await selectUser(email, "Email")
 
     if (user === undefined){
         return res.json({undefined: "Kullanıcı bulunamadı."})
@@ -34,7 +34,7 @@ const userLoginController = async (req, res) => {
         }
         req.session.auth = true
 
-        res.json({message: "Giriş başarılı.", userName: user.UserName})
+        return res.json({message: "Giriş başarılı.", userName: user.UserName})
     }
 }
 module.exports = userLoginController

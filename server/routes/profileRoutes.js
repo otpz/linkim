@@ -14,6 +14,6 @@ router.use(
     })
 )
 
-router.get('/:username', userProfileController)
+router.get('/', userProfileController)
 
 module.exports = router;

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <%- include('./partials/head'); %>
+    <title>Profil</title>
+</head>
+<body class="w-full h-full bg-body flex flex-col items-center">
+
+
+    <%- include('./partials/navbar'); %>
+    
+    <main class="w-110 min-h-125 flex flex-col items-center p-4 m-auto">
+
+        <div class="user-avatar">
+            <img src="/public/assets/img/avatar.png" alt="">
+        </div>
+
+        <div class="user-info">
+            <span class="block text-2xl font-bold text-gray-700"><%= user.Name %></span>
+            <span class="block text-xs font-semibold text-gray-600"><%= user.UserName %></span>
+            <span class="block text-xs font-semibold text-gray-600"><%= user.Biography %></span>
+            <span class="block text-xs font-semibold text-gray-600 mt-2">Mart 2024 Tarihinde Katıldı</span>
+        </div>
+
+        <div class="user-links">
+            <ul class="list">
+                <li id="1">
+                    <a href="">LinkedIn</a>
+                </li>
+            </ul>
+        </div>
+        <div class="w-full h-[0.5px] bg-gray-400 mt-6"></div>
+        <form class="form w-full items-start" action="">
+            <textarea class="rounded-md bg-body outline-none w-full mt-2 placeholder:text-gray-700" name="" id="" rows="2" placeholder="Birşeyler yaz."></textarea>
+            <button class="w-1/2 h-10 border-1 border-gray-600 mt-2 hover:bg-gray-600 hover:text-white transition-all duration-200">Gönder</button>
+        </form>
+    </main>
+
+</body>
+</html>

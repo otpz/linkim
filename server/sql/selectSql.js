@@ -1,7 +1,8 @@
 const sql = require('mssql/msnodesqlv8')
 
-const selectUser = async (email) => {
-    const query = `select * from Users where Email = '${email}'`
+// strEmail = "Email"
+const selectUser = async (email, strEmail) => {
+    const query = `select * from Users where ${strEmail} = '${email}'`
     try {
         const result = await sql.query(query)
         return result.recordset[0]

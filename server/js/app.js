@@ -27,11 +27,12 @@ const login = async (event) => {
     } else if (result.authError){
         toastr.error(result.authError)
     } else{
+        console.log("redirected:", result.userName)
         toastr.success(result.message)
         const redirectInterval = setInterval(() => {
-            window.location.href = `./profile/${result.userName}`
+            window.location.href = `/@${result.userName}`
             clearInterval(redirectInterval)
-        }, 500)
+        }, 1500)
     }
 }
 
