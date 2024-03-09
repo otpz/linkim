@@ -43,6 +43,10 @@ router.get('/forgot', (req, res) => {
   res.render('forgot')
 })
 
+router.get('/settings', (req, res) => {
+  res.render('settings')
+})
+
 router.get('/:username', userProfileController)
 
 // router.get('*' , (req, res) => {
