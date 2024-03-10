@@ -4,17 +4,58 @@
     <%- include('./partials/head'); %>
     <title>Register</title>
 </head>
-<body class="w-full h-full bg-body flex flex-col items-center">
+<body class="w-full bg-body flex flex-col items-center justify-center">
 
     <%- include('./partials/navbar'); %>
-
     
-    <main class="w-100 h-100 flex flex-col items-center p-4 m-auto m-auto">
-        <p class="w-full text-justify text-md font-bold text-gray-600 mt-6"><span class="text-red-500">*</span> Şifrenizi unuttuysanız doğrulama kodu için kayıtlı olduğunuz emailinizi giriniz</p>
-        <form class="form mt-4" action="">
-            <input class="form-input w-full" type="text" placeholder="otpz@gmail.com">
-            <button class="form-button w-full mt-4" type="submit">Gönder</button>
-        </form>
+    <main class="w-3/4 h-full bg-transparent shadow-none flex flex-col items-center p-4">
+        <div class="w-full flex flex-col justify-start items-center">
+            <div class="w-full flex flex-col items-center">
+                <h1 class="text-2xl font-bold mb-4 text-green-800">Profil Bilgileriniz</h1>
+                <form onsubmit="setProfileInfo(event)" class="form w-1/2" action="">
+                    <div class="form-div">
+                        <label class="form-label" for="name">İsim</label>
+                        <input required class="form-input" name="name" type="text" pattern="/^[a-z ,.'-]+$/i" title="İsimde noktalama ve sayı kullanmayınız" placeholder="İsim">
+                    </div>
+                    <div class="form-div">
+                        <label class="form-label" for="surname">Soyisim</label>
+                        <input required class="form-input" name="surname" type="text" pattern="[A-Za-zğĞıİşŞüÜöÖçÇ]{1,20}" title="Soyisimde boşluk, noktalama ve sayı kullanmayınız" placeholder="Soyisim">
+                    </div>
+                    <div class="form-div">
+                        <label class="form-label" for="username">Kullanıcı Adı</label>
+                        <input required class="form-input" name="username"  type="text" pattern="^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="3-20 karakter aralığında, boşluk, noktalama ve özel karakter kullanmayınız" placeholder="Kullanıcı adı">
+                    </div>
+                    <div class="form-div">
+                        <label class="form-label" for="biography">Biyografi</label>
+                        <input required class="form-input" name="biography"  type="text" placeholder="Biyografi bilgisi">
+                    </div>
+                    <div class="form-div">
+                        <label class="form-label" for="email">Email</label>
+                        <input required class="form-input" type="email" placeholder="name@gmail.com" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" title="Doğru email adresi girdiğinizden emin olunuz." name="email">
+                    </div>
+                    <div class="form-div">
+                        <label class="form-label" for="password">Şifre</label>
+                        <input required class="form-input" type="password" placeholder="Şifrenizi en az 8 haneli giriniz." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Minimum 8 karakter, 1 harf ve 1 sayı içeren şifre giriniz." name="password">
+                    </div>
+                    <button class="form-button mt-8" type="submit">Kaydet</button>
+                </form>
+
+                <div class="w-full h-20  mt-6"></div>
+
+                <h1 class="text-2xl font-bold mb-4 text-green-800">Şifre Sıfırlama</h1>
+                <form onsubmit="resetPassword(event)" class="form w-1/2" action="">
+                    <div class="form-div">
+                        <label class="form-label" for="password">Şifre</label>
+                        <input required class="form-input" type="password" placeholder="Şifrenizi en az 8 haneli giriniz." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Minimum 8 karakter, 1 harf ve 1 sayı içeren şifre giriniz." name="password">
+                    </div>
+                    <div class="form-div">
+                        <label class="form-label" for="password">Şifre Tekrarı</label>
+                        <input required class="form-input" type="password" placeholder="Yeni şifrenizi tekrar giriniz" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Minimum 8 karakter, 1 harf ve 1 sayı içeren şifre giriniz." name="password">
+                    </div>
+                    <button class="form-button mt-8" type="submit">Şifre Değiştir</button>
+                </form>
+            </div>
+        </div>
     </main>
 
 

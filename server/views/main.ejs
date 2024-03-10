@@ -13,8 +13,12 @@
         <h1 class="cursor-pointer text-7xl font-extrabold text-gray-600 mt-6"><a href="/">Link<span class="text-brand-title2">im</span></a></h1>
         <p class="text-xl font-extrabold text-gray-600 mt-6">Herşeyin tek linkte. Sen de linkini oluştur.</p>
         <div class="w-125 h-20 flex flex-row justify-evenly items-center mt-8">
+            <% if (!auth) { %>
             <button class="button"><a class="w-full h-full flex justify-center items-center" href="/register">Kayıt Ol</a></button>
             <button class="button"><a class="w-full h-full flex justify-center items-center" href="/login">Giriş Yap</a></button>
+            <% } else { %>
+                <button class="button"><a class="w-full h-full flex justify-center items-center" href="@<%=username%>">Profiliniz</a></button>
+            <% } %>
         </div>
     </main>
     
