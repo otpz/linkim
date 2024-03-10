@@ -15,27 +15,23 @@
                 <form onsubmit="setProfileInfo(event)" class="form w-1/2" action="">
                     <div class="form-div">
                         <label class="form-label" for="name">İsim</label>
-                        <input required class="form-input" name="name" type="text" pattern="/^[a-z ,.'-]+$/i" title="İsimde noktalama ve sayı kullanmayınız" placeholder="İsim">
+                        <input value="<%=Name%>" required class="form-input" name="name" type="text" pattern="/^[a-z ,.'-]+$/i" title="İsimde noktalama ve sayı kullanmayınız" placeholder="İsim">
                     </div>
                     <div class="form-div">
                         <label class="form-label" for="surname">Soyisim</label>
-                        <input required class="form-input" name="surname" type="text" pattern="[A-Za-zğĞıİşŞüÜöÖçÇ]{1,20}" title="Soyisimde boşluk, noktalama ve sayı kullanmayınız" placeholder="Soyisim">
+                        <input value="<%=Surname%>" required class="form-input" name="surname" type="text" pattern="[A-Za-zğĞıİşŞüÜöÖçÇ]{1,20}" title="Soyisimde boşluk, noktalama ve sayı kullanmayınız" placeholder="Soyisim">
                     </div>
                     <div class="form-div">
                         <label class="form-label" for="username">Kullanıcı Adı</label>
-                        <input required class="form-input" name="username"  type="text" pattern="^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="3-20 karakter aralığında, boşluk, noktalama ve özel karakter kullanmayınız" placeholder="Kullanıcı adı">
+                        <input value="<%=UserName%>" required class="form-input" name="username"  type="text" pattern="^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="3-20 karakter aralığında, boşluk, noktalama ve özel karakter kullanmayınız" placeholder="Kullanıcı adı">
                     </div>
                     <div class="form-div">
                         <label class="form-label" for="biography">Biyografi</label>
-                        <input required class="form-input" name="biography"  type="text" placeholder="Biyografi bilgisi">
+                        <input value="<%=Biography%>" class="form-input" name="biography"  type="text" placeholder="Biyografi bilgisi">
                     </div>
                     <div class="form-div">
                         <label class="form-label" for="email">Email</label>
-                        <input required class="form-input" type="email" placeholder="name@gmail.com" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" title="Doğru email adresi girdiğinizden emin olunuz." name="email">
-                    </div>
-                    <div class="form-div">
-                        <label class="form-label" for="password">Şifre</label>
-                        <input required class="form-input" type="password" placeholder="Şifrenizi en az 8 haneli giriniz." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Minimum 8 karakter, 1 harf ve 1 sayı içeren şifre giriniz." name="password">
+                        <input value="<%=Email%>" required class="form-input" type="email" placeholder="name@gmail.com" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" title="Doğru email adresi girdiğinizden emin olunuz." name="email">
                     </div>
                     <button class="form-button mt-8" type="submit">Kaydet</button>
                 </form>

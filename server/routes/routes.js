@@ -9,6 +9,7 @@ const userLoginController = require('../controllers/userLoginController')
 const userRegisterController = require('../controllers/userRegisterController') 
 const userProfileController = require('../controllers/userProfileController') 
 const userLogoutController = require('../controllers/userLogoutController')
+const {userSettingsController, userGetSettingsController} = require('../controllers/userSettingsController')
 
 // middleware 
 router.use(
@@ -21,7 +22,7 @@ router.use(
 //POST routes
 router.post("/register", userRegisterController)
 router.post("/login", userLoginController)
-
+router.post("/settings", userSettingsController)
 
 //GET routes
 router.get('/', (req, res) => {
@@ -44,9 +45,7 @@ router.get('/forgot', (req, res) => {
   res.render('forgot')
 })
 
-router.get('/settings', (req, res) => {
-  res.render('settings')
-})
+router.get('/settings', userGetSettingsController)
 
 router.get('/logout', userLogoutController)
 

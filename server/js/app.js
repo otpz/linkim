@@ -65,8 +65,6 @@ const register = async (event) => {
             clearInterval(redirectInterval)
         }, 500)
     }
-
-    // location.href = "./login.html";
 }
 
 const logout = async () => {
@@ -76,11 +74,46 @@ const logout = async () => {
 
     const result = await data.json()
 
-    console.log("appdata", result)
-
     if (result.message){
         toastr.success(result.message)
     } else {
         toastr.error("Bir hata oluştu.")
+    }
+}
+
+const setProfileInfo = async (event) => {
+
+    event.preventDefault()
+
+    const data = await fetch(`${BACKEND_URL}/settings`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: event.target.name.value,
+            surname: event.target.surname.value,
+            username: event.target.username.value,
+            biography: event.target.biography.value,
+            email: event.target.email.value,
+        })
+    })
+
+    const result = await data.json()
+
+    if (result.message){
+        toastr.success(result.message)
+        const interval = setInterval(() => {
+            window.location.href = `/@${result.username}`
+            clearInterval(interval)
+        }, 1000)
+
+    } else if (result.emailError){
+        toastr.error(result.emailError)
+    } else if (result.userNameError){
+        toastr.error(result.userNameError)
+    } else {
+        toastr.error(result.error)
     }
 }
