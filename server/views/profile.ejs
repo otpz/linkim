@@ -6,9 +6,7 @@
 </head>
 <body class="w-full h-full bg-body flex flex-col items-center">
 
-
     <%- include('./partials/navbar'); %>
-    
     
     <main class="w-110 min-h-125 flex flex-col items-center p-4 m-auto">
 
@@ -18,8 +16,8 @@
 
         <div class="user-info">
             <span class="block text-2xl font-bold text-gray-700"><%= user.Name %></span>
-            <span class="block text-xs font-semibold text-gray-600">@<%= user.UserName %></span>
-            <span class="block text-xs font-semibold text-gray-600"><%= user.Biography %></span>
+            <span class="block text-xs font-semibold text-gray-600 mt-1">@<%= user.UserName %></span>
+            <span class="block text-xs font-semibold text-gray-600 mt-1"><%= user.Biography %></span>
             <span class="block text-xs font-semibold text-gray-600 mt-2"><%= user.JoinDate %> Tarihinde Katıldı</span>
         </div>
 
@@ -35,7 +33,6 @@
             <button class="w-full h-10 text-center flex justify-center items-center px-4 bg-gray-700 text-white rounded-md cursor-pointer"><span class="text-xl mr-2">+</span> Yeni Ekle</button>
         <% } %>
 
-        
         <div class="w-full h-[0.5px] bg-gray-400 mt-6"></div>
 
         <form class="form w-full items-start" action="">
