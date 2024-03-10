@@ -20,8 +20,9 @@ const userLoginController = async (req, res) => {
         return res.json({passwordError: "Şifre eşleşmiyor."})
     } else {
 
-        const date = new Date(user.JoinDate)
-        const formattedDate = new Intl.DateTimeFormat('tr-TR', { month: 'long', year: 'numeric' }).format(date);
+        const date = new Date(user.JoinDate);
+        const options = { month: 'long', day: 'numeric' };
+        const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(date);
 
         // Session
         req.session.user = {

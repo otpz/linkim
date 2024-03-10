@@ -22,8 +22,9 @@ const userSettingsController = async (req, res) => {
             
             const user = await selectUser(userBody.email, "Email")
 
-            const date = new Date(user.JoinDate)
-            const formattedDate = new Intl.DateTimeFormat('tr-TR', { month: 'short', year: 'numeric' }).format(date);
+            const date = new Date(user.JoinDate);
+            const options = { month: 'long', day: 'numeric' };
+            const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(date);
 
             req.session.user = {
                 Email: user.Email,
