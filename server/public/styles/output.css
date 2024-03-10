@@ -922,6 +922,10 @@ html{
   width: 3rem;
 }
 
+.min-w-20 {
+  min-width: 5rem;
+}
+
 .max-w-62 {
   max-width: 15.5rem;
 }

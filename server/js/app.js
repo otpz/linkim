@@ -68,3 +68,19 @@ const register = async (event) => {
 
     // location.href = "./login.html";
 }
+
+const logout = async () => {
+    const data = await fetch(`${BACKEND_URL}/logout`, {
+        method: 'GET'
+    })
+
+    const result = await data.json()
+
+    console.log("appdata", result)
+
+    if (result.message){
+        toastr.success(result.message)
+    } else {
+        toastr.error("Bir hata oluştu.")
+    }
+}

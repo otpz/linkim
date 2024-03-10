@@ -8,6 +8,7 @@ const path = require('path')
 const userLoginController = require('../controllers/userLoginController')
 const userRegisterController = require('../controllers/userRegisterController') 
 const userProfileController = require('../controllers/userProfileController') 
+const userLogoutController = require('../controllers/userLogoutController')
 
 // middleware 
 router.use(
@@ -46,6 +47,8 @@ router.get('/forgot', (req, res) => {
 router.get('/settings', (req, res) => {
   res.render('settings')
 })
+
+router.get('/logout', userLogoutController)
 
 router.get('/:username', userProfileController)
 
