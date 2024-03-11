@@ -4,11 +4,11 @@
     <%- include('./partials/head'); %>
     <title>Profil</title>
 </head>
-<body class="w-full h-full bg-body flex flex-col items-center">
+<body class="w-full bg-body flex flex-col items-center">
 
     <%- include('./partials/navbar'); %>
     
-    <main class="w-110 min-h-125 flex flex-col items-center p-4 m-auto">
+    <main class="w-110 min-h-125 flex flex-col items-center p-4 mt-28">
 
         <div class="user-avatar">
             <img src="/public/assets/img/avatar.png" alt="">
@@ -30,16 +30,44 @@
         </div>
 
         <% if (locals.verifiedUrl === user.UserName) { %>
-            <button class="w-full h-10 text-center flex justify-center items-center px-4 bg-gray-700 text-white rounded-md cursor-pointer"><span class="text-xl mr-2">+</span> Yeni Ekle</button>
+            <button id="add-new-link" class="w-full h-10 text-center flex justify-center items-center px-4 bg-gray-700 text-white rounded-md cursor-pointer"><span class="text-xl mr-2">+</span> Yeni Ekle</button>
         <% } %>
+
+
+        <form id="new-link-form" class="form mt-5 hidden opacity-0 transition-all duration-500" onSubmit="addLink()" action="">
+            <div class="form-div w-full">
+                <label class="form-label" for="description">Açıklama</label>
+                <input class="form-input py-2 px-3" type="text" placeholder="LinkedIn" name="description">
+            </div>
+            <div class="form-div w-full">
+                <label class="form-label" for="url">URL Adresi</label>
+                <input class="form-input py-2 px-3" type="url" placeholder="" name="url">
+            </div>
+            <div class="flex items-center justify-between w-full">
+                <button class="w-2/5 h-10 border-1 border-gray-600 mt-2 hover:bg-gray-600 hover:text-white transition-all duration-200 rounded-md">
+                    Gönder
+                </button>
+                <span id="cancel-form" class="w-2/5 h-10 text-center flex justify-center items-center px-4 text-gray-700 rounded-md cursor-pointer">
+                    İptal
+                </span>
+            </div>
+        </form>
 
         <div class="w-full h-[0.5px] bg-gray-400 mt-6"></div>
 
         <form class="form w-full items-start" action="">
             <textarea class="rounded-md bg-body outline-none w-full mt-2 placeholder:text-gray-700" name="" id="" rows="2" placeholder="Birşeyler yaz."></textarea>
-            <button class="w-1/2 h-10 border-1 border-gray-600 mt-2 hover:bg-gray-600 hover:text-white transition-all duration-200">Gönder</button>
+            <button class="w-2/5 h-10 border-1 border-gray-600 mt-2 hover:bg-gray-600 hover:text-white transition-all duration-200 rounded-md">Gönder</button>
         </form>
     </main>
 
+
+    <script type="text/javascript" src="/js/dom.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 </body>
 </html>

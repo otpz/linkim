@@ -117,3 +117,4 @@ const setProfileInfo = async (event) => {
         toastr.error(result.error)
     }
 }
+
