@@ -1,5 +1,5 @@
 
-const insertUser = require('../sql/insertSql')
+const {insertUser} = require('../sql/insertSql')
 const selectUser = require('../sql/selectSql')
 const {hashPassword} = require('../helpers/auth')
 

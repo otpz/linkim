@@ -10,6 +10,7 @@ const userRegisterController = require('../controllers/userRegisterController')
 const userProfileController = require('../controllers/userProfileController') 
 const userLogoutController = require('../controllers/userLogoutController')
 const {userSettingsController, userGetSettingsController} = require('../controllers/userSettingsController')
+const userAddLinkController = require('../controllers/userAddLinkController')
 
 // middleware 
 router.use(
@@ -23,6 +24,7 @@ router.use(
 router.post("/register", userRegisterController)
 router.post("/login", userLoginController)
 router.post("/settings", userSettingsController)
+router.post('/addlink', userAddLinkController)
 
 //GET routes
 router.get('/', (req, res) => {

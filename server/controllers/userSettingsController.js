@@ -27,6 +27,7 @@ const userSettingsController = async (req, res) => {
             const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(date);
 
             req.session.user = {
+                Id: user.Id,
                 Email: user.Email,
                 Name: user.Name,
                 Surname: user.Surname,

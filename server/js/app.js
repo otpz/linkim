@@ -118,3 +118,29 @@ const setProfileInfo = async (event) => {
     }
 }
 
+const addLink = async (event) => {
+
+    event.preventDefault()
+    console.log(event.target.title.value, event.target.url.value)
+
+    const data = await fetch(`${BACKEND_URL}/addLink`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: event.target.title.value,
+            link: event.target.url.value,
+        })
+    })
+
+    const result = await data.json()
+
+
+    if (result.error){
+        toastr.error(result.error)
+    } else {
+        toastr.success(result.message, result.user)
+    }
+}
