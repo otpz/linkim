@@ -11,6 +11,7 @@ const userProfileController = require('../controllers/userProfileController')
 const userLogoutController = require('../controllers/userLogoutController')
 const {userSettingsController, userGetSettingsController} = require('../controllers/userSettingsController')
 const userAddLinkController = require('../controllers/userAddLinkController')
+const userDeleteLinkController = require('../controllers/userDeleteLinkController')
 
 // middleware 
 router.use(
@@ -19,6 +20,10 @@ router.use(
         origin: process.env.CORS_ORIGIN_URL 
     })
 )
+
+//DELETE routes
+router.delete('/deleteLink/:id', userDeleteLinkController)
+
 
 //POST routes
 router.post("/register", userRegisterController)

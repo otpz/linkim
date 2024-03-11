@@ -11,8 +11,9 @@ const selectUser = async (email, strEmail) => {
     }
 }
 
-const selectUserLinks = async (userId) => {
-    const query = `select * from Links where UserId = ${userId}`
+// queryParam = "UserId"
+const selectUserLinks = async (id, queryParam) => {
+    const query = `select * from Links where ${queryParam} = ${id}`
     try {
         const result = await sql.query(query)
         return result.recordset

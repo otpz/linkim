@@ -24,3 +24,51 @@ if (cancelForm){
     cancelForm.addEventListener('click', toggleFormVisibility)
 }
 
+
+
+
+const deleteLink = async (deleteButton, event) => {
+    event.preventDefault()
+    const number = deleteButton.getAttribute('number')
+
+    // links.forEach((link) => {
+    //     if (link.getAttribute('number') === number){
+    //         link.remove()
+    //     }
+    // })
+
+    const data = await fetch(`${BACKEND_URL}/deleteLink/${number}`, {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    })
+
+    const result = await data.json()
+
+    if (result.message){
+        toastr.success(result.message)
+        const interval = setInterval(() => {
+            window.location.reload()
+            clearInterval(interval)
+        }, 500)
+    } else {
+        toastr.error(result.error)
+    }
+}
+
+
+
+const links = document.querySelectorAll('#link')
+const deleteButtons = document.querySelectorAll('#delete')
+
+if (deleteButtons){
+    deleteButtons.forEach((deleteButton) => {
+        deleteButton.addEventListener('click', (event) => deleteLink(deleteButton, event))
+    })
+}
+
+
+
+

@@ -68,7 +68,7 @@
         @apply w-full h-full flex flex-col items-center justify-center;
     }
     .user-links .list li{
-        @apply w-full h-12 flex items-center px-4 bg-purple-800 text-white rounded-md cursor-pointer;
+        @apply w-full h-12 flex items-center bg-purple-800 text-white rounded-md cursor-pointer;
     } 
     
     .navbar{
@@ -80,7 +80,7 @@
     }
 
     .navbar .nav-list .list-item{ 
-        @apply h-full flex items-center px-4 cursor-pointer text-gray-600 text-base;
+        @apply h-full flex items-center cursor-pointer text-gray-600 text-base;
     }
 
 }

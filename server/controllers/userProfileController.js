@@ -8,12 +8,10 @@ const userProfileController = async (req, res) => {
     
 
     if (user){
-        const userLinks = await selectUserLinks(user.Id)
+        const userLinks = await selectUserLinks(user.Id, "UserId")
 
         user.Links = userLinks ? userLinks : []
 
-        console.log(user.Links)
-        
         const date = new Date(user.JoinDate);
         const options = { month: 'long', day: 'numeric' };
         const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(date);

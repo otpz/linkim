@@ -145,8 +145,8 @@ const addLink = async (event) => {
         event.target.title.value = ""
         event.target.title.value = ""
         const interval = setInterval(() => {
-            // window.location.href = `/`
+            window.location.reload()
             clearInterval(interval)
-        }, 400)
+        }, 500)
     }
 }
