@@ -121,7 +121,6 @@ const setProfileInfo = async (event) => {
 const addLink = async (event) => {
 
     event.preventDefault()
-    console.log(event.target.title.value, event.target.url.value)
 
     const data = await fetch(`${BACKEND_URL}/addLink`, {
         method: 'POST',
@@ -136,7 +135,6 @@ const addLink = async (event) => {
     })
 
     const result = await data.json()
-
 
     if (result.error){
         toastr.error(result.error)

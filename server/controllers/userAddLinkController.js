@@ -3,6 +3,7 @@ const {insertLink} = require('../sql/insertSql')
 const userAddLinkController = async (req, res) => {
 
     const {title, link} = req.body
+
     const id = req.session.user ? req.session.user.Id : null
 
     if (id){

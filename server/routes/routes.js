@@ -5,13 +5,14 @@ const dotenv = require('dotenv').config()
 const path = require('path')
 
 // controllers
+const userDeleteLinkController = require('../controllers/userDeleteLinkController')
 const userLoginController = require('../controllers/userLoginController')
 const userRegisterController = require('../controllers/userRegisterController') 
 const userProfileController = require('../controllers/userProfileController') 
 const userLogoutController = require('../controllers/userLogoutController')
 const {userSettingsController, userGetSettingsController} = require('../controllers/userSettingsController')
 const userAddLinkController = require('../controllers/userAddLinkController')
-const userDeleteLinkController = require('../controllers/userDeleteLinkController')
+
 
 // middleware 
 router.use(

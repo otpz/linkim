@@ -2,7 +2,6 @@ const deleteUserLink = require('../sql/deleteSql')
 
 const userDeleteLinkController = async (req, res) => {
     const id = req.params.id
-    console.log("silinecek link", id)
     const result = await deleteUserLink(id)
 
     if (result.rowsAffected[0] === 1){

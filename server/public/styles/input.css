@@ -83,6 +83,24 @@
         @apply h-full flex items-center cursor-pointer text-gray-600 text-base;
     }
 
+    .list li:hover,
+    .list li:has(#move:hover){
+        @apply bg-purple-400 text-white transition-all duration-300;
+    }
+
+    .list li:has(#delete:hover){
+        @apply bg-purple-800 text-white transition-all duration-300;
+    }
+    
+    .list li address{
+        @apply text-center text-ellipsis whitespace-nowrap overflow-hidden;
+    }
+    
+    /* .list #link.dragging:where(#link){
+        opacity: 0.4;
+    } */
+
+
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
