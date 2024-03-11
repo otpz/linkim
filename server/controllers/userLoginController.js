@@ -1,5 +1,5 @@
 
-const selectUser = require('../sql/selectSql')
+const {selectUser} = require('../sql/selectSql')
 const {comparePassword} = require('../helpers/auth')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv').config()

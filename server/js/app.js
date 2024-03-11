@@ -141,6 +141,12 @@ const addLink = async (event) => {
     if (result.error){
         toastr.error(result.error)
     } else {
-        toastr.success(result.message, result.user)
+        toastr.success(result.message)
+        event.target.title.value = ""
+        event.target.title.value = ""
+        const interval = setInterval(() => {
+            // window.location.href = `/`
+            clearInterval(interval)
+        }, 400)
     }
 }

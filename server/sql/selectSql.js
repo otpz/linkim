@@ -11,4 +11,14 @@ const selectUser = async (email, strEmail) => {
     }
 }
 
-module.exports = selectUser
+const selectUserLinks = async (userId) => {
+    const query = `select * from Links where UserId = ${userId}`
+    try {
+        const result = await sql.query(query)
+        return result.recordset
+    } catch (error) {
+        return error
+    }
+}
+
+module.exports = {selectUser, selectUserLinks}

@@ -23,9 +23,9 @@
 
         <div class="user-links">
             <ul class="list">
-                <li id="1">
-                    <a href="">LinkedIn</a>
-                </li>
+                <% for(let i = 0; i < user.Links.length; i++) {%>
+                    <li class="mt-2" id="<%=i%>"><a target="_blank" href="<%=user.Links[i].LinkUrl%>"><%= user.Links[i].Title %></a></li>
+                <% } %>
             </ul>
         </div>
 

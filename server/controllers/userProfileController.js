@@ -1,13 +1,19 @@
-const selectUser = require('../sql/selectSql')
+const {selectUser, selectUserLinks} = require('../sql/selectSql')
 
 const userProfileController = async (req, res) => {
 
     const urlUserName = req.params.username.slice(1)
 
     const user = await selectUser(urlUserName, "UserName")
+    
 
     if (user){
+        const userLinks = await selectUserLinks(user.Id)
 
+        user.Links = userLinks ? userLinks : []
+
+        console.log(user.Links)
+        
         const date = new Date(user.JoinDate);
         const options = { month: 'long', day: 'numeric' };
         const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(date);

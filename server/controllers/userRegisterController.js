@@ -1,6 +1,6 @@
 
 const {insertUser} = require('../sql/insertSql')
-const selectUser = require('../sql/selectSql')
+const {selectUser} = require('../sql/selectSql')
 const {hashPassword} = require('../helpers/auth')
 
 // register endpoint

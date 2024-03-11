@@ -1,4 +1,4 @@
-const selectUser = require('../sql/selectSql')
+const {selectUser} = require('../sql/selectSql')
 const editUser = require('../sql/setSql')
 
 const userSettingsController = async (req, res) => {
