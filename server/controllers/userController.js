@@ -1,0 +1,217 @@
+const {insertLink} = require('../sql/insertSql')
+const deleteUserLink = require('../sql/deleteSql')
+const {selectUser, selectUserLinks} = require('../sql/selectSql')
+const {comparePassword, hashPassword} = require('../helpers/auth')
+const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv').config()
+const editUser = require('../sql/setSql')
+
+class UserController {
+
+    async deneme(req, res){ 
+        res.json({message: "Başarılı"})
+    }
+
+    async addLinkController(req, res){
+
+        const {title, link} = req.body
+    
+        const id = req.session.user ? req.session.user.Id : null
+    
+        if (id){
+            if (!title || !link){
+                return res.json({error: 'Lütfen bir başlık ve URL adresi girin.'})
+            }
+            
+            const result = await insertLink(id, title, link)
+        
+            if (result.rowsAffected[0] === 1){
+                return res.json({message: "URL Adresi başarıyla eklendi."})
+            } else {
+                return res.json({error: "Bir hata oluştu."})
+            }
+        } else {
+            return res.json({error: "Lütfen giriş yapın."})
+        }
+    }
+
+    async deleteLinkController(req, res){
+        const id = req.params.id
+        const result = await deleteUserLink(id)
+    
+        if (result.rowsAffected[0] === 1){
+            res.json({message: "Link Silindi."})
+        } else {
+            res.json({error: "Link Silinemedi."})
+        }
+    }
+
+    async loginController(req, res){
+        const {email, password} = req.body
+    
+        const user = await selectUser(email, "Email")
+    
+        if (user === undefined){
+            return res.json({undefined: "Kullanıcı bulunamadı."})
+        }
+    
+        const comparedPassword = await comparePassword(password, user.Password)
+    
+        if (!comparedPassword){
+            return res.json({passwordError: "Şifre eşleşmiyor."})
+        } else {
+    
+            const date = new Date(user.JoinDate);
+            const options = { month: 'long', day: 'numeric' };
+            const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(date);
+    
+            // Session
+            req.session.user = {
+                Id: user.Id,
+                Email: user.Email,
+                Name: user.Name,
+                Surname: user.Surname,
+                UserName: user.UserName,
+                Biography: user.Biography,
+                JoinDate: formattedDate,
+            }
+            req.session.auth = true
+    
+            return res.json({message: "Giriş başarılı.", userName: user.UserName})
+        }
+    }
+
+    logoutController(req, res){
+        req.session.destroy((err) => {
+          if (err) {
+              console.log(err)
+          }
+          const interval = setInterval(() => {
+            res.redirect('/')
+            clearInterval(interval)
+          }, 500)
+        })
+    }
+
+    async profileController(req, res){
+
+        const urlUserName = req.params.username.slice(1)
+    
+        const user = await selectUser(urlUserName, "UserName")
+        
+        if (user === undefined){
+            res.render('error')
+            return;
+        }
+    
+        const userLinks = await selectUserLinks(user.Id, "UserId")
+    
+        user.Links = userLinks ? userLinks : []
+    
+        const date = new Date(user.JoinDate);
+        const options = { month: 'long', day: 'numeric' };
+        const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(date);
+    
+        const sessionUserName = req.session.user ? req.session.user.UserName : null 
+        
+        user.JoinDate = formattedDate
+    
+        if (urlUserName === sessionUserName){
+            if (req.session.auth === true){
+                res.render(`profile`, {user})
+            } else {
+                res.redirect('/login')
+                res.render('login', {authError: "Lütfen giriş yapınız."})
+                return;
+            }
+        } else{
+            res.render(`profile`, {user})
+        }
+    } 
+
+    async registerController(req, res){
+        const {name, surname, username, email, password} = req.body
+        
+        try {
+            
+            const user = await selectUser(email, "Email")
+    
+            if (user){
+                if (user.UserName === username){
+                    return res.json({error: "Bu kullanıcı adı zaten kullanımda."})
+                } else if (user.Email === email){
+                    return res.json({error: "Bu email zaten kullanımda."})
+                }
+            }
+    
+            const hashedPassword = await hashPassword(password)
+    
+            const result = await insertUser(name, surname, username, email, hashedPassword)
+    
+            if (result.name === "RequestError"){
+                return res.json({error: "RequestError"})
+            }
+    
+            return res.json({message: "Kayıt başarıyla oluşturuldu"})
+    
+        } catch (error) {
+            console.log(error)
+            return res.json({error: error})        
+        }
+    }
+
+    async settingsController(req, res){
+        const currentEmail = req.session.user.Email
+        const currentUserName = req.session.user.UserName
+    
+        const userBody = req.body
+    
+        const existEmail = await selectUser(userBody.email, 'Email')
+        const existUserName = await selectUser(userBody.username, 'UserName')
+    
+        if (existEmail && existEmail.Email && existEmail.Email !== currentEmail){
+            return res.json({emailError: "Bu email adresi zaten kullanılıyor."})
+        } else if (existUserName && existUserName.UserName && existUserName.UserName !== currentUserName){
+            return res.json({userNameError: "Bu kullanıcı adı zaten kullanılıyor."})
+        } else {
+            const result = await editUser(userBody, currentEmail)
+            if (result.rowsAffected[0] === 0){
+                return res.json({error: "Bir hata oluştu. Lütfen tekrar deneyin."})
+            }else {
+                
+                const user = await selectUser(userBody.email, "Email")
+    
+                const date = new Date(user.JoinDate);
+                const options = { month: 'long', day: 'numeric' };
+                const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(date);
+    
+                req.session.user = {
+                    Id: user.Id,
+                    Email: user.Email,
+                    Name: user.Name,
+                    Surname: user.Surname,
+                    UserName: user.UserName,
+                    Biography: user.Biography,
+                    JoinDate: formattedDate,
+                }
+                
+                return res.json({message: "Profiliniz başarıyla güncellendi.", username: user.UserName})
+            }
+        }
+    }
+
+    async getSettingsController(req, res){
+    
+        const auth = req.session.auth
+    
+        if (auth){
+            const user = req.session.user
+            res.render('settings', user)
+        } else{
+            res.render('error')
+        }
+    }
+
+}
+
+module.exports = new UserController()

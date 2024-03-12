@@ -5,14 +5,7 @@ const dotenv = require('dotenv').config()
 const path = require('path')
 
 // controllers
-const userDeleteLinkController = require('../controllers/userDeleteLinkController')
-const userLoginController = require('../controllers/userLoginController')
-const userRegisterController = require('../controllers/userRegisterController') 
-const userProfileController = require('../controllers/userProfileController') 
-const userLogoutController = require('../controllers/userLogoutController')
-const {userSettingsController, userGetSettingsController} = require('../controllers/userSettingsController')
-const userAddLinkController = require('../controllers/userAddLinkController')
-
+const userController = require('../controllers/userController')
 
 // middleware 
 router.use(
@@ -22,15 +15,18 @@ router.use(
     })
 )
 
+router.get('/deneme', userController.deneme)
+
+
 //DELETE routes
-router.delete('/deleteLink/:id', userDeleteLinkController)
+router.delete('/deleteLink/:id', userController.deleteLinkController)
 
 
 //POST routes
-router.post("/register", userRegisterController)
-router.post("/login", userLoginController)
-router.post("/settings", userSettingsController)
-router.post('/addlink', userAddLinkController)
+router.post("/register", userController.registerController)
+router.post("/login", userController.loginController)
+router.post("/settings", userController.settingsController)
+router.post('/addlink', userController.addLinkController)
 
 //GET routes
 router.get('/', (req, res) => {
@@ -53,11 +49,11 @@ router.get('/forgot', (req, res) => {
   res.render('forgot')
 })
 
-router.get('/settings', userGetSettingsController)
+router.get('/settings', userController.getSettingsController)
 
-router.get('/logout', userLogoutController)
+router.get('/logout', userController.logoutController)
 
-router.get('/:username', userProfileController)
+router.get('/:username', userController.profileController)
 
 // router.get('*' , (req, res) => {
 //   res.render('error')
