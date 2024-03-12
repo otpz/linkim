@@ -2,15 +2,19 @@ const {insertLink} = require('../sql/insertSql')
 const deleteUserLink = require('../sql/deleteSql')
 const {selectUser, selectUserLinks} = require('../sql/selectSql')
 const {comparePassword, hashPassword} = require('../helpers/auth')
+const formatDate = require("../helpers/formatDate")
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv').config()
 const editUser = require('../sql/setSql')
 
+
 class UserController {
 
-    async deneme(req, res){ 
-        res.json({message: "Başarılı"})
-    }
+    // formatDate(date){
+    //     const newDate = new Date(date)
+    //     const options = { month: 'long', day: 'numeric'}
+    //     return new Intl.DateTimeFormat('tr-TR', options).format(newDate);
+    // }
 
     async addLinkController(req, res){
 
@@ -61,10 +65,7 @@ class UserController {
             return res.json({passwordError: "Şifre eşleşmiyor."})
         } else {
     
-            const date = new Date(user.JoinDate);
-            const options = { month: 'long', day: 'numeric' };
-            const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(date);
-    
+
             // Session
             req.session.user = {
                 Id: user.Id,
@@ -73,7 +74,7 @@ class UserController {
                 Surname: user.Surname,
                 UserName: user.UserName,
                 Biography: user.Biography,
-                JoinDate: formattedDate,
+                JoinDate: formatDate(user.JoinDate),
             }
             req.session.auth = true
     
@@ -108,13 +109,11 @@ class UserController {
     
         user.Links = userLinks ? userLinks : []
     
-        const date = new Date(user.JoinDate);
-        const options = { month: 'long', day: 'numeric' };
-        const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(date);
+        
     
         const sessionUserName = req.session.user ? req.session.user.UserName : null 
         
-        user.JoinDate = formattedDate
+        user.JoinDate = formatDate(user.JoinDate);
     
         if (urlUserName === sessionUserName){
             if (req.session.auth === true){
@@ -181,9 +180,6 @@ class UserController {
                 
                 const user = await selectUser(userBody.email, "Email")
     
-                const date = new Date(user.JoinDate);
-                const options = { month: 'long', day: 'numeric' };
-                const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(date);
     
                 req.session.user = {
                     Id: user.Id,
@@ -192,7 +188,7 @@ class UserController {
                     Surname: user.Surname,
                     UserName: user.UserName,
                     Biography: user.Biography,
-                    JoinDate: formattedDate,
+                    JoinDate: formatDate(user.JoinDate),
                 }
                 
                 return res.json({message: "Profiliniz başarıyla güncellendi.", username: user.UserName})
@@ -211,6 +207,8 @@ class UserController {
             res.render('error')
         }
     }
+
+    
 
 }
 

@@ -11,12 +11,9 @@ const userController = require('../controllers/userController')
 router.use(
     cors({
         credentials: true,
-        origin: process.env.CORS_ORIGIN_URL 
+        origin: process.env.CORS_ORIGIN_URL
     })
 )
-
-router.get('/deneme', userController.deneme)
-
 
 //DELETE routes
 router.delete('/deleteLink/:id', userController.deleteLinkController)
