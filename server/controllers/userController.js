@@ -1,6 +1,6 @@
 const {insertLink, insertUser} = require('../sql/insertSql')
 const deleteUserLink = require('../sql/deleteSql')
-const {selectUser, selectUserLinks} = require('../sql/selectSql')
+const {selectUser, selectUserLinks, selectPages} = require('../sql/selectSql')
 const {comparePassword, hashPassword} = require('../helpers/auth')
 const formatDate = require("../helpers/formatDate")
 const jwt = require('jsonwebtoken')
@@ -215,8 +215,14 @@ class UserController {
         }
     }
 
-    
-
+    async getAboutPageController(req, res){
+        const result = await selectPages("hakkimizda")
+        if (result){
+            return res.render("about", {result})
+        } else {
+            return res.render(error)
+        }
+    } 
 }
 
 module.exports = new UserController()

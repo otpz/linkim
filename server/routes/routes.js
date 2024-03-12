@@ -18,7 +18,6 @@ router.use(
 //DELETE routes
 router.delete('/deleteLink/:id', userController.deleteLinkController)
 
-
 //POST routes
 router.post("/register", userController.registerController)
 router.post("/login", userController.loginController)
@@ -34,9 +33,7 @@ router.get('/register', (req, res) => {
     res.render('register')
 })
 
-router.get('/about', (req, res) => {
-  res.render('about')
-})
+router.get('/about', userController.getAboutPageController)
 
 router.get('/login', (req, res) => {
   res.render('login')

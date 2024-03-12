@@ -22,4 +22,14 @@ const selectUserLinks = async (id, queryParam) => {
     }
 }
 
-module.exports = {selectUser, selectUserLinks}
+const selectPages = async (pageSlug) => {
+    const query = `select * from Pages where Slug = '${pageSlug}'` 
+    try {
+        const result = await sql.query(query)
+        return result.recordset[0]
+    } catch (error) {
+        return error
+    }
+}
+
+module.exports = {selectUser, selectUserLinks, selectPages}
