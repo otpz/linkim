@@ -138,6 +138,8 @@ const addLink = async (event) => {
 
     if (result.error){
         toastr.error(result.error)
+    } else if (result.urlError){
+        toastr.error(result.urlError)
     } else {
         toastr.success(result.message)
         event.target.title.value = ""

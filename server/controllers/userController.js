@@ -1,4 +1,4 @@
-const {insertLink} = require('../sql/insertSql')
+const {insertLink, insertUser} = require('../sql/insertSql')
 const deleteUserLink = require('../sql/deleteSql')
 const {selectUser, selectUserLinks} = require('../sql/selectSql')
 const {comparePassword, hashPassword} = require('../helpers/auth')
@@ -19,17 +19,23 @@ class UserController {
     async addLinkController(req, res){
 
         const {title, link} = req.body
-    
+        
+        const urlExpression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+
+        const urlRegex = new RegExp(urlExpression)
+
         const id = req.session.user ? req.session.user.Id : null
     
         if (id){
             if (!title || !link){
                 return res.json({error: 'Lütfen bir başlık ve URL adresi girin.'})
-            }
+            } else if (!link.match(urlRegex)){
+                return res.json({urlError: 'Lütfen doğru bir URL adresi giriniz.'})
+            }   
             
             const result = await insertLink(id, title, link)
         
-            if (result.rowsAffected[0] === 1){
+            if (result.message){
                 return res.json({message: "URL Adresi başarıyla eklendi."})
             } else {
                 return res.json({error: "Bir hata oluştu."})
@@ -43,7 +49,7 @@ class UserController {
         const id = req.params.id
         const result = await deleteUserLink(id)
     
-        if (result.rowsAffected[0] === 1){
+        if (result.message){
             res.json({message: "Link Silindi."})
         } else {
             res.json({error: "Link Silinemedi."})
@@ -102,30 +108,16 @@ class UserController {
         
         if (user === undefined){
             res.render('error')
-            return;
+            return
         }
     
         const userLinks = await selectUserLinks(user.Id, "UserId")
     
         user.Links = userLinks ? userLinks : []
+
+        user.JoinDate = formatDate(user.JoinDate)
     
-        
-    
-        const sessionUserName = req.session.user ? req.session.user.UserName : null 
-        
-        user.JoinDate = formatDate(user.JoinDate);
-    
-        if (urlUserName === sessionUserName){
-            if (req.session.auth === true){
-                res.render(`profile`, {user})
-            } else {
-                res.redirect('/login')
-                res.render('login', {authError: "Lütfen giriş yapınız."})
-                return;
-            }
-        } else{
-            res.render(`profile`, {user})
-        }
+        res.render('profile', {user})
     } 
 
     async registerController(req, res){
@@ -174,12 +166,10 @@ class UserController {
             return res.json({userNameError: "Bu kullanıcı adı zaten kullanılıyor."})
         } else {
             const result = await editUser(userBody, currentEmail)
-            if (result.rowsAffected[0] === 0){
+            if (result.error){
                 return res.json({error: "Bir hata oluştu. Lütfen tekrar deneyin."})
             }else {
-                
                 const user = await selectUser(userBody.email, "Email")
-    
     
                 req.session.user = {
                     Id: user.Id,
