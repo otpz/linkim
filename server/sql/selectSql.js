@@ -12,8 +12,23 @@ const selectUser = async (email, strEmail) => {
 }
 
 // queryParam = "UserId"
-const selectUserLinks = async (id, queryParam) => {
-    const query = `select * from Links where ${queryParam} = ${id}`
+const selectExistLinks = async (userId, queryParam, id, Id) => {
+
+    const query = `select count (*) from Links where ${queryParam} = '${userId}' and ${Id} = ${id}`
+
+    try {
+        const result = await sql.query(query)
+        return result.recordset[0]
+    } catch (error) {
+        return error
+    }
+}
+
+// queryParam = "UserId"
+const selectUserLinks = async (userId, queryParam) => {
+
+    const query = `select * from Links where ${queryParam} = ${userId}`
+    
     try {
         const result = await sql.query(query)
         return result.recordset
@@ -21,6 +36,7 @@ const selectUserLinks = async (id, queryParam) => {
         return error
     }
 }
+
 
 const selectPages = async (pageSlug) => {
     const query = `select * from Pages where Slug = '${pageSlug}'` 
@@ -32,4 +48,4 @@ const selectPages = async (pageSlug) => {
     }
 }
 
-module.exports = {selectUser, selectUserLinks, selectPages}
+module.exports = {selectUser, selectUserLinks, selectPages, selectExistLinks}

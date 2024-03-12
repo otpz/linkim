@@ -6,6 +6,9 @@ const path = require('path')
 
 // controllers
 const userController = require('../controllers/userController')
+const pageController = require('../controllers/pageController') 
+const linkController = require('../controllers/linkController')
+const authController = require('../controllers/authController')
 
 // middleware 
 router.use(
@@ -16,13 +19,13 @@ router.use(
 )
 
 //DELETE routes
-router.delete('/deleteLink/:id', userController.deleteLinkController)
+router.delete('/deleteLink/:id', linkController.deleteLinkController)
 
 //POST routes
-router.post("/register", userController.registerController)
-router.post("/login", userController.loginController)
+router.post("/register", authController.registerController)
+router.post("/login", authController.loginController)
 router.post("/settings", userController.settingsController)
-router.post('/addlink', userController.addLinkController)
+router.post('/addlink', linkController.addLinkController)
 
 //GET routes
 router.get('/', (req, res) => {
@@ -33,7 +36,7 @@ router.get('/register', (req, res) => {
     res.render('register')
 })
 
-router.get('/about', userController.getAboutPageController)
+router.get('/page/:slug', pageController.getPageController)
 
 router.get('/login', (req, res) => {
   res.render('login')
@@ -45,7 +48,7 @@ router.get('/forgot', (req, res) => {
 
 router.get('/settings', userController.getSettingsController)
 
-router.get('/logout', userController.logoutController)
+router.get('/logout', authController.logoutController)
 
 router.get('/:username', userController.profileController)
 
