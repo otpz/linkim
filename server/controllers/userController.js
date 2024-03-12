@@ -47,12 +47,29 @@ class UserController {
 
     async deleteLinkController(req, res){
         const id = req.params.id
+
+        const userId = req.session.user.Id // giriş yapan kullanıcı id'si
+
+        const userLinks = await selectUserLinks(userId, "UserId")
+
+        let match = false
+
+        userLinks.forEach(links => {
+            if (links.Id == id){
+                match = true
+            }
+        })
+
+        if (!match){
+            return res.json({error: "Link Bulunamadı."})
+        }
+
         const result = await deleteUserLink(id)
-    
+
         if (result.message){
-            res.json({message: "Link Silindi."})
+            return res.json({message: "Link Silindi."})
         } else {
-            res.json({error: "Link Silinemedi."})
+            return res.json({error: "Link Silinemedi."})
         }
     }
 
