@@ -2,6 +2,7 @@ const {insertUser} = require('../sql/insertSql')
 const {selectUser} = require('../sql/selectSql')
 const {comparePassword, hashPassword} = require('../helpers/auth')
 const formatDate = require("../helpers/formatDate")
+const {schema} = require("../helpers/validation")
 
 class AuthController {
 
@@ -9,14 +10,24 @@ class AuthController {
         const {name, surname, username, email, password} = req.body
         
         try {
-            
-            const user = await selectUser(email, "Email")
-    
-            if (user){
-                if (user.UserName === username){
-                    return res.json({error: "Bu kullanıcı adı zaten kullanımda."})
-                } else if (user.Email === email){
-                    return res.json({error: "Bu email zaten kullanımda."})
+            await schema.validate(req.body, {abortEarly: false})
+
+            const userByEmail = await selectUser(email, "Email")
+            const userByUserName = await selectUser(username, "UserName")
+
+            if (userByEmail){
+                if (userByEmail.UserName === username){
+                    return res.json({errorSql: "Bu kullanıcı adı zaten kullanımda."})
+                } else if (userByEmail.Email === email){
+                    return res.json({errorSql: "Bu email zaten kullanımda."})
+                }
+            }
+
+            if (userByUserName){
+                if (userByUserName.UserName === username){
+                    return res.json({errorSql: "Bu kullanıcı adı zaten kullanımda."})
+                } else if (userByUserName.Email === email){
+                    return res.json({errorSql: "Bu email zaten kullanımda."})
                 }
             }
     
@@ -30,9 +41,9 @@ class AuthController {
     
             return res.json({message: "Kayıt başarıyla oluşturuldu"})
     
-        } catch (error) {
-            console.log(error)
-            return res.json({error: error})        
+        } catch (errors) {
+            const errorMessages = errors.inner.map(error => error.message)
+            return res.json({error: errorMessages})        
         }
     }
 

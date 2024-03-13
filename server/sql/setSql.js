@@ -11,9 +11,25 @@ const editUser = async (user, email) => {
             return {error: "error"}
         }
     } catch (error) {
+        console.log("request error ->", error)
+        return error
+    }
+}
+
+const editPassword = async (email, password) => {
+    const query = `UPDATE Users Set Password = '${password}' WHERE Email = '${email}'`
+
+    try {
+        const result = await sql.query(query)
+        if (result.rowsAffected[0]){
+            return {message: "success"}
+        } else {
+            return {error: "error"}
+        }
+    } catch (error) {
         console.log(error)
         return error
     }
 }
 
-module.exports = editUser
+module.exports = {editUser, editPassword}

@@ -26,6 +26,7 @@ router.post("/register", authController.registerController)
 router.post("/login", authController.loginController)
 router.post("/settings", userController.settingsController)
 router.post('/addlink', linkController.addLinkController)
+router.post("/settings/resetpassword", userController.resetPasswordController)
 
 //GET routes
 router.get('/', (req, res) => {

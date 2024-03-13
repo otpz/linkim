@@ -57,7 +57,11 @@ const register = async (event) => {
     const result = await data.json()
 
     if (result.error){
-        toastr.error(result.error);
+        result.error.forEach(element => {
+            toastr.error(element)
+        })
+    } else if (result.errorSql){ 
+        toastr.error(result.errorSql)
     } else {
         toastr.success(result.message);
         const redirectInterval = setInterval(() => {
@@ -113,8 +117,12 @@ const setProfileInfo = async (event) => {
         toastr.error(result.emailError)
     } else if (result.userNameError){
         toastr.error(result.userNameError)
-    } else {
-        toastr.error(result.error)
+    } else if (result.error){
+        result.error.forEach(element => {
+            toastr.error(element)
+        })
+    } else if (result.errorSql){
+        toastr.error(result.errorSql)
     }
 }
 
@@ -149,4 +157,50 @@ const addLink = async (event) => {
             clearInterval(interval)
         }, 500)
     }
+}
+
+const resetPassword = async (event) => {
+
+    event.preventDefault()
+
+    const data = await fetch(`${BACKEND_URL}/settings/resetpassword`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            currentPassword: event.target.currentPassword.value,
+            password: event.target.password.value,
+            confirmPassword: event.target.confirmPassword.value,
+        })
+    })
+
+    const result = await data.json()
+
+    console.log("result -> ", result)
+
+    if (result.message){
+        toastr.success(result.message)
+        event.target.currentPassword.value = ""
+        event.target.password.value = ""
+        event.target.confirmPassword.value = ""
+
+        const interval = setInterval(() => {
+            window.location.reload()
+            clearInterval(interval)
+        }, 500)
+        
+    } else if (result.passwordError){
+        toastr.error(result.passwordError)
+    } else if (result.passwordMatchError){
+        toastr.error(result.passwordMatchError)
+    } else if (result.errorSql){
+        toastr.error(result.errorSql)
+    } else {
+        result.error.forEach(element => {
+            toastr.error(element)
+        })
+    }
+
 }

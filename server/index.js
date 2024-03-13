@@ -1,9 +1,9 @@
 const express = require('express')
 const dotenv = require('dotenv').config()
 const sql = require('mssql/msnodesqlv8')
-const session = require('express-session');
+const session = require('express-session')
 const cookieParser = require('cookie-parser')
-const ejs = require('ejs');
+const ejs = require('ejs')
 const path = require('path')
 
 const app = express()
@@ -45,6 +45,9 @@ app.use(session({
     secure: false,
   },
 }))
+
+
+
 
 const setUserLocals = (req, res, next) => {
   res.locals.username = req.session.user ? req.session.user.UserName : null 
