@@ -17,7 +17,6 @@ const login = async (event) => {
 
     const result = await data.json()
 
-    console.log("result", result)
     toastr.options.positionClass = "toast-top-center"
 
     if (result.undefined){
@@ -26,13 +25,18 @@ const login = async (event) => {
         toastr.error(result.passwordError)
     } else if (result.authError){
         toastr.error(result.authError)
-    } else{
-        console.log("redirected:", result.userName)
+    } else if (result.message){
         toastr.success(result.message)
         const redirectInterval = setInterval(() => {
             window.location.href = `/@${result.userName}`
             clearInterval(redirectInterval)
         }, 1500)
+    } else if (result.errorValidation){
+        result.errorValidation.forEach(element => {
+            toastr.error(element)
+        })
+    } else {
+        toastr.error(result.error)
     }
 }
 
@@ -56,12 +60,14 @@ const register = async (event) => {
 
     const result = await data.json()
 
-    if (result.error){
-        result.error.forEach(element => {
+    if (result.errorValidation){
+        result.errorValidation.forEach(element => {
             toastr.error(element)
         })
     } else if (result.errorSql){ 
         toastr.error(result.errorSql)
+    } else if (result.error){
+        toastr.error(result.error)  
     } else {
         toastr.success(result.message);
         const redirectInterval = setInterval(() => {
@@ -117,12 +123,14 @@ const setProfileInfo = async (event) => {
         toastr.error(result.emailError)
     } else if (result.userNameError){
         toastr.error(result.userNameError)
-    } else if (result.error){
-        result.error.forEach(element => {
+    } else if (result.errorValidation){
+        result.errorValidation.forEach(element => {
             toastr.error(element)
         })
     } else if (result.errorSql){
         toastr.error(result.errorSql)
+    } else{
+        toastr.error(result.error)
     }
 }
 
@@ -145,13 +153,18 @@ const addLink = async (event) => {
     const result = await data.json()
 
     if (result.error){
+        console.log(result.error)
         toastr.error(result.error)
-    } else if (result.urlError){
-        toastr.error(result.urlError)
-    } else {
+        const interval = setInterval(() => {
+            window.location.reload()
+            clearInterval(interval)
+        }, 250)
+    } else if (result.errorValidation){
+        result.errorValidation.forEach(element => {
+            toastr.error(element)
+        })
+    }else {
         toastr.success(result.message)
-        event.target.title.value = ""
-        event.target.title.value = ""
         const interval = setInterval(() => {
             window.location.reload()
             clearInterval(interval)
@@ -185,22 +198,22 @@ const resetPassword = async (event) => {
         event.target.currentPassword.value = ""
         event.target.password.value = ""
         event.target.confirmPassword.value = ""
-
         const interval = setInterval(() => {
             window.location.reload()
             clearInterval(interval)
         }, 500)
-        
     } else if (result.passwordError){
         toastr.error(result.passwordError)
     } else if (result.passwordMatchError){
         toastr.error(result.passwordMatchError)
     } else if (result.errorSql){
         toastr.error(result.errorSql)
-    } else {
-        result.error.forEach(element => {
+    } else if (result.errorValidation){
+        result.errorValidation.forEach(element => {
             toastr.error(element)
         })
+    } else{
+        toastr.error(result.error)
     }
 
 }

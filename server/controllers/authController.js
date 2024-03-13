@@ -2,7 +2,7 @@ const {insertUser} = require('../sql/insertSql')
 const {selectUser} = require('../sql/selectSql')
 const {comparePassword, hashPassword} = require('../helpers/auth')
 const formatDate = require("../helpers/formatDate")
-const {schema} = require("../helpers/validation")
+const {schemaRegister, schemaLogin} = require("../helpers/validation")
 
 class AuthController {
 
@@ -10,7 +10,7 @@ class AuthController {
         const {name, surname, username, email, password} = req.body
         
         try {
-            await schema.validate(req.body, {abortEarly: false})
+            await schemaRegister.validate(req.body, {abortEarly: false})
 
             const userByEmail = await selectUser(email, "Email")
             const userByUserName = await selectUser(username, "UserName")
@@ -42,40 +42,47 @@ class AuthController {
             return res.json({message: "Kayıt başarıyla oluşturuldu"})
     
         } catch (errors) {
-            const errorMessages = errors.inner.map(error => error.message)
-            return res.json({error: errorMessages})        
+            if (errors.name === "ValidationError"){
+                const errorMessages = errors.inner.map(error => error.message)
+                return res.json({errorValidation: errorMessages})        
+            }
+            return res.json({error: errors})
         }
     }
 
     async loginController(req, res){
         const {email, password} = req.body
-    
-        const user = await selectUser(email, "Email")
-    
-        if (user === undefined){
-            return res.json({undefined: "Kullanıcı bulunamadı."})
-        }
-    
-        const comparedPassword = await comparePassword(password, user.Password)
-    
-        if (!comparedPassword){
-            return res.json({passwordError: "Şifre eşleşmiyor."})
-        } else {
-    
 
-            // Session
-            req.session.user = {
-                Id: user.Id,
-                Email: user.Email,
-                Name: user.Name,
-                Surname: user.Surname,
-                UserName: user.UserName,
-                Biography: user.Biography,
-                JoinDate: formatDate(user.JoinDate),
+        try {
+            await schemaLogin.validate(req.body, {abortEarly: false})
+            const user = await selectUser(email, "Email")
+            if (user === undefined){
+                return res.json({undefined: "Kullanıcı bulunamadı."})
             }
-            req.session.auth = true
-    
-            return res.json({message: "Giriş başarılı.", userName: user.UserName})
+            const comparedPassword = await comparePassword(password, user.Password)
+            if (!comparedPassword){
+                return res.json({passwordError: "Şifre eşleşmiyor."})
+            } else {
+                // Session
+                req.session.user = {
+                    Id: user.Id,
+                    Email: user.Email,
+                    Name: user.Name,
+                    Surname: user.Surname,
+                    UserName: user.UserName,
+                    Biography: user.Biography,
+                    JoinDate: formatDate(user.JoinDate),
+                }
+                req.session.auth = true
+        
+                return res.json({message: "Giriş başarılı.", userName: user.UserName})
+            }
+        } catch (errors) {
+            if (errors.name === "ValidationError"){
+                const errorMessages = errors.inner.map(error => error.message)
+                return res.json({errorValidation: errorMessages})        
+            }
+            return res.json({error: errors})
         }
     }
 

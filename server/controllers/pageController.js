@@ -8,7 +8,7 @@ class PageController{
 
         const result = await selectPages(page)
         if (result){
-            return res.render(page, {result})
+            return res.render("page", {result})
         } else {
             return res.render("error")
         }

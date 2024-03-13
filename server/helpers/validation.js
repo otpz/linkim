@@ -1,6 +1,6 @@
 const yup = require('yup')
 
-const schema = yup.object().shape({
+const schemaRegister = yup.object().shape({
     name: yup.string("Rakam kullanmayınız.").required("İsim alanı zorunludur.").min(2, "İsim en az 2 karakter olmalıdır."),
     surname: yup.string("Rakam kullanmayınız.").required("Soyisim alanı zorunludur.").min(2, "Soyisim en az 2 karakter olmalıdır."),
     email: yup.string().email("Geçersiz email.").required("Email alanı zorunludur.").matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "Geçerli bir email adresi giriniz."),
@@ -22,4 +22,14 @@ const schemaResetPassword = yup.object().shape({
     confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Yeni şifreler uyuşmuyor.').required('Yeni şifreyi tekrar giriniz.')
 })
 
-module.exports = {schema, schemaSettings, schemaResetPassword}
+const schemaLinkUrl = yup.object().shape({
+    title: yup.string().required("Başlık zorunludur.").min(2, "Başlık en az 2 karakterden oluşmalıdır.").max(200, "Başlık en fazla 200 karakterden içerebilir."),
+    link: yup.string().url("URL Doğru bir formatta olmalıdır.").required("URL adresi zorunludur.")
+})
+
+const schemaLogin = yup.object().shape({
+    email: yup.string().email("Geçersiz email.").required("Email alanı zorunludur.").matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "Geçerli bir email adresi giriniz."),
+    password: yup.string().required("Şifre alanı gereklidir.").min(8, "Geçerli bir şifre giriniz.")
+})
+
+module.exports = {schemaRegister, schemaSettings, schemaResetPassword, schemaLinkUrl, schemaLogin}

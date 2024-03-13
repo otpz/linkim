@@ -59,8 +59,11 @@ class UserController {
                 }
             }
         } catch (errors) {
-            const errorMessages = errors.inner.map(error => error.message)
-            return res.json({error: errorMessages}) 
+            if (errors.name === "ValidationError"){
+                const errorMessages = errors.inner.map(error => error.message)
+                return res.json({errorValidation: errorMessages})        
+            }
+            return res.json({error: errors})
         }
     }
 
@@ -89,8 +92,11 @@ class UserController {
                 return res.json({message: "Şifre başarıyla değiştirildi."})
             }
         } catch (errors) {
-            const errorMessages = errors.inner.map(error => error.message)
-            return res.json({error: errorMessages})
+            if (errors.name === "ValidationError"){
+                const errorMessages = errors.inner.map(error => error.message)
+                return res.json({errorValidation: errorMessages})        
+            }
+            return res.json({error: errors})
         }
     }
 
