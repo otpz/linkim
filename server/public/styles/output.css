@@ -935,10 +935,6 @@ html{
   width: 36rem;
 }
 
-.w-160 {
-  width: 40rem;
-}
-
 .w-2 {
   width: 0.5rem;
 }
@@ -1161,11 +1157,6 @@ html{
   line-height: 1;
 }
 
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -1219,11 +1210,6 @@ html{
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
-}
-
-.text-gray-800 {
-  --tw-text-opacity: 1;
-  color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
 .text-green-600 {

@@ -30,7 +30,7 @@ const login = async (event) => {
         const redirectInterval = setInterval(() => {
             window.location.href = `/@${result.userName}`
             clearInterval(redirectInterval)
-        }, 1500)
+        }, 1000)
     } else if (result.errorValidation){
         result.errorValidation.forEach(element => {
             toastr.error(element)
@@ -131,6 +131,10 @@ const setProfileInfo = async (event) => {
         toastr.error(result.errorSql)
     } else{
         toastr.error(result.error)
+        const interval = setInterval(() => {
+            window.location.href = "/login"
+            clearInterval(interval)
+        }, 350)
     }
 }
 
@@ -153,12 +157,11 @@ const addLink = async (event) => {
     const result = await data.json()
 
     if (result.error){
-        console.log(result.error)
         toastr.error(result.error)
         const interval = setInterval(() => {
-            window.location.reload()
+            window.location.href = "/login"
             clearInterval(interval)
-        }, 250)
+        }, 350)
     } else if (result.errorValidation){
         result.errorValidation.forEach(element => {
             toastr.error(element)
@@ -214,6 +217,10 @@ const resetPassword = async (event) => {
         })
     } else{
         toastr.error(result.error)
+        const interval = setInterval(() => {
+            window.location.href = "/login"
+            clearInterval(interval)
+        }, 350)
     }
 
 }

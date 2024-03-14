@@ -5,6 +5,7 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const ejs = require('ejs')
 const path = require('path')
+const authMiddleware = require('./middlewares/authMiddleware')
 
 const app = express()
 
@@ -57,10 +58,12 @@ const setUserLocals = (req, res, next) => {
 }
 
 // middleware
-app.use(setUserLocals);
+app.use(setUserLocals)
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({extended: false}))
+//auth middleware
+// app.use(authMiddleware)
 
 //routes
 app.use('/', require('./routes/routes'))

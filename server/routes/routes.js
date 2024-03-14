@@ -4,6 +4,10 @@ const cors = require('cors')
 const dotenv = require('dotenv').config()
 const path = require('path')
 
+
+//middleware
+const authMiddleware = require('../middlewares/authMiddleware')
+
 // controllers
 const userController = require('../controllers/userController')
 const pageController = require('../controllers/pageController') 
@@ -19,14 +23,14 @@ router.use(
 )
 
 //DELETE routes
-router.delete('/deleteLink/:id', linkController.deleteLinkController)
+router.delete('/deleteLink/:id', authMiddleware, linkController.deleteLinkController)
 
 //POST routes
 router.post("/register", authController.registerController)
 router.post("/login", authController.loginController)
-router.post("/settings", userController.settingsController)
-router.post('/addlink', linkController.addLinkController)
-router.post("/settings/resetpassword", userController.resetPasswordController)
+router.post("/settings", authMiddleware, userController.settingsController)
+router.post('/addlink', authMiddleware, linkController.addLinkController)
+router.post("/settings/resetpassword", authMiddleware, userController.resetPasswordController)
 
 //GET routes
 router.get('/', (req, res) => {
@@ -47,7 +51,7 @@ router.get('/forgot', (req, res) => {
   res.render('forgot')
 })
 
-router.get('/settings', userController.getSettingsController)
+router.get('/settings' ,userController.getSettingsController)
 
 router.get('/logout', authController.logoutController)
 

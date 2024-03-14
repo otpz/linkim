@@ -53,9 +53,9 @@ const deleteLink = async (deleteButton, event) => {
     } else {
         toastr.error(result.error)
         const interval = setInterval(() => {
-            window.location.reload()
+            window.location.href = '/login'
             clearInterval(interval)
-        }, 250)
+        }, 350)
     }
 }
 

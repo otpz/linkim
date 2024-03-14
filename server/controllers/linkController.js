@@ -7,7 +7,7 @@ class LinkController {
     async addLinkController(req, res){
         
         const {title, link} = req.body
-        
+
         const id = req.session.user ? req.session.user.Id : null
 
         try {
@@ -37,8 +37,9 @@ class LinkController {
     async deleteLinkController(req, res){
         const id = req.params.id
 
+        const userId = req.session.user ? req.session.user.Id : null // giriş yapan kullanıcı id'si
+
         try {
-            const userId = req.session.user ? req.session.user.Id : null // giriş yapan kullanıcı id'si
 
             if (!userId){
                 res.json({error: "Lütfen Giriş Yapın."})
