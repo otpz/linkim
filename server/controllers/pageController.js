@@ -1,4 +1,5 @@
 const {selectPages} = require('../sql/selectSql')
+const nodemailer = require("nodemailer");
 
 class PageController{
 
@@ -13,6 +14,21 @@ class PageController{
             return res.render("error")
         }
     } 
+
+    //send email
+    async supportFormController(req, res){
+        const {question} = req.body
+
+        // const transporter = nodemailer.createTransport({
+        //     service: 'Gmail',
+        // })
+
+        // if (question){
+        //     res.json({message: "Sorunuz alındı."})
+        // } else {
+        //     res.json({error: "Bir hata oluştu. Daha sonra tekrar deneyiniz."})
+        // }
+    }
 }
 
 module.exports = new PageController()
