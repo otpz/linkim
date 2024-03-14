@@ -5,13 +5,13 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const ejs = require('ejs')
 const path = require('path')
-const authMiddleware = require('./middlewares/authMiddleware')
-
+const exceptionMiddleware = require('./middlewares/exceptionMiddleware')
+const userLocalMiddleware = require('./middlewares/userLocalMiddleware')
 const app = express()
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
-app.use(express.static(__dirname));
+
 
 const config = {
   server: process.env.DB_SERVER,
@@ -35,6 +35,8 @@ const connectDB = () => {
 
 connectDB()
 
+// middleware
+app.use(express.static(__dirname));
 app.use(session({
   name: 'sessionid',
   secret: process.env.SESSION_SECRET,
@@ -46,27 +48,16 @@ app.use(session({
     secure: false,
   },
 }))
-
-
-
-
-const setUserLocals = (req, res, next) => {
-  res.locals.username = req.session.user ? req.session.user.UserName : null 
-  res.locals.auth = req.session.auth === true
-  res.locals.verifiedUrl = req.session.user ? req.session.user.UserName : null
-  next()
-}
-
-// middleware
-app.use(setUserLocals)
+app.use(userLocalMiddleware)
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({extended: false}))
-//auth middleware
-// app.use(authMiddleware)
 
 //routes
 app.use('/', require('./routes/routes'))
+
+//error middleware
+app.use(exceptionMiddleware)
 
 const port = process.env.PORT
 app.listen(port, () => {

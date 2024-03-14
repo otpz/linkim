@@ -61,6 +61,7 @@ const register = async (event) => {
     const result = await data.json()
 
     if (result.errorValidation){
+        console.log("error validation app.js")
         result.errorValidation.forEach(element => {
             toastr.error(element)
         })

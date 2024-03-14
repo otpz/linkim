@@ -26,7 +26,7 @@ class UserController {
         res.render('profile', {user})
     } 
 
-    async settingsController(req, res){
+    async settingsController(req, res, next){
         const currentEmail = req.session.user.Email
         const currentUserName = req.session.user.UserName
     
@@ -59,15 +59,11 @@ class UserController {
                 }
             }
         } catch (errors) {
-            if (errors.name === "ValidationError"){
-                const errorMessages = errors.inner.map(error => error.message)
-                return res.json({errorValidation: errorMessages})        
-            }
-            return res.json({error: errors})
+            next(errors) // error middleware
         }
     }
 
-    async resetPasswordController(req, res){
+    async resetPasswordController(req, res, next){
 
         const {currentPassword, password, confirmPassword} = req.body
         const userEmail = req.session.user.Email
@@ -92,11 +88,7 @@ class UserController {
                 return res.json({message: "Şifre başarıyla değiştirildi."})
             }
         } catch (errors) {
-            if (errors.name === "ValidationError"){
-                const errorMessages = errors.inner.map(error => error.message)
-                return res.json({errorValidation: errorMessages})        
-            }
-            return res.json({error: errors})
+            next(errors) // error middleware
         }
     }
 

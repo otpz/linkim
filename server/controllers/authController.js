@@ -3,10 +3,9 @@ const {selectUser} = require('../sql/selectSql')
 const {comparePassword, hashPassword} = require('../helpers/auth')
 const formatDate = require("../helpers/formatDate")
 const {schemaRegister, schemaLogin} = require("../helpers/validation")
-
 class AuthController {
 
-    async registerController(req, res){
+    async registerController(req, res, next){
         const {name, surname, username, email, password} = req.body
         
         try {
@@ -42,15 +41,11 @@ class AuthController {
             return res.json({message: "Kayıt başarıyla oluşturuldu"})
     
         } catch (errors) {
-            if (errors.name === "ValidationError"){
-                const errorMessages = errors.inner.map(error => error.message)
-                return res.json({errorValidation: errorMessages})        
-            }
-            return res.json({error: errors})
+            next(errors) // error middleware
         }
     }
 
-    async loginController(req, res){
+    async loginController(req, res, next){
         const {email, password} = req.body
 
         try {
@@ -78,11 +73,7 @@ class AuthController {
                 return res.json({message: "Giriş başarılı.", userName: user.UserName})
             }
         } catch (errors) {
-            if (errors.name === "ValidationError"){
-                const errorMessages = errors.inner.map(error => error.message)
-                return res.json({errorValidation: errorMessages})        
-            }
-            return res.json({error: errors})
+            next(errors)
         }
     }
 

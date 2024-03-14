@@ -24,7 +24,7 @@ const schemaResetPassword = yup.object().shape({
 
 const schemaLinkUrl = yup.object().shape({
     title: yup.string().required("Başlık zorunludur.").min(2, "Başlık en az 2 karakterden oluşmalıdır.").max(200, "Başlık en fazla 200 karakterden içerebilir."),
-    link: yup.string().url("URL Doğru bir formatta olmalıdır.").required("URL adresi zorunludur.")
+    link: yup.string().url("URL doğru bir formatta olmalıdır.").required("URL adresi zorunludur.")
 })
 
 const schemaLogin = yup.object().shape({

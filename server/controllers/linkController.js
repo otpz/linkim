@@ -4,7 +4,7 @@ const {selectExistLinks} = require('../sql/selectSql')
 const {schemaLinkUrl} = require('../helpers/validation')
 class LinkController {
 
-    async addLinkController(req, res){
+    async addLinkController(req, res, next){
         
         const {title, link} = req.body
 
@@ -25,12 +25,7 @@ class LinkController {
             }
 
         } catch (errors) {
-            if (errors.name === "ValidationError"){
-                const errorMessages = errors.inner.map(error => error.message)
-                console.log(errorMessages)
-                return res.json({errorValidation: errorMessages})        
-            }
-            return res.json({error: errors})
+            next(errors) // error middleware
         }
     }
 
@@ -59,7 +54,7 @@ class LinkController {
                 return res.json({error: "Link Silinemedi."})
             }
         } catch (error) {
-            
+            console.log("delete error")
         }
     }
 
