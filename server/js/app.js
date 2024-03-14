@@ -225,3 +225,27 @@ const resetPassword = async (event) => {
     }
 
 }
+
+const support = async (event) => {
+    event.preventDefault()
+
+    const data = await fetch(`${BACKEND_URL}/support`,{
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            question: event.target.question.value,
+        }) 
+    })
+
+    const result = await data.json();
+
+    if (result.message){
+        event.target.question.value = ''
+        toastr.success(result.message)
+    } else{
+        toastr.error(result.error)
+    }
+}
