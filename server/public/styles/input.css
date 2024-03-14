@@ -27,18 +27,19 @@
     }
     
     .form-div{
-        @apply w-3/5 flex flex-col mb-3;
+        @apply w-3/5 flex flex-col mb-2;
     }
 
     .form-input{
         @apply rounded-sm p-1 px-3 border-1 border-gray-400;
     }
+
     .form-input::placeholder{
         @apply text-gray-400 text-sm;
     }
 
     .form-label{
-        @apply mb-1.5 text-xs font-medium text-gray-600;
+        @apply mb-0.5 text-xs font-medium text-gray-600;
     }
 
     .form-forget{
@@ -48,7 +49,6 @@
     .form-button{
         @apply w-3/5 rounded-sm p-2 border-1 border-gray-400 mb-3 bg-submit-button text-white text-sm;
     }
-
 
     .user-avatar{
         @apply w-20 h-20 rounded-full flex items-center justify-center border-1 border-white;
@@ -64,9 +64,11 @@
     .user-links{
         @apply w-full min-h-18 flex items-center justify-center my-4 ;
     }
+
     .user-links .list{
         @apply w-full h-full flex flex-col items-center justify-center;
     }
+    
     .user-links .list li{
         @apply w-full h-12 flex items-center bg-purple-800 text-white rounded-md cursor-pointer;
     } 

@@ -42,7 +42,7 @@ const login = async (event) => {
 
 const register = async (event) => {
     event.preventDefault()
-        
+    
     const data = await fetch(`${BACKEND_URL}/register`, {
         method: 'POST',
         headers: {
