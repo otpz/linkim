@@ -3,7 +3,7 @@ const dotenv = require('dotenv').config()
 
 class PageController{
 
-    async getPageController(req, res){
+    async   getPageController(req, res){
 
         const page = req.params.slug
 

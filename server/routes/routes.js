@@ -4,8 +4,6 @@ const cors = require('cors')
 const dotenv = require('dotenv').config()
 const path = require('path')
 
-
-
 //middleware
 const authMiddleware = require('../middlewares/authMiddleware')
 
@@ -43,7 +41,7 @@ router.get('/register', (req, res) => {
     res.render('register')
 })
 
-router.get('/page/:slug', pageController.getPageController)
+
 
 router.get('/login', (req, res) => {
   res.render('login')
@@ -58,6 +56,7 @@ router.get('/settings' ,userController.getSettingsController)
 router.get('/logout', authController.logoutController)
 
 router.get('/:username', userController.profileController)
+router.get('/page/:slug', pageController.getPageController)
 
 // router.get('*' , (req, res) => {
 //   res.render('error')

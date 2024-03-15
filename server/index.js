@@ -12,7 +12,6 @@ const app = express()
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-
 const config = {
   server: process.env.DB_SERVER,
   database: process.env.DB,
