@@ -1,4 +1,5 @@
 const {selectPages} = require('../sql/selectSql')
+const dotenv = require('dotenv').config()
 
 class PageController{
 
