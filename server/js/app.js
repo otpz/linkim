@@ -41,8 +41,7 @@ const login = async (event) => {
 }
 
 const register = async (event) => {
-    event.preventDefault()
-    
+    event.preventDefault()  
     const data = await fetch(`${BACKEND_URL}/register`, {
         method: 'POST',
         headers: {
@@ -54,7 +53,8 @@ const register = async (event) => {
             surname: event.target.surname.value,
             username: event.target.username.value,
             email: event.target.email.value,
-            password: event.target.password.value
+            password: event.target.password.value,
+            g_rechaptcha_response: event.target['g-recaptcha-response'].value
         })
     })
 
