@@ -237,6 +237,7 @@ const support = async (event) => {
         },
         body: JSON.stringify({
             question: event.target.question.value,
+            g_rechaptcha_response: event.target['g-recaptcha-response'].value
         }) 
     })
 
