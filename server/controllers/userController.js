@@ -3,12 +3,34 @@ const formatDate = require("../helpers/formatDate")
 const {editUser, editPassword} = require('../sql/setSql')
 const {schemaSettings, schemaResetPassword} = require("../helpers/validation")
 const {comparePassword, hashPassword} = require("../helpers/auth")
+const { doubleCsrf } = require("csrf-csrf")
+const dotenv = require('dotenv').config()
+
+const { invalidCsrfTokenError, generateToken, doubleCsrfProtection } = doubleCsrf({
+    getSecret: () => process.env.CSRF_SECRET,
+    cookieName: process.env.CSRF_COOKIE_NAME,
+    cookieOptions: { sameSite: false, secure: false, signed: true }, // not ideal for production, development only
+});
 
 class UserController {
+
+    csrfErrorHandler = (error, req, res, next) => {
+        if (error == invalidCsrfTokenError) {
+          res.status(403).json({
+            error: "csrf validation error",
+          })
+        } else {
+          next()
+        }
+    }
 
     async profileController(req, res){
 
         const urlUserName = req.params.username.slice(1)
+
+        const csrfToken = generateToken(req, res)
+
+        console.log(csrfToken)
 
         const user = await selectUser(urlUserName, "UserName")
 
@@ -23,7 +45,7 @@ class UserController {
 
         user.JoinDate = formatDate(user.JoinDate)
     
-        res.render('profile', {user})
+        res.render('profile', {user: user, csrfToken: csrfToken})
     } 
 
     async settingsController(req, res, next){

@@ -152,6 +152,7 @@ const addLink = async (event) => {
         body: JSON.stringify({
             title: event.target.title.value,
             link: event.target.url.value,
+            csrfToken: event.target.csrfToken.value
         })
     })
 

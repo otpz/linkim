@@ -51,8 +51,8 @@
             <button id="add-new-link" class="w-full h-10 text-center flex justify-center items-center px-4 bg-gray-700 text-white rounded-md cursor-pointer"><span class="text-xl mr-2">+</span> Yeni Ekle</button>
         <% } %>
 
-
         <form id="new-link-form" class="form mt-5 hidden opacity-0 transition-all duration-500" onsubmit="addLink(event)" action="">
+            <input type="hidden" id="csrfToken" name="csrfToken" value="<%= csrfToken %>">
             <div class="form-div w-full">
                 <label class="form-label" for="title">Başlık</label>
                 <input class="form-input py-2 px-3" type="text" placeholder="LinkedIn" name="title">

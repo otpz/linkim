@@ -5,6 +5,7 @@ const dotenv = require('dotenv').config()
 const path = require('path')
 
 
+
 //middleware
 const authMiddleware = require('../middlewares/authMiddleware')
 
@@ -29,7 +30,7 @@ router.delete('/deleteLink/:id', authMiddleware, linkController.deleteLinkContro
 router.post("/register", authController.registerController)
 router.post("/login", authController.loginController)
 router.post("/settings", authMiddleware, userController.settingsController)
-router.post('/addlink', authMiddleware, linkController.addLinkController)
+router.post('/addlink', userController.csrfErrorHandler ,authMiddleware, linkController.addLinkController)
 router.post("/settings/resetpassword", authMiddleware, userController.resetPasswordController)
 router.post("/support", pageController.supportFormController)
 

@@ -3,7 +3,6 @@ const dotenv = require('dotenv').config()
 const sql = require('mssql/msnodesqlv8')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
-const csrf = require('csrf')
 const ejs = require('ejs')
 const path = require('path')
 const exceptionMiddleware = require('./middlewares/exceptionMiddleware')
@@ -51,7 +50,7 @@ app.use(session({
 }))
 app.use(userLocalMiddleware)
 app.use(express.json())
-app.use(cookieParser())
+app.use(cookieParser(process.env.SESSION_SECRET))
 app.use(express.urlencoded({extended: false}))
 
 //routes
