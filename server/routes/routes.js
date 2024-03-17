@@ -17,7 +17,6 @@ const authController = require('../controllers/authController')
 router.use(
     cors({
         credentials: true,
-        origin: process.env.CORS_ORIGIN_URL
     })
 )
 
