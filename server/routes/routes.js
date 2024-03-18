@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const cors = require('cors')
 const dotenv = require('dotenv').config()
+const rateLimit = require('express-rate-limit')
 const path = require('path')
 
 //middleware
@@ -13,6 +14,15 @@ const userController = require('../controllers/userController')
 const pageController = require('../controllers/pageController') 
 const linkController = require('../controllers/linkController')
 const authController = require('../controllers/authController')
+
+const limiter = rateLimit({
+	windowMs: 1000 * 60, // 1 minutes
+	limit:1, // Limit each IP to 1 requests per `window` (here, per 1 minutes).
+	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+  handler: (req, res, next, options) => res.status(400).json({errorRequest: "Daha fazla istek göndermeden lütfen biraz bekleyin."}),
+	// store: ... , // Redis, Memcached, etc. See below.
+})
 
 // middleware 
 router.use(
@@ -28,7 +38,7 @@ router.delete('/deleteLink/:id', authMiddleware, linkController.deleteLinkContro
 router.post("/register", authController.registerController)
 router.post("/login", authController.loginController)
 router.post("/settings", authMiddleware, userController.settingsController)
-router.post('/addlink', authMiddleware, linkController.addLinkController)
+router.post('/addlink', limiter, authMiddleware, linkController.addLinkController)
 router.post("/settings/resetpassword", authMiddleware, userController.resetPasswordController)
 router.post("/support", pageController.supportFormController)
 

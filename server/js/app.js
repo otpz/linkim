@@ -164,6 +164,9 @@ const addLink = async (event) => {
             window.location.href = "/login"
             clearInterval(interval)
         }, 350)
+    }
+    else if (result.errorRequest){
+        toastr.error(result.errorRequest)
     } else if (result.errorValidation){
         result.errorValidation.forEach(element => {
             toastr.error(element)
