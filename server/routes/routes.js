@@ -21,7 +21,6 @@ const limiter = rateLimit({
 	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
   handler: (req, res, next, options) => res.status(400).json({errorRequest: "Daha fazla istek göndermeden lütfen biraz bekleyin."}),
-	// store: ... , // Redis, Memcached, etc. See below.
 })
 
 // middleware 
@@ -38,7 +37,10 @@ router.delete('/deleteLink/:id', authMiddleware, linkController.deleteLinkContro
 router.post("/register", authController.registerController)
 router.post("/login", authController.loginController)
 router.post("/settings", authMiddleware, userController.settingsController)
-router.post('/addlink', limiter, authMiddleware, linkController.addLinkController)
+router.post('/addlink', 
+// limiter, 
+authMiddleware, linkController.addLinkController)
+
 router.post("/settings/resetpassword", authMiddleware, userController.resetPasswordController)
 router.post("/support", pageController.supportFormController)
 

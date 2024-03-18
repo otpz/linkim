@@ -48,4 +48,15 @@ const selectPages = async (pageSlug) => {
     }
 }
 
-module.exports = {selectUser, selectUserLinks, selectPages, selectExistLinks}
+const selectLinksLastMinutes = async () => {
+    // 1 dakika içerisinde eklenen link sayısı
+    const query = `select count(*) as counter from Links where CreatedDate >= dateadd(minute, -1, getdate())`
+    try {
+        const result = await sql.query(query)
+        return result.recordset[0]
+    } catch (error) {
+        return error
+    }
+}
+
+module.exports = {selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes}

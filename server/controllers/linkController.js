@@ -1,6 +1,6 @@
 const {insertLink} = require('../sql/insertSql')
 const deleteUserLink = require('../sql/deleteSql')
-const {selectExistLinks} = require('../sql/selectSql')
+const {selectExistLinks, selectLinksLastMinutes} = require('../sql/selectSql')
 const {schemaLinkUrl} = require('../helpers/validation')
 class LinkController {
 
@@ -10,8 +10,6 @@ class LinkController {
 
         const csrfTokenHeader = req.headers["csrf-token"]
         const csrfTokenSession = req.session.csrfToken
-        
-        // console.log(`header ${csrfTokenHeader} | session ${csrfTokenSession}`)
 
         if (csrfTokenHeader !== csrfTokenSession ){
             return res.status(400).json({error: "Doğrulanmadı"})
@@ -23,6 +21,11 @@ class LinkController {
             await schemaLinkUrl.validate(req.body, {abortEarly: false})
             
             if (id){
+                const links = await selectLinksLastMinutes()
+                console.log(links.counter)
+                if (links.counter >= 5){
+                    return res.json({errorRequest: "Daha fazla istek göndermeden lütfen biraz bekleyiniz."})
+                }
                 const result = await insertLink(id, title, link)
                 if (result.message){
                     return res.json({message: "URL Adresi başarıyla eklendi."})
