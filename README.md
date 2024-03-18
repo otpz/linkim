@@ -1,3 +1,4 @@
+
 # Linkim
 
 linkim is a social media referance landing page.
@@ -44,13 +45,15 @@ That's all the tables you need to create
 ### .env File
 You need to create a .env file into server file like;
 
-*DB = database name
-*DB_SERVER = database server name
-*PORT = server port number like 3000, 5000 etc.
-*SESSION_SECRET = random text like 2832832182
-*GOOGLE_SECRET = you need to get a secret key from Google for reCAPTCHA.
-*CSRF_SECRET = random text like 23jdkq2931skd12
-*CSRF_COOKIE_NAME = x-csrf-token 
+```.env
+DB = database name
+DB_SERVER = database server name
+PORT = server port number like 3000, 5000 etc.
+SESSION_SECRET = random text like 2832832182
+GOOGLE_SECRET = you need to get a secret key from Google for reCAPTCHA.
+CSRF_SECRET = random text like 23jdkq2931skd12
+CSRF_COOKIE_NAME = x-csrf-token 
+```
 
 ### Clone the Project and Install Packages
 First, create a new file and write this command to terminal.
