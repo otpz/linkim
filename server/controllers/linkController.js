@@ -8,6 +8,15 @@ class LinkController {
         
         const {title, link} = req.body
 
+        const csrfTokenHeader = req.headers["csrf-token"]
+        const csrfTokenSession = req.session.csrfToken
+        
+        // console.log(`header ${csrfTokenHeader} | session ${csrfTokenSession}`)
+
+        if (csrfTokenHeader !== csrfTokenSession ){
+            return res.status(400).json({error: "Doğrulanmadı"})
+        }
+
         const id = req.session.user ? req.session.user.Id : null
 
         try {

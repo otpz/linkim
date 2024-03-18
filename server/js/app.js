@@ -146,7 +146,7 @@ const addLink = async (event) => {
     const data = await fetch(`${BACKEND_URL}/addLink`, {
         method: 'POST',
         headers: {
-            'x-csrf-token': event.target.csrfToken.value,
+            'csrf-token': event.target.csrfToken.value,
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         },

@@ -6,6 +6,7 @@ const path = require('path')
 
 //middleware
 const authMiddleware = require('../middlewares/authMiddleware')
+const generateTokenMd5 = require('../middlewares/generateToken')
 
 // controllers
 const userController = require('../controllers/userController')
@@ -27,7 +28,7 @@ router.delete('/deleteLink/:id', authMiddleware, linkController.deleteLinkContro
 router.post("/register", authController.registerController)
 router.post("/login", authController.loginController)
 router.post("/settings", authMiddleware, userController.settingsController)
-router.post('/addlink', userController.csrfErrorHandler ,authMiddleware, linkController.addLinkController)
+router.post('/addlink', authMiddleware, linkController.addLinkController)
 router.post("/settings/resetpassword", authMiddleware, userController.resetPasswordController)
 router.post("/support", pageController.supportFormController)
 
@@ -39,8 +40,6 @@ router.get('/', (req, res) => {
 router.get('/register', (req, res) => {
     res.render('register')
 })
-
-
 
 router.get('/login', (req, res) => {
   res.render('login')
@@ -54,7 +53,7 @@ router.get('/settings' ,userController.getSettingsController)
 
 router.get('/logout', authController.logoutController)
 
-router.get('/:username', userController.profileController)
+router.get('/:username', generateTokenMd5, userController.profileController)
 router.get('/page/:slug', pageController.getPageController)
 
 // router.get('*' , (req, res) => {

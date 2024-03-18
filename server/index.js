@@ -7,6 +7,8 @@ const ejs = require('ejs')
 const path = require('path')
 const exceptionMiddleware = require('./middlewares/exceptionMiddleware')
 const userLocalMiddleware = require('./middlewares/userLocalMiddleware')
+const generateTokenMd5 = require('./middlewares/generateToken')
+
 const app = express()
 
 // set the view engine to ejs
@@ -34,6 +36,7 @@ const connectDB = () => {
 
 connectDB()
 
+
 // middleware
 app.use(express.static(__dirname));
 app.use(session({
@@ -51,6 +54,7 @@ app.use(userLocalMiddleware)
 app.use(express.json())
 app.use(cookieParser(process.env.SESSION_SECRET))
 app.use(express.urlencoded({extended: false}))
+app.get('/favicon.ico', (req, res) => res.status(204)) // diğer middleware'ler 2 kez çalışmasın diye
 
 //routes
 app.use('/', require('./routes/routes'))
