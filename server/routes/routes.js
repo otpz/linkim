@@ -37,11 +37,9 @@ router.delete('/deleteLink/:id', authMiddleware, linkController.deleteLinkContro
 router.post("/register", authController.registerController)
 router.post("/login", authController.loginController)
 router.post("/settings", authMiddleware, userController.settingsController)
-router.post('/addlink', 
-// limiter, 
-authMiddleware, linkController.addLinkController)
-
+router.post("/addlink", authMiddleware, linkController.addLinkController)
 router.post("/settings/resetpassword", authMiddleware, userController.resetPasswordController)
+router.post("/changestyle", userController.changeStyleController)
 router.post("/support", pageController.supportFormController)
 
 //GET routes

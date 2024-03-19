@@ -103,6 +103,106 @@
     } */
 
 
+
+    /******* USER CUSTOM STYLES *******/
+
+    /* PROFILE BACKGROUND*/
+    .standart{
+        color: white;
+        background: rgb(0,0,0);
+        background: linear-gradient(135deg, rgba(0,0,0,1) 0%, rgba(208,233,215,1) 100%);
+    }
+    .tie{
+        color: white;
+        background: rgb(0,0,0);
+        background: linear-gradient(135deg, rgba(0,0,0,1) 0%, rgba(72,84,97,1) 100%);
+    }
+    .darkPink{
+        color: white;
+        background: rgb(0,0,0);
+        background: linear-gradient(135deg, rgba(0,0,0,1) 0%, rgba(232,67,147,1) 100%);
+    }
+    .stock{
+        color: white;
+        background: rgb(56,0,54);
+        background: linear-gradient(135deg, rgba(56,0,54,1) 0%, rgba(12,186,186,1) 100%);
+    }
+    .worker{
+        color: white;
+        background: rgb(44,62,80);
+        background: linear-gradient(135deg, rgba(44,62,80,1) 0%, rgba(0,0,0,1) 100%);
+    }
+    .guitar{
+        color: white;
+        background: rgb(165,92,27);
+        background: linear-gradient(135deg, rgba(165,92,27,1) 0%, rgba(0,0,0,1) 100%);
+    }
+
+    /* LINKS */
+    .bluePurple {
+        background: rgb(56,120,255);
+        background: linear-gradient(90deg, rgba(56,120,255,1) 0%, rgba(255,57,251,1) 100%);
+    }
+    .yellowTurquoise{
+        background: rgb(255,188,0);
+        background: linear-gradient(90deg, rgba(255,188,0,1) 0%, rgba(25,151,184,1) 100%);
+    }
+    .redBlue {
+        background: rgb(255,73,126);
+        background: linear-gradient(90deg, rgba(255,73,126,1) 0%, rgba(42,71,255,1) 100%);
+    }
+    .greenYellow {
+        background: rgb(0,196,39);
+        background: linear-gradient(90deg, rgba(0,196,39,1) 0%, rgba(241,255,0,1) 100%);
+    }
+    .blackGray{
+        background: rgb(28,28,28);
+        background: linear-gradient(90deg, rgba(28,28,28,1) 0%, rgba(154,154,154,1) 100%);
+    }
+    .purpleYellow{
+        background: rgb(107,33,168);
+        background: linear-gradient(90deg, rgba(107,33,168,1) 0%, rgba(255,238,81,1) 100%);
+    }
+    .redYellow{
+        background: rgb(195,23,23);
+        background: linear-gradient(90deg, rgba(195,23,23,1) 0%, rgba(217,227,92,1) 100%);
+    }
+    .blueSoftBlue{
+        background: rgb(72,23,195);
+        background: linear-gradient(90deg, rgba(72,23,195,1) 0%, rgba(92,145,227,1) 100%);
+    }
+    .cactus{
+        background: rgb(198,234,141);
+        background: linear-gradient(90deg, rgba(198,234,141,1) 0%, rgba(254,144,175,1) 100%);
+    }
+    .frost{
+        background: rgb(0,4,40);
+        background: linear-gradient(90deg, rgba(0,4,40,1) 0%, rgba(0,78,146,1) 100%);
+    }
+    .rainbow{
+        background-image: linear-gradient( 89.7deg, rgba(223,0,0,1) 2.7%, rgba(214,91,0,1) 15.1%, rgba(233,245,0,1) 29.5%, rgba(23,255,17,1) 45.8%, rgba(29,255,255,1) 61.5%, rgba(5,17,255,1) 76.4%, rgba(202,0,253,1) 92.4% );
+    }
+    .purplePink{
+        background: rgb(126,21,129);
+        background: linear-gradient(90deg, rgba(126,21,129,1) 0%, rgba(223,2,162,1) 100%);
+    }
+
+
+    /* BORDERS */
+    .square{
+        border: none;
+        border-radius: 1px
+    }
+    .smooth{
+        border: none;
+        border: 4px;
+    }
+    .rounded{
+        border-radius: 25px;
+    }
+    .extraRounded{
+        border-radius: 50%;
+    }
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');

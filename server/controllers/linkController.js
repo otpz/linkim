@@ -12,11 +12,7 @@ class LinkController {
         const csrfTokenHeader = req.headers["csrf-token"]
         const csrfTokenSession = req.session.csrfToken
 
-        console.log("header: ", csrfTokenHeader, "session: ", csrfTokenSession)
-
         const isMatch = await comparePassword(csrfTokenSession, csrfTokenHeader)
-
-        console.log(isMatch)
 
         if (!isMatch){
             return res.status(400).json({error: "Doğrulanmadı!"})

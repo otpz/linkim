@@ -224,6 +224,30 @@ const addLink = async (event) => {
     }
 }
 
+const changeStyle = async (event) => {
+    event.preventDefault()
+
+    console.log(event.target.bgColor.value)
+    console.log(event.target.borderStyle.value)
+    console.log(event.target.linkColor.value)
+
+    const data = await fetch(`${BACKEND_URL}/changestyle`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            bgColor: event.target.bgColor.value,
+            borderStyle: event.target.borderStyle.value,
+            linkColor: event.target.linkColor.value
+        })
+    })
+
+    const result = await data.json()
+    console.log(result)
+}
+
 const resetPassword = async (event) => {
 
     event.preventDefault()
@@ -248,7 +272,7 @@ const resetPassword = async (event) => {
     const result = await data.json()
 
     if (!result.message){
-        passwordResetSubmit.disabled = true
+        passwordResetSubmit.disabled = false
         passwordResetSubmit.innerHTML = "Şifre Değiştir"
     }
 

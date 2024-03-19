@@ -105,6 +105,12 @@ class UserController {
         }
     }
     
+    async changeStyleController(req, res){
+        const {bgColor, borderStyle, linkColor} = req.body
+        console.log(bgColor, borderStyle, linkColor)
+        res.json({message: "Stiller alındı."})
+    }
+
 }
 
 module.exports = new UserController()

@@ -1,27 +1,44 @@
 const toggleAddNewLinkDOM = document.querySelector('#add-new-link')
-const toggleForm = document.querySelector('#new-link-form')
-const cancelForm = document.querySelector('#cancel-form')
+const toggleStyleFormDOM = document.querySelector('#profile-style-button')
+const toggleStyleForm = document.querySelector('#user-style-form')
+const toggleLinkForm = document.querySelector('#new-link-form')
+const cancelLinkForm = document.querySelector('#cancel-form')
 
-const toggleFormVisibility = () => {
-    if (toggleForm.classList.contains('hidden')){
-        toggleForm.classList.remove('hidden')
-        toggleForm.classList.remove('opacity-0')
-        toggleForm.classList.add('flex')
-        toggleForm.classList.add('opacity-100')
+const toggleAddLinkFormVisibility = () => {
+    if (toggleLinkForm.classList.contains('hidden')){
+        toggleLinkForm.classList.remove('hidden')
+        toggleLinkForm.classList.add('flex')
+        toggleStyleForm.classList.add('hidden')
+        toggleStyleForm.classList.remove('flex')
     } else {
-        toggleForm.classList.add('hidden')
-        toggleForm.classList.remove('flex')
-        toggleForm.classList.remove('opacity-100')
-        toggleForm.classList.add('opacity-0')
+        toggleLinkForm.classList.add('hidden')
+        toggleLinkForm.classList.remove('flex')
     }
 }
 
-if (toggleAddNewLinkDOM){
-    toggleAddNewLinkDOM.addEventListener('click', toggleFormVisibility)
+const toggleStyleFormVisibility = () => {
+    if (toggleStyleForm.classList.contains('hidden')){
+        toggleStyleForm.classList.remove('hidden')
+        toggleStyleForm.classList.add('flex')
+        toggleLinkForm.classList.add('hidden')
+        toggleLinkForm.classList.remove('flex')
+    } else {
+        toggleStyleForm.classList.add('hidden')
+        toggleStyleForm.classList.remove('flex')
+    }
 }
 
-if (cancelForm){
-    cancelForm.addEventListener('click', toggleFormVisibility)
+if(toggleStyleFormDOM) {
+    toggleStyleFormDOM.addEventListener('click', toggleStyleFormVisibility)
+}
+
+
+if (toggleAddNewLinkDOM){
+    toggleAddNewLinkDOM.addEventListener('click', toggleAddLinkFormVisibility)
+}
+
+if (cancelLinkForm){
+    cancelLinkForm.addEventListener('click', toggleAddLinkFormVisibility)
 }
 
 const deleteLink = async (deleteButton, event) => {
