@@ -15,10 +15,10 @@
         </div>
 
         <div class="user-info">
-            <span class="block text-2xl font-bold text-gray-700"><%= user.Name %></span>
-            <a class="block text-xs font-semibold text-gray-600 mt-1" href="@<%=user.UserName%>">@<%= user.UserName %></a>
-            <p class="text-xs font-semibold text-gray-600 mt-1"><%= user.Biography %></p>
-            <span class="block text-xs font-semibold text-gray-600 mt-2"><%= user.JoinDate %> Tarihinde Katıldı</span>
+            <span class="block text-2xl font-bold text-white"><%= user.Name %></span>
+            <a class="block text-xs font-semibold text-white mt-1" href="@<%=user.UserName%>">@<%= user.UserName %></a>
+            <p class="text-xs font-semibold text-white mt-1"><%= user.Biography %></p>
+            <span class="block text-xs font-semibold text-white mt-2"><%= user.JoinDate %> Tarihinde Katıldı</span>
         </div>
 
         <div class="user-links">
@@ -27,7 +27,7 @@
                     <% for(let i = 0; i < user.Links.length; i++) { %>
                         <li class="mt-2 select-none <%= user.Styles.LinkBackgroundColor %> <%= user.Styles.LinkBorderRadius %>" id="link" number="<%=user.Links[i].Id%>">
                             <% if (locals.verifiedUrl === user.UserName) { %>
-                                <span number="<%=user.Links[i].Id%>" id="move" class="left-10 select-none cursor-move w-12 h-full flex items-center justify-center rounded-l-md" href="#">
+                                <span number="<%=user.Links[i].Id%>" id="move" class="left-10 select-none cursor-move w-12 h-full flex items-center justify-center <%= user.Styles.LinkBorderRadius %>" href="#">
                                     <svg class="w-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#fff" d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
                                 </span>
                             <% } %>
@@ -35,7 +35,7 @@
                                     <%= user.Links[i].Title %>
                                 </a>
                             <% if (locals.verifiedUrl === user.UserName) { %>
-                                <a number="<%=user.Links[i].Id%>" id="delete" class="select-none  hover:bg-purple-600 transition-all w-12 h-full flex items-center justify-center rounded-r-md" href="#">
+                                <a number="<%=user.Links[i].Id%>" id="delete" class="select-none  hover:opacity-50 transition-all w-12 h-full flex items-center justify-center <%= user.Styles.LinkBorderRadius %>" href="#">
                                     <svg class="w-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.<path fill="#fff" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
                                 </a>
                             <% } %>
@@ -49,10 +49,10 @@
 
         <% if (locals.verifiedUrl === user.UserName) { %>
             <div class="w-full flex justify-between">
-                <button id="add-new-link" class="w-10/12 h-10 text-center flex justify-center items-center px-4 bg-gray-700 text-white rounded-md cursor-pointer hover:bg-gray-800 transition-all duration-150">
+                <button id="add-new-link" class="w-10/12 h-10 text-center flex justify-center items-center px-4 bg-gray-700 text-white cursor-pointer hover:bg-gray-800 transition-all duration-150 <%= user.Styles.LinkBackgroundColor %> <%= user.Styles.LinkBorderRadius %> hover:opacity-80">
                     <span class="text-xl mr-2">+</span> Yeni Ekle
                 </button>
-                <button id="profile-style-button" class="ml-2 w-2/12 bg-gray-700 rounded-md flex justify-center items-center hover:bg-gray-800 transition-all duration-150">
+                <button id="profile-style-button" class="ml-2 w-2/12 bg-gray-700 flex justify-center items-center hover:bg-gray-800 transition-all duration-150 <%= user.Styles.LinkBackgroundColor %> <%= user.Styles.LinkBorderRadius %> hover:opacity-90">
                     <svg enable-background="new 0 0 32 32" height="24px" id="Layer_1" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="settings"><path d="M30.391,12.68l-3.064-0.614c-0.154-0.443-0.336-0.873-0.537-1.289l1.736-2.604   c0.529-0.793,0.424-1.85-0.25-2.523l-1.924-1.924c-0.387-0.387-0.898-0.586-1.416-0.586c-0.383,0-0.77,0.11-1.107,0.336   l-2.604,1.735c-0.418-0.202-0.848-0.382-1.291-0.536L19.32,1.61c-0.186-0.936-1.008-1.608-1.961-1.608h-2.72   c-0.953,0-1.774,0.673-1.961,1.608l-0.614,3.065c-0.443,0.154-0.873,0.335-1.289,0.536L8.172,3.476   C7.833,3.25,7.447,3.14,7.063,3.14c-0.517,0-1.028,0.199-1.415,0.586L3.725,5.65c-0.674,0.674-0.779,1.73-0.25,2.523l1.735,2.604   c-0.202,0.417-0.382,0.847-0.536,1.29L1.608,12.68C0.673,12.867,0,13.688,0,14.641v2.72c0,0.953,0.673,1.775,1.608,1.961   l3.065,0.615c0.154,0.443,0.335,0.873,0.536,1.289L3.475,23.83c-0.529,0.793-0.424,1.85,0.25,2.523l1.924,1.924   c0.387,0.387,0.898,0.586,1.415,0.586c0.384,0,0.771-0.111,1.108-0.336l2.604-1.736c0.417,0.203,0.847,0.383,1.29,0.537   l0.613,3.064c0.187,0.936,1.008,1.609,1.961,1.609h2.72c0.953,0,1.775-0.674,1.961-1.609l0.615-3.064   c0.443-0.154,0.873-0.336,1.289-0.537l2.604,1.736c0.338,0.225,0.725,0.336,1.107,0.336c0.518,0,1.029-0.199,1.416-0.586   l1.924-1.924c0.674-0.674,0.779-1.73,0.25-2.523l-1.736-2.604c0.203-0.418,0.383-0.848,0.537-1.291l3.064-0.613   C31.326,19.137,32,18.314,32,17.361v-2.72C32,13.688,31.326,12.867,30.391,12.68z M26.934,17.975   c-0.695,0.139-1.264,0.635-1.496,1.305c-0.129,0.369-0.279,0.727-0.447,1.074c-0.311,0.639-0.258,1.393,0.135,1.982l1.736,2.604   l-1.924,1.924l-2.604-1.736c-0.334-0.223-0.721-0.336-1.109-0.336c-0.297,0-0.596,0.066-0.871,0.199   c-0.348,0.168-0.705,0.32-1.076,0.449c-0.668,0.232-1.164,0.801-1.303,1.496l-0.615,3.066h-2.72l-0.613-3.066   c-0.139-0.695-0.635-1.264-1.304-1.496c-0.369-0.129-0.728-0.279-1.075-0.447c-0.276-0.135-0.574-0.201-0.872-0.201   c-0.389,0-0.775,0.113-1.109,0.336l-2.604,1.736l-1.924-1.924l1.735-2.604c0.393-0.59,0.444-1.344,0.137-1.98   c-0.168-0.348-0.319-0.705-0.448-1.076c-0.232-0.668-0.802-1.164-1.496-1.303l-3.065-0.615L2,14.641l3.066-0.613   c0.694-0.139,1.264-0.635,1.496-1.304c0.129-0.369,0.278-0.728,0.447-1.075c0.31-0.638,0.258-1.392-0.136-1.981L5.139,7.064   L7.062,5.14l2.604,1.735C10,7.098,10.387,7.211,10.775,7.211c0.297,0,0.595-0.066,0.871-0.199c0.347-0.168,0.705-0.319,1.075-0.448   c0.669-0.232,1.165-0.802,1.304-1.496l0.614-3.065l2.72-0.001l0.613,3.066c0.139,0.694,0.635,1.264,1.305,1.496   c0.369,0.129,0.727,0.278,1.074,0.447c0.277,0.134,0.574,0.2,0.873,0.2c0.389,0,0.775-0.113,1.109-0.336l2.604-1.735l1.924,1.924   l-1.736,2.604c-0.393,0.59-0.443,1.343-0.137,1.98c0.168,0.347,0.32,0.705,0.449,1.075c0.232,0.669,0.801,1.165,1.496,1.304   l3.064,0.614L30,17.361L26.934,17.975z" fill="#fff"/><path d="M16,9.001c-3.865,0-7,3.135-7,7c0,3.866,3.135,7,7,7s7-3.135,7-7C23,12.136,19.865,9.001,16,9.001z    M16,22.127c-3.382,0-6.125-2.744-6.125-6.125c0-3.382,2.743-6.125,6.125-6.125c3.381,0,6.125,2.743,6.125,6.125   C22.125,19.383,19.381,22.127,16,22.127z" fill="#fff"/><path d="M16,12.001c-2.21,0-4,1.79-4,4c0,2.209,1.79,4,4,4c2.209,0,4-1.791,4-4C20,13.792,18.209,12.001,16,12.001z    M16,19.002c-1.656,0-3-1.344-3-3c0-1.656,1.344-3,3-3s3,1.344,3,3C19,17.658,17.656,19.002,16,19.002z" fill="#fff"/></g></svg>
                 </button>
             </div>
@@ -61,8 +61,8 @@
         <form id="user-style-form" class="form mt-5 hidden" action="" onsubmit="changeStyle(event)">
             <div class="w-full h-76 mb-3">
                 <div class="w-full h-full flex flex-col">
-                    <h3 class="text-gray-700 text-lg">Profil Arkaplan Rengi</h3>
-                    <p class="text-gray-700 text-sm">Profilinizin arkaplan rengini özelleştirin</p>
+                    <h3 class="text-white text-lg">Profil Arkaplan Rengi</h3>
+                    <p class="text-white text-sm">Profilinizin arkaplan rengini özelleştirin</p>
                     <div class="w-full flex flex-wrap justify-between">
                         <div class="my-2 flex w-1/2 h-16 items-center">
                             <input id="tie" name="bgColor" class="form-input w-4 h-4" type="radio" value="tie">
@@ -93,30 +93,42 @@
             </div>
             <div class="w-full h-56 mb-3">
                 <div class="w-full h-full flex flex-col">
-                    <h3 class="text-gray-700 text-lg">Link Kenarlığı</h3>
-                    <p class="text-gray-700 text-sm">Link butonlarının kenarlığını özelleştirin.</p>
+                    <h3 class="text-white text-lg">Link Kenarlığı</h3>
+                    <p class="text-white text-sm">Link butonlarının kenarlığını özelleştirin.</p>
                     <div class="my-2 flex w-full h-8 items-center">
                         <input id="square" name="borderStyle" class="form-input w-4 h-4" type="radio" value="square">
-                        <label for="square" class="form-label ml-2 text-base text-gray-900">Kare</label>
+                        <label for="square" class="form-label ml-2 text-base text-white flex justify-center items-center">
+                            <div class="w-5 h-5 border-white border-1 mr-2 square"></div>
+                            Kare
+                        </label>
                     </div>
                     <div class="my-2 flex w-full h-8 items-center">
                         <input id="smooth" name="borderStyle" class="form-input w-4 h-4" type="radio" value="smooth">
-                        <label for="smooth" class="form-label ml-2 text-base text-gray-900">Yumuşak</label>
+                        <label for="smooth" class="form-label ml-2 text-base text-white flex justify-center items-center">
+                            <div class="w-5 h-5 border-white border-1 mr-2 smooth"></div>
+                            Yumuşak
+                        </label>
                     </div>
                     <div class="my-2 flex w-full h-8 items-center">
                         <input id="round" name="borderStyle" class="form-input w-4 h-4" type="radio" value="rounded">
-                        <label for="round" class="form-label ml-2 text-base text-gray-900">Yuvarlak</label>
+                        <label for="round" class="form-label ml-2 text-base text-white flex justify-center items-center">
+                            <div class="w-5 h-5 border-white border-1 mr-2 rounded-lg"></div>
+                            Yuvarlak
+                        </label>
                     </div>
                     <div class="my-2 flex w-full h-8 items-center">
                         <input id="extraRound" name="borderStyle" class="form-input w-4 h-4" type="radio" value="extraRounded">
-                        <label for="extraRound" class="form-label ml-2 text-base text-gray-900">Ekstra Yuvarlak</label>
+                        <label for="extraRound" class="form-label ml-2 text-base text-white flex justify-center items-center">
+                            <div class="w-5 h-5 border-white border-1 mr-2 extraRound"></div>
+                            Ekstra Yuvarlak
+                        </label>
                     </div>
                 </div>
             </div>
             <div class="w-full h-144">
                 <div class="w-full h-full flex flex-col">
-                    <h3 class="text-gray-700 text-lg">Link Rengi</h3>
-                    <p class="text-gray-700 text-sm">Link butonlarının arkaplan renklerini özelleştirin.</p>
+                    <h3 class="text-white text-lg">Link Rengi</h3>
+                    <p class="text-white text-sm">Link butonlarının arkaplan renklerini özelleştirin.</p>
                     <div class="my-2 flex justify-between w-full h-8 items-center">
                         <input id="bluePurple" name="linkColor" class="form-input w-4 h-4" type="radio" value="bluePurple">
                         <label for="bluePurple" class="border-2 border-white rounded-md block w-full h-full ml-2 bg-gray-700 bluePurple"></label>
@@ -168,16 +180,14 @@
                 </div>
             </div>
             <div class="w-full flex items-center justify-between  mt-5">
-                <button id="styleSubmit" class="w-2/5 h-10 border-1 border-gray-600 mt-2 hover:bg-gray-600 hover:text-white transition-all duration-200 rounded-md">
+                <button id="styleSubmit" class="w-2/5 h-10 border-1 border-white mt-2 hover:bg-gray-600 hover:text-white transition-all duration-200 rounded-md">
                     Gönder
                 </button>
-                <span id="cancel-form" class="w-2/5 h-10 text-center flex justify-center items-center px-4 text-gray-700 rounded-md cursor-pointer">
+                <span id="cancel-form" class="w-2/5 h-10 text-center flex justify-center items-center px-4 text-white rounded-md cursor-pointer">
                     İptal
                 </span>
             </div>
-        </form>
-
-        
+        </form>       
 
         <form id="new-link-form" class="form mt-5 hidden" onsubmit="addLink(event)" action="">
             <% if (locals.csrfToken) { %>
@@ -195,7 +205,7 @@
                 <button id="linkSubmit" class="w-2/5 h-10 border-1 border-gray-600 mt-2 hover:bg-gray-600 hover:text-white transition-all duration-200 rounded-md">
                     Gönder
                 </button>
-                <span id="cancel-form" class="w-2/5 h-10 text-center flex justify-center items-center px-4 text-gray-700 rounded-md cursor-pointer">
+                <span id="cancel-form" class="w-2/5 h-10 text-center flex justify-center items-center px-4 text-white rounded-md cursor-pointer">
                     İptal
                 </span>
             </div>
@@ -204,8 +214,8 @@
         <div class="w-full h-[0.5px] bg-gray-400 mt-6"></div>
 
         <form class="form w-full items-start" action="">
-            <textarea class=" bg-transparent outline-none w-full mt-2 placeholder:text-gray-700 border-b-1 border-gray-400" name="" id="" rows="5" placeholder="Birşeyler yaz."></textarea>
-            <button class="w-2/5 h-10 border-1 border-gray-600 mt-2 hover:bg-gray-600 hover:text-white transition-all duration-200 rounded-md">Gönder</button>
+            <textarea class=" bg-transparent outline-none w-full mt-2 placeholder:text-gray-400 border-b-1 border-gray-400" name="" id="" rows="5" placeholder="Birşeyler yaz."></textarea>
+            <button class="w-2/5 h-10 border-1 border-white mt-2 hover:bg-gray-800 hover:text-white transition-all duration-200 rounded-md">Gönder</button>
         </form>
     </main>
 

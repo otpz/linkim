@@ -27,7 +27,6 @@ class UserController {
 
         user.JoinDate = formatDate(user.JoinDate)
         
-        console.log("profile ctrl: ", user.Styles)
         res.render('profile', {user})
     } 
 

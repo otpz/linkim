@@ -53,6 +53,7 @@
     .user-avatar{
         @apply w-20 h-20 rounded-full flex items-center justify-center border-1 border-white;
     }
+
     .user-avatar img{
         @apply w-full h-full rounded-full;
     }
@@ -70,7 +71,7 @@
     }
     
     .user-links .list li{
-        @apply w-full h-12 flex items-center bg-purple-800 text-white rounded-md cursor-pointer;
+        @apply w-full h-12 flex items-center bg-purple-800 text-white cursor-pointer;
     } 
     
     .navbar{
@@ -82,7 +83,7 @@
     }
 
     .navbar .nav-list .list-item{ 
-        @apply h-full flex items-center cursor-pointer text-gray-600 text-base;
+        @apply h-full flex items-center cursor-pointer text-base;
     }
 
     .list li:hover,
@@ -190,18 +191,16 @@
 
     /* BORDERS */
     .square{
-        border: none;
         border-radius: 1px
     }
     .smooth{
-        border: none;
-        border: 4px;
+        border-radius: 4px;
     }
     .rounded{
-        border-radius: 25px;
+        border-radius: 18px;
     }
     .extraRounded{
-        border-radius: 50%;
+        border-radius: 1000px;
     }
 }
 
