@@ -1,6 +1,7 @@
-const {selectUser, selectUserLinks} = require('../sql/selectSql')
+const {selectUser, selectUserLinks, selectUserStyles, selectExistStyles} = require('../sql/selectSql')
+const {insertStyle} = require('../sql/insertSql')
 const formatDate = require("../helpers/formatDate")
-const {editUser, editPassword} = require('../sql/setSql')
+const {editUser, editPassword, editStyle} = require('../sql/setSql')
 const {schemaSettings, schemaResetPassword} = require("../helpers/validation")
 const {comparePassword, hashPassword} = require("../helpers/auth")
 const dotenv = require('dotenv').config()
@@ -19,11 +20,14 @@ class UserController {
         }
     
         const userLinks = await selectUserLinks(user.Id, "UserId")
-    
+        const userStyles = await selectUserStyles(user.Id, "UserId")
+
         user.Links = userLinks ? userLinks : []
+        user.Styles = userStyles[0] ? userStyles[0] : []
 
         user.JoinDate = formatDate(user.JoinDate)
-    
+        
+        console.log("profile ctrl: ", user.Styles)
         res.render('profile', {user})
     } 
 
@@ -107,8 +111,28 @@ class UserController {
     
     async changeStyleController(req, res){
         const {bgColor, borderStyle, linkColor} = req.body
-        console.log(bgColor, borderStyle, linkColor)
-        res.json({message: "Stiller alındı."})
+        const userId = req.session.user.Id
+
+        try {
+
+            const existStyle = await selectExistStyles(userId, "UserId")
+            if (existStyle.existStyle){
+                const result = await editStyle(userId, bgColor, borderStyle, linkColor)
+                if (result.error){
+                    return res.json({errorSql: "Stiller kaydedilirken bir sorun oluştu."})
+                }
+                return res.json({message: "Stilleriniz kaydedildi."})
+            }
+
+            const result = await insertStyle(userId, bgColor, borderStyle, linkColor)
+            if (result.error){
+                return res.json({errorSql: "Stiller eklenirken bir sorun oluştu."})
+            }
+            return res.json({message: "Stilleriniz kaydedildi."})
+
+        } catch (errors) {
+            next(errors)
+        }
     }
 
 }

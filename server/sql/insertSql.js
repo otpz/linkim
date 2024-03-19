@@ -30,4 +30,19 @@ const insertLink = async (userId, title, link) => {
     }
 }
 
-module.exports = {insertUser, insertLink}
+const insertStyle = async (userId, bgColor, borderStyle, linkBgColor) => {
+    const query = `insert into UserStyles (UserId, BackgroundColor, LinkBorderRadius, LinkBackgroundColor) values ('${userId}', '${bgColor}', '${borderStyle}', '${linkBgColor}')`
+    try {
+        const result = await sql.query(query)
+        if (result.rowsAffected[0]){
+            return {message: "success"}
+        } else {
+            return {error: "error"}
+        }
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
+module.exports = {insertUser, insertLink, insertStyle}

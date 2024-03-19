@@ -15,7 +15,17 @@ const selectUser = async (email, strEmail) => {
 const selectExistLinks = async (userId, queryParam, id, Id) => {
 
     const query = `select count (*) from Links where ${queryParam} = '${userId}' and ${Id} = ${id}`
+    try {
+        const result = await sql.query(query)
+        return result.recordset[0]
+    } catch (error) {
+        return error
+    }
+}
 
+// queryParam = "UserId" - Kullanıcı daha önce style kaydetmiş mi
+const selectExistStyles = async (userId, queryParam) => {
+    const query = `select count(*) as existStyle from UserStyles where ${queryParam} = '${userId}'`
     try {
         const result = await sql.query(query)
         return result.recordset[0]
@@ -26,7 +36,6 @@ const selectExistLinks = async (userId, queryParam, id, Id) => {
 
 // queryParam = "UserId"
 const selectUserLinks = async (userId, queryParam) => {
-
     const query = `select * from Links where ${queryParam} = ${userId}`
     
     try {
@@ -37,6 +46,16 @@ const selectUserLinks = async (userId, queryParam) => {
     }
 }
 
+// queryParam = "UserId"
+const selectUserStyles = async (userId, queryParam) => {
+    const query = `select * from UserStyles where ${queryParam} = ${userId}`
+    try {
+        const result = await sql.query(query)
+        return result.recordset
+    } catch (error) {
+        return error
+    }
+}
 
 const selectPages = async (pageSlug) => {
     const query = `select * from Pages where Slug = '${pageSlug}'` 
@@ -47,6 +66,7 @@ const selectPages = async (pageSlug) => {
         return error
     }
 }
+
 
 const selectLinksLastMinutes = async () => {
     // 1 dakika içerisinde eklenen link sayısı
@@ -59,4 +79,4 @@ const selectLinksLastMinutes = async () => {
     }
 }
 
-module.exports = {selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes}
+module.exports = {selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles}

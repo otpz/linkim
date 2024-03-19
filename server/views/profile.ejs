@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full <%= user.Styles.BackgroundColor %>">
 <head>
     <%- include('./partials/head'); %>
     <title>Profil</title>
 </head>
-<body class="w-full bg-body flex flex-col items-center">
+<body class="w-full flex flex-col items-center bg-body <%= user.Styles.BackgroundColor %>">
 
     <%- include('./partials/navbar'); %>
     
@@ -25,7 +25,7 @@
             <% if (user.Links.length > 0) { %>
                 <ul class="list">
                     <% for(let i = 0; i < user.Links.length; i++) { %>
-                        <li class="mt-2 select-none" id="link" number="<%=user.Links[i].Id%>">
+                        <li class="mt-2 select-none <%= user.Styles.LinkBackgroundColor %> <%= user.Styles.LinkBorderRadius %>" id="link" number="<%=user.Links[i].Id%>">
                             <% if (locals.verifiedUrl === user.UserName) { %>
                                 <span number="<%=user.Links[i].Id%>" id="move" class="left-10 select-none cursor-move w-12 h-full flex items-center justify-center rounded-l-md" href="#">
                                     <svg class="w-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#fff" d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
@@ -204,7 +204,7 @@
         <div class="w-full h-[0.5px] bg-gray-400 mt-6"></div>
 
         <form class="form w-full items-start" action="">
-            <textarea class=" bg-body outline-none w-full mt-2 placeholder:text-gray-700 border-b-1 border-gray-400" name="" id="" rows="5" placeholder="Birşeyler yaz."></textarea>
+            <textarea class=" bg-transparent outline-none w-full mt-2 placeholder:text-gray-700 border-b-1 border-gray-400" name="" id="" rows="5" placeholder="Birşeyler yaz."></textarea>
             <button class="w-2/5 h-10 border-1 border-gray-600 mt-2 hover:bg-gray-600 hover:text-white transition-all duration-200 rounded-md">Gönder</button>
         </form>
     </main>
