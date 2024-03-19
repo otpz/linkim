@@ -2,6 +2,7 @@ const {insertLink} = require('../sql/insertSql')
 const deleteUserLink = require('../sql/deleteSql')
 const {selectExistLinks, selectLinksLastMinutes} = require('../sql/selectSql')
 const {schemaLinkUrl} = require('../helpers/validation')
+const { comparePassword } = require('../helpers/auth')
 class LinkController {
 
     async addLinkController(req, res, next){
@@ -11,8 +12,14 @@ class LinkController {
         const csrfTokenHeader = req.headers["csrf-token"]
         const csrfTokenSession = req.session.csrfToken
 
-        if (csrfTokenHeader !== csrfTokenSession ){
-            return res.status(400).json({error: "Doğrulanmadı"})
+        console.log("header: ", csrfTokenHeader, "session: ", csrfTokenSession)
+
+        const isMatch = await comparePassword(csrfTokenSession, csrfTokenHeader)
+
+        console.log(isMatch)
+
+        if (!isMatch){
+            return res.status(400).json({error: "Doğrulanmadı!"})
         }
 
         const id = req.session.user ? req.session.user.Id : null
@@ -22,7 +29,6 @@ class LinkController {
             
             if (id){
                 const links = await selectLinksLastMinutes()
-                console.log(links.counter)
                 if (links.counter >= 5){
                     return res.json({errorRequest: "Daha fazla istek göndermeden lütfen biraz bekleyiniz."})
                 }

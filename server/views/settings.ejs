@@ -27,14 +27,13 @@
                     </div>
                     <div class="form-div">
                         <label class="form-label" for="biography">Biyografi</label>
-                        <!-- <input value="<%=Biography%>" class="form-input" name="biography"  type="text" placeholder="Biyografi bilgisi"> -->
                         <textarea class="form-input" name="biography" id=""biography cols="30" rows="3"><%=Biography%></textarea>
                     </div>
                     <div class="form-div">
                         <label class="form-label" for="email">Email</label>
                         <input value="<%=Email%>" required class="form-input" type="email" placeholder="name@gmail.com" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" title="Doğru email adresi girdiğinizden emin olunuz." name="email">
                     </div>
-                    <button class="form-button mt-8" type="submit">Kaydet</button>
+                    <button id="settingsSubmit" class="form-button mt-8" type="submit">Kaydet</button>
                 </form>
 
                 <div class="w-full h-20  mt-6"></div>
@@ -53,7 +52,7 @@
                         <label class="form-label" for="confirmPassword">Şifre Tekrarı</label>
                         <input required class="form-input" type="password" placeholder="Yeni şifrenizi tekrar giriniz" name="confirmPassword">
                     </div>
-                    <button class="form-button mt-8" type="submit">Şifre Değiştir</button>
+                    <button id="passwordResetSubmit" class="form-button mt-8" type="submit">Şifre Değiştir</button>
                 </form>
             </div>
         </div>

@@ -3,6 +3,10 @@ const BACKEND_URL = 'http://localhost:3000'
 const login = async (event) => {
     event.preventDefault()
 
+    const loginSubmit = document.getElementById("loginSubmit")
+    loginSubmit.disabled = true
+    loginSubmit.innerHTML = "Giriş yapılıyor.."
+   
     const data = await fetch(`${BACKEND_URL}/login`, {
         method: 'POST',
         headers: {
@@ -14,10 +18,15 @@ const login = async (event) => {
             password: event.target.password.value
         })
     })
-
+    
     const result = await data.json()
 
     toastr.options.positionClass = "toast-top-center"
+
+    if(!result.message){
+        loginSubmit.disabled = false
+        loginSubmit.innerHTML = "Giriş Yap"
+    }
 
     if (result.undefined){
         toastr.error(result.undefined)
@@ -26,10 +35,11 @@ const login = async (event) => {
     } else if (result.authError){
         toastr.error(result.authError)
     } else if (result.message){
+        event.target.email.value = ''
+        event.target.password.value = ''
         toastr.success(result.message)
-        const redirectInterval = setInterval(() => {
+        setTimeout(() => {
             window.location.href = `/@${result.userName}`
-            clearInterval(redirectInterval)
         }, 1000)
     } else if (result.errorValidation){
         result.errorValidation.forEach(element => {
@@ -42,6 +52,11 @@ const login = async (event) => {
 
 const register = async (event) => {
     event.preventDefault()  
+
+    const registerSubmit = document.getElementById("registerSubmit")
+    registerSubmit.disabled = true
+    registerSubmit.innerHTML = "Kayıt gerçekleştiriliyor.."
+
     const data = await fetch(`${BACKEND_URL}/register`, {
         method: 'POST',
         headers: {
@@ -60,8 +75,13 @@ const register = async (event) => {
 
     const result = await data.json()
 
+    if (!result.message){
+        registerSubmit.disabled = false
+        registerSubmit.innerHTML = "Kayıt Ol"
+        grecaptcha.reset()
+    }
+
     if (result.errorValidation){
-        console.log("error validation app.js")
         result.errorValidation.forEach(element => {
             toastr.error(element)
         })
@@ -70,10 +90,14 @@ const register = async (event) => {
     } else if (result.error){
         toastr.error(result.error)  
     } else {
-        toastr.success(result.message);
-        const redirectInterval = setInterval(() => {
+        event.target.name.value = ''
+        event.target.surname.value = ''
+        event.target.username.value = ''
+        event.target.email.value = ''
+        event.target.password.value = ''
+        toastr.success(result.message)
+        setTimeout(() => {
             window.location.href = `./login`
-            clearInterval(redirectInterval)
         }, 500)
     }
 }
@@ -96,6 +120,10 @@ const setProfileInfo = async (event) => {
 
     event.preventDefault()
 
+    const settingsSubmit = document.getElementById("settingsSubmit")
+    settingsSubmit.disabled = true
+    settingsSubmit.innerHTML = "Kaydediliyor.."
+
     const data = await fetch(`${BACKEND_URL}/settings`, {
         method: 'POST',
         headers: {
@@ -113,11 +141,20 @@ const setProfileInfo = async (event) => {
 
     const result = await data.json()
 
+    if (!result.message){
+        settingsSubmit.disabled = false
+        settingsSubmit.innerHTML = "Kaydet"
+    }
+
     if (result.message){
+        event.target.name.value = ''
+        event.target.surname.value = ''
+        event.target.username.value = ''
+        event.target.biography.value = ''
+        event.target.email.value = ''
         toastr.success(result.message)
-        const interval = setInterval(() => {
+        setTimeout(() => {
             window.location.href = `/@${result.username}`
-            clearInterval(interval)
         }, 1000)
 
     } else if (result.emailError){
@@ -132,16 +169,18 @@ const setProfileInfo = async (event) => {
         toastr.error(result.errorSql)
     } else{
         toastr.error(result.error)
-        const interval = setInterval(() => {
+        setTimeout(() => {
             window.location.href = "/login"
-            clearInterval(interval)
         }, 350)
     }
 }
 
 const addLink = async (event) => {
-
     event.preventDefault()
+
+    const linkSubmit = document.getElementById("linkSubmit")
+    linkSubmit.disabled = true
+    linkSubmit.innerHTML = "Ekleniyor.."
 
     const data = await fetch(`${BACKEND_URL}/addLink`, {
         method: 'POST',
@@ -158,11 +197,15 @@ const addLink = async (event) => {
 
     const result = await data.json()
 
+    if (!result.message){
+        linkSubmit.disabled = false
+        linkSubmit.innerHTML = "Gönder"
+    }
+
     if (result.error){
         toastr.error(result.error)
-        const interval = setInterval(() => {
+        setTimeout(() => {
             window.location.href = "/login"
-            clearInterval(interval)
         }, 350)
     }
     else if (result.errorRequest){
@@ -172,10 +215,11 @@ const addLink = async (event) => {
             toastr.error(element)
         })
     }else {
+        event.target.title.value = ''
+        event.target.url.value = ''
         toastr.success(result.message)
-        const interval = setInterval(() => {
+        setTimeout(() => {
             window.location.reload()
-            clearInterval(interval)
         }, 500)
     }
 }
@@ -183,6 +227,10 @@ const addLink = async (event) => {
 const resetPassword = async (event) => {
 
     event.preventDefault()
+
+    const passwordResetSubmit = document.getElementById("passwordResetSubmit")
+    passwordResetSubmit.disabled = true
+    passwordResetSubmit.innerHTML = "Kaydediliyor.."
 
     const data = await fetch(`${BACKEND_URL}/settings/resetpassword`, {
         method: "POST",
@@ -199,16 +247,18 @@ const resetPassword = async (event) => {
 
     const result = await data.json()
 
-    console.log("result -> ", result)
+    if (!result.message){
+        passwordResetSubmit.disabled = true
+        passwordResetSubmit.innerHTML = "Şifre Değiştir"
+    }
 
     if (result.message){
         toastr.success(result.message)
         event.target.currentPassword.value = ""
         event.target.password.value = ""
         event.target.confirmPassword.value = ""
-        const interval = setInterval(() => {
+        setTimeout(() => {
             window.location.reload()
-            clearInterval(interval)
         }, 500)
     } else if (result.passwordError){
         toastr.error(result.passwordError)
@@ -222,9 +272,8 @@ const resetPassword = async (event) => {
         })
     } else{
         toastr.error(result.error)
-        const interval = setInterval(() => {
+        setTimeout(() => {
             window.location.href = "/login"
-            clearInterval(interval)
         }, 350)
     }
 
