@@ -32,4 +32,8 @@ const schemaLogin = yup.object().shape({
     password: yup.string().required("Şifre alanı gereklidir.").min(8, "Geçerli bir şifre giriniz.")
 })
 
-module.exports = {schemaRegister, schemaSettings, schemaResetPassword, schemaLinkUrl, schemaLogin}
+const schemaEmail = yup.object().shape({
+    email: yup.string().email("Geçersiz email.").required("Email alanı zorunludur.").matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "Geçerli bir email adresi giriniz."),
+})
+
+module.exports = {schemaRegister, schemaSettings, schemaResetPassword, schemaLinkUrl, schemaLogin, schemaEmail}

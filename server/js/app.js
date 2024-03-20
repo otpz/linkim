@@ -327,3 +327,28 @@ const support = async (event) => {
         toastr.error(result.error)
     }
 }
+
+const sendMail = async (event) => {
+    event.preventDefault()
+    
+    const data = await fetch(`${BACKEND_URL}/sendmail`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: event.target.email.value
+        })
+    })
+
+    const result = await data.json()
+
+    if (result.errorValidation){
+        result.errorValidation.forEach(element => {
+            toastr.error(element)
+        })
+    } else if (result.message){
+        toastr.success(result.message)
+    }
+}

@@ -41,6 +41,7 @@ router.post("/addlink", authMiddleware, linkController.addLinkController)
 router.post("/settings/resetpassword", authMiddleware, userController.resetPasswordController)
 router.post("/changestyle", userController.changeStyleController)
 router.post("/support", pageController.supportFormController)
+router.post("/sendmail", pageController.sendMail)
 
 //GET routes
 router.get('/', (req, res) => {
@@ -58,6 +59,8 @@ router.get('/login', (req, res) => {
 router.get('/forgot', (req, res) => {
   res.render('forgot')
 })
+
+router.get("/forgot/:token", pageController.forgotPasswordReset)
 
 router.get('/settings' ,userController.getSettingsController)
 
