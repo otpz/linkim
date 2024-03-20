@@ -303,6 +303,58 @@ const resetPassword = async (event) => {
 
 }
 
+const resetForgotPassword = async (event) => {
+    event.preventDefault()
+
+    const passwordResetSubmit = document.getElementById("reset-forgot-password-button")
+    passwordResetSubmit.disabled = true
+    passwordResetSubmit.innerHTML = "Kaydediliyor.."
+
+    const data = await fetch(`${BACKEND_URL}/resetforgotpassword`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: event.target.email.value,
+            password: event.target.password.value,
+            confirmPassword: event.target.confirmPassword.value,
+        })
+    })
+
+    const result = await data.json()
+
+    if (!result.message){
+        passwordResetSubmit.disabled = false
+        passwordResetSubmit.innerHTML = "Şifre Yenile"
+    }
+
+    if (result.message){
+        toastr.success(result.message)
+        event.target.password.value = ""
+        event.target.confirmPassword.value = ""
+        setTimeout(() => {
+            window.location.href = "/login"
+        }, 500)
+    } else if (result.passwordError){
+        toastr.error(result.passwordError)
+    } else if (result.passwordMatchError){
+        toastr.error(result.passwordMatchError)
+    } else if (result.errorSql){
+        toastr.error(result.errorSql)
+    } else if (result.errorValidation){
+        result.errorValidation.forEach(element => {
+            toastr.error(element)
+        })
+    } else{
+        toastr.error(result.error)
+        setTimeout(() => {
+            window.location.href = "/login"
+        }, 350)
+    }
+}
+
 const support = async (event) => {
     event.preventDefault()
 

@@ -1,8 +1,10 @@
 const {selectPages, selectUser} = require('../sql/selectSql')
-const {schemaEmail} = require('../helpers/validation')
+const {editPassword} = require('../sql/setSql')
+const {schemaEmail, schemaResetPassword} = require('../helpers/validation')
 const generatePasswordResetToken = require('../helpers/generatePasswordResetToken')
 const dotenv = require('dotenv').config()
 const nodemailer = require("nodemailer")
+const {hashPassword} = require("../helpers/auth")
 
 class PageController{
 
@@ -43,7 +45,7 @@ class PageController{
         }
     }
 
-    async sendMail(req, res, next){
+    async sendMailController(req, res, next){
         const {email} = req.body
         try {
             await schemaEmail.validate(req.body, {abortEarly: false})
@@ -71,30 +73,14 @@ class PageController{
             `Merhaba ${user.Name}, <br><br>
             
             Şifrenizi değiştirmek için <a href="http://localhost:3000/forgot/${passwordResetToken}">tıklayınız</a>. <br><br>
-            
-            Linkim Ekibi,
+
+            Linkim Ekibi, <br>
+            İyi günler.
             `
-
-            // const html = 
-            // `Merhaba Doğukan <br><br>
-            // Şifreniz 3. parti yazılımlar tarafından çalınmış olabilir. <br><br>
-
-            // Eğer mail adresinizi veya şifrenizi biriyle paylaştıysanız aşağıdaki linke tıklayıp sıfırlanamanız gerekmektedir. <br><br>
-
-            // https://hizliresim.com/LyoPgz <br><br><br><br>
-
-            // <i>If you have shared your e-mail address or password with someone, you need to click on the link below to reset it. </i> <br><br>
-
-            // https://hizliresim.com/LyoPgz <br><br>
-
-            // Mail Services Team,
-            // Best Regards.
-            // `
 
             const info = transporter.sendMail({
                 from: {
                     name: "Linkim",
-                    // name: "Güvenlik Uyarısı ⚠",
                     address: process.env.MAIL_SENDER
                 },
                 to: [email],
@@ -109,14 +95,42 @@ class PageController{
         }
     }
     
-    async forgotPasswordReset(req, res){
+    async getforgotPasswordController(req, res){
         const token = req.params.token
         const email = req.session.Email
-        if(req.session.passwordResetToken !== token){
+
+        if(req.session.passwordResetToken === undefined || (req.session.passwordResetToken !== token)){
             return res.render("error")
         }
-
         return res.render("resetPassword", {email})
+    }
+
+    async resetForgotPasswordController(req, res, next){
+
+        const {email, password, confirmPassword} = req.body
+
+        try {
+            const user = await selectUser(email, "Email")
+            if (!user){
+                delete res.session.passwordResetToken
+                return res.json({error: "Kullanıcı bulunamadı."})
+            }
+            await schemaResetPassword.validate(req.body, {abortEarly: false})
+
+            if (password !== confirmPassword){
+                return res.json({passwordMatchError: "Yeni şifreniz tekrarı ile uyuşmalıdır."})
+            } else {
+                const hashedPassword = await hashPassword(password)
+                const result = await editPassword(email, hashedPassword)
+                if (result.error){
+                    return res.json({errorSql: "Bir hata oluştu. Lütfen tekrar deneyin."})
+                }
+                req.session.passwordResetToken = undefined
+                return res.json({message: "Şifre başarıyla yenilendi."})
+            }
+        } catch (errors) {
+            next(errors) // error middleware
+        }
     }
 }
 
