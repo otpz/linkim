@@ -1,56 +1,56 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full <%= Styles.BackgroundColor %>">
 <head>
     <%- include('./partials/head'); %>
     <title>Register</title>
 </head>
-<body class="w-full bg-body flex flex-col items-center justify-center">
+<body class="w-full bg-body flex flex-col items-center justify-center <%= Styles.BackgroundColor %>">
 
     <%- include('./partials/navbar'); %>
     
     <main class="w-3/4 h-full bg-transparent shadow-none flex flex-col items-center p-4 mt-10">
         <div class="w-full flex flex-col justify-start items-center">
             <div class="w-full flex flex-col items-center">
-                <h2 class="text-xl font-bold mb-4 text-green-800">Profil Bilgileriniz</h2>
+                <h2 class="text-xl font-bold mb-4 text-white">Profil Bilgileriniz</h2>
                 <form onsubmit="setProfileInfo(event)" class="form w-1/2" action="">
                     <div class="form-div">
-                        <label class="form-label" for="name">İsim</label>
-                        <input value="<%=Name%>" required class="form-input" name="name" type="text" pattern="/^[a-z ,.'-]+$/i" title="İsimde noktalama ve sayı kullanmayınız" placeholder="İsim">
+                        <label class="form-label text-gray-200" for="name">İsim</label>
+                        <input value="<%=Name%>" required class="form-input text-gray-800" name="name" type="text" pattern="/^[a-z ,.'-]+$/i" title="İsimde noktalama ve sayı kullanmayınız" placeholder="İsim">
                     </div>
                     <div class="form-div">
-                        <label class="form-label" for="surname">Soyisim</label>
-                        <input value="<%=Surname%>" required class="form-input" name="surname" type="text" pattern="[A-Za-zğĞıİşŞüÜöÖçÇ]{1,20}" title="Soyisimde boşluk, noktalama ve sayı kullanmayınız" placeholder="Soyisim">
+                        <label class="form-label text-gray-200" for="surname">Soyisim</label>
+                        <input value="<%=Surname%>" required class="form-input text-gray-800" name="surname" type="text" pattern="[A-Za-zğĞıİşŞüÜöÖçÇ]{1,20}" title="Soyisimde boşluk, noktalama ve sayı kullanmayınız" placeholder="Soyisim">
                     </div>
                     <div class="form-div">
-                        <label class="form-label" for="username">Kullanıcı Adı</label>
-                        <input value="<%=UserName%>" required class="form-input" name="username"  type="text" pattern="^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="3-20 karakter aralığında, boşluk, noktalama ve özel karakter kullanmayınız" placeholder="Kullanıcı adı">
+                        <label class="form-label text-gray-200" for="username">Kullanıcı Adı</label>
+                        <input value="<%=UserName%>" required class="form-input text-gray-800" name="username"  type="text" pattern="^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="3-20 karakter aralığında, boşluk, noktalama ve özel karakter kullanmayınız" placeholder="Kullanıcı adı">
                     </div>
                     <div class="form-div">
-                        <label class="form-label" for="biography">Biyografi</label>
-                        <textarea class="form-input" name="biography" id=""biography cols="30" rows="3"><%=Biography%></textarea>
+                        <label class="form-label text-gray-200" for="biography">Biyografi</label>
+                        <textarea class="form-input text-gray-800" name="biography" id=""biography cols="30" rows="3"><%=Biography%></textarea>
                     </div>
                     <div class="form-div">
-                        <label class="form-label" for="email">Email</label>
-                        <input value="<%=Email%>" required class="form-input" type="email" placeholder="name@gmail.com" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" title="Doğru email adresi girdiğinizden emin olunuz." name="email">
+                        <label class="form-label text-gray-200" for="email">Email</label>
+                        <input value="<%=Email%>" required class="form-input text-gray-800" type="email" placeholder="name@gmail.com" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" title="Doğru email adresi girdiğinizden emin olunuz." name="email">
                     </div>
                     <button id="settingsSubmit" class="form-button mt-8" type="submit">Kaydet</button>
                 </form>
 
                 <div class="w-full h-20  mt-6"></div>
 
-                <h2 class="text-xl font-bold mb-4 text-green-800">Şifre Sıfırlama</h2>
+                <h2 class="text-xl font-bold mb-4 text-white">Şifre Sıfırlama</h2>
                 <form onsubmit="resetPassword(event)" class="form w-1/2" action="">
                     <div class="form-div">
-                        <label class="form-label" for="currentPassword">Mevcut Şifre</label>
-                        <input required class="form-input" type="password" placeholder="Mevcut şifrenizi giriniz." name="currentPassword">
+                        <label class="form-label text-gray-200" for="currentPassword">Mevcut Şifre</label>
+                        <input required class="form-input text-gray-800" type="password" placeholder="Mevcut şifrenizi giriniz." name="currentPassword">
                     </div>
                     <div class="form-div">
-                        <label class="form-label" for="password">Şifre</label>
-                        <input required class="form-input" type="password" placeholder="Yeni şifrenizi giriniz" name="password">
+                        <label class="form-label text-gray-200" for="password">Şifre</label>
+                        <input required class="form-input text-gray-800" type="password" placeholder="Yeni şifrenizi giriniz" name="password">
                     </div>
                     <div class="form-div">
-                        <label class="form-label" for="confirmPassword">Şifre Tekrarı</label>
-                        <input required class="form-input" type="password" placeholder="Yeni şifrenizi tekrar giriniz" name="confirmPassword">
+                        <label class="form-label text-gray-200" for="confirmPassword">Şifre Tekrarı</label>
+                        <input required class="form-input text-gray-800" type="password" placeholder="Yeni şifrenizi tekrar giriniz" name="confirmPassword">
                     </div>
                     <button id="passwordResetSubmit" class="form-button mt-8" type="submit">Şifre Değiştir</button>
                 </form>

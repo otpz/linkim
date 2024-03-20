@@ -102,6 +102,9 @@ class UserController {
     
         if (auth){
             const user = req.session.user
+            const userStyles = await selectUserStyles(user.Id, "UserId")
+            console.log(userStyles)
+            user.Styles = userStyles[0]
             res.render('settings', user)
         } else{
             res.render('error')
