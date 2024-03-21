@@ -36,4 +36,9 @@ const schemaEmail = yup.object().shape({
     email: yup.string().email("Geçersiz email.").required("Email alanı zorunludur.").matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "Geçerli bir email adresi giriniz."),
 })
 
-module.exports = {schemaRegister, schemaSettings, schemaResetPassword, schemaLinkUrl, schemaLogin, schemaEmail}
+const schemaSupport = yup.object().shape({
+    email: yup.string().email("Geçersiz email.").required("Email alanı zorunludur.").matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "Geçerli bir email adresi giriniz."),
+    name: yup.string("Rakam kullanmayınız.").required("İsim alanı zorunludur.").min(2, "İsim en az 2 karakter olmalıdır."),
+})
+
+module.exports = {schemaRegister, schemaSettings, schemaResetPassword, schemaLinkUrl, schemaLogin, schemaEmail, schemaSupport}

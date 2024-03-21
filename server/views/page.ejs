@@ -8,9 +8,47 @@
     
     <%- include('./partials/navbar'); %>
     
-    <div class="w-160 h-full">
+    <!-- <div class="w-160 h-full">
         <%- result.PageContent %>
-    </div>
+    </div> -->
+
+    <main class="w-160 flex flex-col p-4 m-auto">
+        <div class="w-full">
+            <h1 class="text-2xl font-bold text-gray-800 mt-6">Hakkımızda</h1>
+            <p class="w-full text-justify text-sm font-bold text-gray-600 mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus libero harum perferendis assumenda illo. Corrupti, illo! Excepturi, exercitationem veritatis esse doloribus, rerum culpa libero beatae sequi laborum reiciendis architecto maiores.</p>
+        </div>
+
+        <div class="w-full">
+            <h2 class="text-lg font-bold text-gray-800 mt-6">Misyon</h2>
+            <p class="w-full text-justify text-sm font-bold text-gray-600 mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolor voluptas facere nam obcaecati est?</p>
+        </div>
+
+        <div class="w-full">
+            <h2 class="text-lg font-bold text-gray-800 mt-6">Vizyon</h2>
+            <p class="w-full text-justify text-sm font-bold text-gray-600 mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolor voluptas facere nam obcaecati est?</p>
+        </div>
+
+        <div>
+            <h2 class="text-lg font-bold text-gray-800 mt-6">Destek</h2>
+            <p class="w-full text-justify text-sm font-bold text-gray-600 mt-3">Merak ettiğiniz soruları veya destek almak istediğiniz konuyu bize yazın.</p>
+            <form class="form mt-4" action="" onsubmit="support(event)">
+                <div class="flex items-center justify-between w-full">
+                    <div class="form-div w-1/2 mr-2">
+                        <label class="form-label" for="name">İsim</label>
+                        <input required class="form-input" name="name" type="text" placeholder="İsim">
+                    </div>
+                    <div class="form-div w-1/2 ml-2">
+                        <label class="form-label" for="email">Email</label>
+                        <input required class="form-input" name="email" type="text" placeholder="Soyisim">
+                    </div>
+                </div>
+                <textarea class="form-input w-full" type="text" placeholder="Örn: Profilimi silmek istiyorum nasıl yaparım?" name="question" id="" rows="2"></textarea>
+                <div class="g-recaptcha m-auto mt-3" data-sitekey="6LdtkJgpAAAAAK_FZR4n8awu8NJbpAdzSKtAM7MQ"></div>
+                
+                <button class="form-button w-full mt-4" type="submit">Gönder</button>
+            </form>
+        </div>
+    </main>
 
     <script type="text/javascript" src="/js/app.js"></script>
 

@@ -911,11 +911,6 @@ html{
   margin-bottom: 0.5rem;
 }
 
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -980,6 +975,10 @@ html{
   margin-top: 2rem;
 }
 
+.mr-auto {
+  margin-right: auto;
+}
+
 .block {
   display: block;
 }
@@ -994,14 +993,6 @@ html{
 
 .hidden {
   display: none;
-}
-
-.h-0 {
-  height: 0px;
-}
-
-.h-0\.05 {
-  height: 0.2px;
 }
 
 .h-10 {
@@ -1481,16 +1472,6 @@ html{
 .placeholder\:text-gray-400::placeholder {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
-}
-
-.placeholder\:text-gray-700::-moz-placeholder {
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
-}
-
-.placeholder\:text-gray-700::placeholder {
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 .hover\:bg-gray-600:hover {

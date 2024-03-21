@@ -365,6 +365,8 @@ const support = async (event) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+            name: event.target.name.value,
+            email: event.target.email.value,
             question: event.target.question.value,
             g_rechaptcha_response: event.target['g-recaptcha-response'].value
         }) 

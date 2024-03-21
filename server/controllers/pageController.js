@@ -1,6 +1,6 @@
 const {selectPages, selectUser} = require('../sql/selectSql')
 const {editPassword} = require('../sql/setSql')
-const {schemaEmail, schemaResetPassword} = require('../helpers/validation')
+const {schemaEmail, schemaResetPassword, schemaSupport} = require('../helpers/validation')
 const generatePasswordResetToken = require('../helpers/generatePasswordResetToken')
 const dotenv = require('dotenv').config()
 const nodemailer = require("nodemailer")
@@ -21,7 +21,7 @@ class PageController{
     } 
 
     async supportFormController(req, res){
-        const {question} = req.body
+        const {name, email, question} = req.body
 
         const response_key = req.body.g_rechaptcha_response
         const secret_key = process.env.GOOGLE_SECRET
@@ -38,10 +38,48 @@ class PageController{
             return res.json({ error: "reCHAPCHA doğrulaması yapılmadı." })
         } 
 
-        if (question){
-            res.json({message: "Sorunuz alındı."})
-        } else {
-            res.json({error: "Bir hata oluştu. Daha sonra tekrar deneyiniz."})
+        try {
+            await schemaSupport.validate(req.body, {abortEarly: false})
+
+            if (!question){
+                return res.json({error: "Soru kısmını boş bırakmayınız."})
+            }
+
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                host: 'smtp.gmail.com',
+                port: 587,
+                secure: false,
+                auth: {
+                    user: process.env.MAIL_SENDER,
+                    pass: process.env.GOOGLE_APP_KEY
+                },
+            })
+
+            const html = 
+            `Gönderen bilgileri: ${name}, ${email} <br><br>
+            
+            Gönderenin mesajı;<br>
+
+            ${question} <br>
+
+            Linkim Destek Bölümü Mesajları<br>
+            `
+            const info = transporter.sendMail({
+                from: {
+                    name: name,
+                    address: process.env.MAIL_SENDER
+                },
+                to: [process.env.MAIL_SENDER],
+                subject: "Destek",
+                text: "TESTING FROM LINKIM",
+                html: html,
+            })
+
+            return res.json({message: "Sorunuz alındı."})
+
+        } catch (errors) {
+            next(errors)
         }
     }
 
