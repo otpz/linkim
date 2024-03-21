@@ -427,7 +427,7 @@ const askQuestion = async (event) => {
         },
         body: JSON.stringify({
             question: event.target.question.value,
-            anonymously: event.target.anonymously.value,
+            anonymously: event.target.anonymously.checked,
         })
     })
 
@@ -470,7 +470,7 @@ const askQuestion = async (event) => {
             </div>
         </div>
     `
-    if(result.message){
+    if(!result.message){
         event.target.question.value = ""
         sendQuestion.disabled = false
         sendQuestion.innerHTML = "Gönder"
@@ -482,11 +482,12 @@ const askQuestion = async (event) => {
         const newQuestionDiv = document.createElement('div')
         newQuestionDiv.innerHTML = newQuestion
         questionsDOM.appendChild(newQuestionDiv)
-
     } else if (result.errorValidation){
         result.errorValidation.forEach(element => {
             toastr.error(element)
         })
+    } else if (result.error){
+        toastr.error(result.error)
     }
 
 }

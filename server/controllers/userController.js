@@ -1,5 +1,5 @@
 const {selectUser, selectUserLinks, selectUserStyles, selectExistStyles} = require('../sql/selectSql')
-const {insertStyle} = require('../sql/insertSql')
+const {insertStyle, insertQuestion} = require('../sql/insertSql')
 const formatDate = require("../helpers/formatDate")
 const {editUser, editPassword, editStyle} = require('../sql/setSql')
 const {schemaSettings, schemaResetPassword, schemaText} = require("../helpers/validation")
@@ -145,10 +145,23 @@ class UserController {
             const questioner = req.session.user
             const user = await selectUser(req.params.username, "UserName") // soru sorulan
 
-            if (question){
-                return res.json({message: "Sorunuz eklendi."})
+            if (!user){
+                return res.json({error: "Kullanıcı bulunamadı"})
             }
+
+            const questionerId = !anonymously ? questioner.Id : null
+
+            console.log("questionerId", questionerId)
+
+            const result = await insertQuestion(user.Id, questionerId, question)
+
+            if (result.error){
+                return res.json({error: "Soru gönderilirken bir sorun oluştu."})
+            }
+            return res.json({message: "Sorunuz gönderildi."})
+
         } catch (errors) {
+            console.log(errors)
             next(errors)
         }
 

@@ -11,7 +11,7 @@ const insertUser = async (name, surname, username, email, password) => {
         }
     } catch (error) {
         console.log(error)
-        return error
+        return {error: error}
     }
 }
 
@@ -26,7 +26,7 @@ const insertLink = async (userId, title, link) => {
         }
     } catch (error) {
         console.log(error)
-        return error
+        return {error: error}
     }
 }
 
@@ -41,8 +41,23 @@ const insertStyle = async (userId, bgColor, borderStyle, linkBgColor) => {
         }
     } catch (error) {
         console.log(error)
-        return error
+        return {error: error}
     }
 }
 
-module.exports = {insertUser, insertLink, insertStyle}
+const insertQuestion = async (userId, questionerId, question) => {
+    const query = `insert into UserQuestions (UserId, QuestionerId, Question, Answer, AnsweredDate, Likes) values ('${userId}', ${questionerId}, '${question}', null, null, 0)`
+    try {
+        const result = await sql.query(query)
+        if (result.rowsAffected[0]){
+            return {message: "success"}
+        } else {
+            return {error: "error"}
+        }
+    } catch (error) {
+        console.log(error)
+        return {error: error}
+    }
+}
+
+module.exports = {insertUser, insertLink, insertStyle, insertQuestion}
