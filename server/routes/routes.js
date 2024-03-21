@@ -17,7 +17,7 @@ const authController = require('../controllers/authController')
 
 const limiter = rateLimit({
 	windowMs: 1000 * 60, // 1 minutes
-	limit:1, // Limit each IP to 1 requests per `window` (here, per 1 minutes).
+	limit: 3, // Limit each IP to 3 requests per `window` (here, per 1 minutes).
 	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
   handler: (req, res, next, options) => res.status(400).json({errorRequest: "Daha fazla istek göndermeden lütfen biraz bekleyin."}),
@@ -43,7 +43,7 @@ router.post("/changestyle", authMiddleware, userController.changeStyleController
 router.post("/support", pageController.supportFormController)
 router.post("/sendmail", pageController.sendMailController)
 router.post("/resetforgotpassword", pageController.resetForgotPasswordController)
-router.post("/ask/:username", authMiddleware, userController.sendQuestionController)
+router.post("/ask/:username", limiter, authMiddleware, userController.sendQuestionController)
 //GET routes
 router.get('/', (req, res) => {
   res.render('main')

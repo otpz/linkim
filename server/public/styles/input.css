@@ -115,8 +115,9 @@
     }
 
     .question-main .top,
-    .question-main .bottom{
-        @apply p-4 w-full flex flex-col items-start
+    .question-main .bottom,
+    .question-main .middle{
+        @apply p-4 py-3 w-full flex flex-col items-start
     }
 
     .question-main .bottom{
@@ -175,6 +176,21 @@
 
     .question-main .likes span{
         @apply text-xs h-4 text-gray-400
+    }
+
+
+    /* Question middle */
+
+    .question-main .middle .question-form{
+        @apply w-full items-start;
+    }
+
+    .question-main .middle textarea{
+        @apply bg-transparent outline-none w-full mt-2 placeholder:text-gray-400 placeholder:text-sm text-sm
+    }
+
+    .question-main .middle button{
+        @apply w-1/4 bg-gray-800 h-10 transition-all duration-200
     }
 
 
