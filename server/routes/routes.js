@@ -39,11 +39,11 @@ router.post("/login", authController.loginController)
 router.post("/settings", authMiddleware, userController.settingsController)
 router.post("/addlink", authMiddleware, linkController.addLinkController)
 router.post("/settings/resetpassword", authMiddleware, userController.resetPasswordController)
-router.post("/changestyle", userController.changeStyleController)
+router.post("/changestyle", authMiddleware, userController.changeStyleController)
 router.post("/support", pageController.supportFormController)
 router.post("/sendmail", pageController.sendMailController)
 router.post("/resetforgotpassword", pageController.resetForgotPasswordController)
-
+router.post("/ask/:username", authMiddleware, userController.sendQuestionController)
 //GET routes
 router.get('/', (req, res) => {
   res.render('main')

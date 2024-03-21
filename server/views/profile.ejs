@@ -213,10 +213,20 @@
 
         <div class="w-full h-[0.5px] bg-gray-400 mt-6"></div>
 
-        <form class="form w-full items-start" action="">
-            <textarea class=" bg-transparent outline-none w-full mt-2 placeholder:text-gray-400 border-b-1 border-gray-400" name="" id="" rows="5" placeholder="Birşeyler yaz."></textarea>
-            <button class="w-2/5 h-10 border-1 border-white mt-2 hover:bg-gray-800 hover:text-white transition-all duration-200 rounded-md">Gönder</button>
+        <form class="form w-full items-start" action="" onsubmit="askQuestion(event)">
+            <textarea class="bg-transparent outline-none w-full mt-2 placeholder:text-gray-400 border-b-1 border-gray-400" name="question" id="question" rows="5" placeholder="Bana bir şey sor."></textarea>
+            <div class="flex items-center justify-between w-full">
+                <button id="sendQuestion" class="w-2/5 h-10 border-1 border-white mt-2 hover:bg-gray-800 hover:text-white transition-all duration-200 rounded-md">Gönder</button>
+                <div class="mt-2 flex w-2/5 h-10 items-center justify-center">
+                    <input id="anonymously" name="bgColor" class="form-input w-4 h-4" type="radio" value="anonymously">
+                    <label for="anonymously" class=" ml-3">Anonim olarak sor</label>
+                </div>
+            </div>
         </form>
+
+        <div id="questions" class="questions">
+        </div>
+
     </main>
 
     <script type="text/javascript" src="/js/app.js"></script>

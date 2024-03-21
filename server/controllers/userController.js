@@ -2,7 +2,7 @@ const {selectUser, selectUserLinks, selectUserStyles, selectExistStyles} = requi
 const {insertStyle} = require('../sql/insertSql')
 const formatDate = require("../helpers/formatDate")
 const {editUser, editPassword, editStyle} = require('../sql/setSql')
-const {schemaSettings, schemaResetPassword} = require("../helpers/validation")
+const {schemaSettings, schemaResetPassword, schemaText} = require("../helpers/validation")
 const {comparePassword, hashPassword} = require("../helpers/auth")
 const dotenv = require('dotenv').config()
 
@@ -134,6 +134,24 @@ class UserController {
         } catch (errors) {
             next(errors)
         }
+    }
+
+    async sendQuestionController(req, res, next){
+
+        const {question, anonymously} = req.body
+
+        try {
+            await schemaText.validate(req.body, {abortEarly: false})
+            const questioner = req.session.user
+            const user = await selectUser(req.params.username, "UserName") // soru sorulan
+
+            if (question){
+                return res.json({message: "Sorunuz eklendi."})
+            }
+        } catch (errors) {
+            next(errors)
+        }
+
     }
 
 }

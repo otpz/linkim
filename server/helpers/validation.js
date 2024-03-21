@@ -41,4 +41,8 @@ const schemaSupport = yup.object().shape({
     name: yup.string("Rakam kullanmayınız.").required("İsim alanı zorunludur.").min(2, "İsim en az 2 karakter olmalıdır."),
 })
 
-module.exports = {schemaRegister, schemaSettings, schemaResetPassword, schemaLinkUrl, schemaLogin, schemaEmail, schemaSupport}
+const schemaText = yup.object().shape({
+    question: yup.string().required("Metin alanının doldurulması zorunludur.").min(2, "En az 2 karakterli bir metin giriniz.").max(1000, "En fazla 1000 karakterli metin giriniz.")
+})
+
+module.exports = {schemaRegister, schemaSettings, schemaResetPassword, schemaLinkUrl, schemaLogin, schemaEmail, schemaSupport, schemaText}

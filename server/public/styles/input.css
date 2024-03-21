@@ -104,6 +104,96 @@
     } */
 
 
+    /* questions */
+
+    .questions{
+        @apply w-full
+    }
+
+    .question-main{
+        @apply my-10 w-full min-h-60 flex flex-col bg-gray-900 rounded-lg
+    }
+
+    .question-main .top,
+    .question-main .bottom{
+        @apply p-4 w-full flex flex-col items-start
+    }
+
+    .question-main .bottom{
+        @apply bg-gray-800 rounded-lg
+    }
+
+    .question-main .q-user-info{
+        @apply w-full h-12 flex items-center justify-start mb-2
+    }
+
+    .question-main .q-user-info .avatar{
+        @apply w-10 h-10 rounded-full mr-3
+    }
+
+    .question-main .q-user-info .info{
+        @apply flex flex-col
+    }
+
+    .question-main .q-user-info .info .name{
+        @apply text-base text-white
+    }
+
+    .question-main .q-user-info .info .username{
+        @apply text-sm text-gray-400
+    }
+
+    .question-main .user-text{
+        @apply w-full
+    }
+
+    .question-main .user-text p{
+        @apply text-sm leading-5 text-justify
+    }
+
+    .question-main .question-stats{
+        @apply w-full flex justify-between items-center mt-1
+    }
+
+    .question-main .question-stats .time{
+        @apply text-xs text-gray-400
+    }   
+
+    .question-main .likes{
+        @apply min-w-32 h-6 flex items-center
+    }
+
+    .question-main .likes svg{
+        @apply fill-gray-400
+    }
+
+    .question-main .likes:hover svg,
+    .question-main .likes:hover span
+    {
+        @apply text-gray-500 transition-all duration-200 fill-gray-500
+    }
+
+    .question-main .likes span{
+        @apply text-xs h-4 text-gray-400
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /******* USER CUSTOM STYLES *******/
 

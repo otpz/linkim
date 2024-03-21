@@ -406,3 +406,91 @@ const sendMail = async (event) => {
         toastr.success(result.message)
     }
 }
+
+const askQuestion = async (event) => {
+    event.preventDefault()
+
+    const sendQuestion = document.getElementById("sendQuestion")
+    sendQuestion.disabled = true
+    sendQuestion.innerHTML = "Gönderiliyor.."
+
+    // kullanıcı adını alma
+    const currentUrl = window.location.href
+    const usernameWithAt = currentUrl.split('@')[1]
+    const username = usernameWithAt.split('&')[0]
+
+    const data = await fetch(`${BACKEND_URL}/ask/${username}`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            question: event.target.question.value,
+            anonymously: event.target.anonymously.value,
+        })
+    })
+
+    const result = await data.json()
+
+    const newQuestion = `
+        <div class="question-main">
+            <div class="top">
+                <div class="q-user-info">
+                    <img class="avatar" src="/public/assets/img/avatar.png" alt="">
+                    <div class="info">
+                        <span class="name">Anonim</span>
+                        <span class="username"></span>
+                    </div>
+                </div>
+                <div class="user-text">
+                    <p>Lorem. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos veritatis ducimus ipsum et sed ea nemo. Provident perferendis atque officia!</p>
+                </div>
+            </div>
+            <div class="bottom">
+                <div class="q-user-info">
+                    <img class="avatar" src="/public/assets/img/pp.jpg" alt="">
+                    <div class="info">
+                        <span class="name">Osman Topuz</span>
+                        <span class="username">@otpz</span>
+                    </div>
+                </div>
+                <div class="user-text">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam cum eum reprehenderit dicta sint velit earum autem inventore nesciunt itaque!</p>
+                </div>
+                <div class="question-stats">
+                    <button class="likes">
+                        <svg class="w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
+                        <span>3 likes</span>
+                    </button>
+                    <div class="time">
+                        <span>3 hours ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+    if(result.message){
+        event.target.question.value = ""
+        sendQuestion.disabled = false
+        sendQuestion.innerHTML = "Gönder"
+    }
+    
+    if (result.message){
+        toastr.success(result.message)
+        const questionsDOM = document.getElementById("questions")
+        const newQuestionDiv = document.createElement('div')
+        newQuestionDiv.innerHTML = newQuestion
+        questionsDOM.appendChild(newQuestionDiv)
+
+    } else if (result.errorValidation){
+        result.errorValidation.forEach(element => {
+            toastr.error(element)
+        })
+    }
+
+}
+
+
+
+
