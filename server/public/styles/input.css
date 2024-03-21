@@ -111,7 +111,7 @@
     }
 
     .question-main{
-        @apply my-10 w-full min-h-60 flex flex-col bg-gray-900 rounded-lg
+        @apply my-5 w-full min-h-60 flex flex-col bg-gray-900 rounded-lg
     }
 
     .question-main .top,

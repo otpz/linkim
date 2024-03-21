@@ -1,4 +1,4 @@
-const {selectUser, selectUserLinks, selectUserStyles, selectExistStyles} = require('../sql/selectSql')
+const {selectUser, selectUserLinks, selectUserStyles, selectExistStyles, selectUserQuestions} = require('../sql/selectSql')
 const {insertStyle, insertQuestion} = require('../sql/insertSql')
 const formatDate = require("../helpers/formatDate")
 const {editUser, editPassword, editStyle} = require('../sql/setSql')
@@ -21,9 +21,25 @@ class UserController {
     
         const userLinks = await selectUserLinks(user.Id, "UserId")
         const userStyles = await selectUserStyles(user.Id, "UserId")
+        const userQuestions = await selectUserQuestions(user.Id, "UserId")
+
+        for (const question of userQuestions) {
+            const questionerUser = await selectUser(question.QuestionerId, "Id");
+        
+            question.Questioner = {
+                QuestionerName: questionerUser.Name,
+                QuestionerSurname: questionerUser.Surname,
+                QuestionerUserName: questionerUser.UserName
+            };
+        
+            // console.log(question);
+        }
+
+        console.log(userQuestions)
 
         user.Links = userLinks ? userLinks : []
         user.Styles = userStyles[0] ? userStyles[0] : []
+        user.Questions = userQuestions ? userQuestions : []
 
         user.JoinDate = formatDate(user.JoinDate)
         
@@ -165,6 +181,17 @@ class UserController {
             next(errors)
         }
 
+    }
+
+    async answerQuestionController(req, res, next){
+        const {answer} = req.body
+
+        try {
+            await schemaText.validate({question: answer}, {abortEarly: false})
+        } catch (errors) {
+            console.log(errors)
+            next(errors)
+        }
     }
 
 }

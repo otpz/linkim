@@ -37,7 +37,16 @@ const selectExistStyles = async (userId, queryParam) => {
 // queryParam = "UserId"
 const selectUserLinks = async (userId, queryParam) => {
     const query = `select * from Links where ${queryParam} = ${userId}`
-    
+    try {
+        const result = await sql.query(query)
+        return result.recordset
+    } catch (error) {
+        return error
+    }
+}
+
+const selectUserQuestions = async (userId, queryParam) => {
+    const query = `select * from UserQuestions where ${queryParam} = ${userId}`
     try {
         const result = await sql.query(query)
         return result.recordset
@@ -67,7 +76,6 @@ const selectPages = async (pageSlug) => {
     }
 }
 
-
 const selectLinksLastMinutes = async () => {
     // 1 dakika içerisinde eklenen link sayısı
     const query = `select count(*) as counter from Links where CreatedDate >= dateadd(minute, -1, getdate())`
@@ -79,4 +87,5 @@ const selectLinksLastMinutes = async () => {
     }
 }
 
-module.exports = {selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles}
+
+module.exports = {selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions}

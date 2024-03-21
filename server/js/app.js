@@ -467,8 +467,8 @@ const askQuestion = async (event) => {
     
     if (result.message){
         toastr.success(result.message)
-        const questionsDOM = document.getElementById("questions")
-        questionsDOM.innerHTML += newQuestion
+        // const questionsDOM = document.getElementById("questions")
+        // questionsDOM.innerHTML += newQuestion
     } else if (result.errorValidation){
         result.errorValidation.forEach(element => {
             toastr.error(element)
@@ -481,7 +481,38 @@ const askQuestion = async (event) => {
 
 }
 
-const answerQuestion = async () => {
+const answerQuestion = async (event) => {
+    event.preventDefault()
+
+    // kullanıcı adını alma
+    const currentUrl = window.location.href
+    const usernameWithAt = currentUrl.split('@')[1]
+    const username = usernameWithAt.split('&')[0]
+
+    const data = await fetch(`${BACKEND_URL}/answer/${username}`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            answer: event.target.answer.value,
+        })
+    })
+
+    const result = await data.json()
+
+    if (result.message){
+        toastr.success(result.message)
+    } else if (result.errorValidation){
+        result.errorValidation.forEach(element => {
+            toastr.error(element)
+        })
+    } else if (result.error){
+        toastr.error(result.error)
+    } else if(result.errorRequest){
+        toastr.error(result.errorRequest)
+    }
 
 }
 
