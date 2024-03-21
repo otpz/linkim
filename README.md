@@ -3,6 +3,8 @@
 
 linkim is a social media referance landing page.
 
+## Stage : Development
+
 ## Installation
 In order to install and use the project, you need to create a database in Microsoft SQL Server as follows.
 DB name: linkim
