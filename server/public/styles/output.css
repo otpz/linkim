@@ -800,8 +800,6 @@ html{
   flex-direction: column;
   align-items: flex-start;
   padding: 1rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
 }
 
 .question-main .bottom {
@@ -1149,6 +1147,10 @@ html{
   display: flex;
 }
 
+.grid {
+  display: grid;
+}
+
 .list-item {
   display: list-item;
 }
@@ -1331,6 +1333,10 @@ html{
   flex-wrap: wrap;
 }
 
+.place-items-center {
+  place-items: center;
+}
+
 .items-start {
   align-items: flex-start;
 }
@@ -1394,6 +1400,10 @@ html{
 
 .border-r-1 {
   border-right-width: 1px;
+}
+
+.border-dashed {
+  border-style: dashed;
 }
 
 .border-gray-400 {

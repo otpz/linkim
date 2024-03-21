@@ -16,8 +16,8 @@ const linkController = require('../controllers/linkController')
 const authController = require('../controllers/authController')
 
 const limiter = rateLimit({
-	windowMs: 1000 * 60, // 1 minutes
-	limit: 3, // Limit each IP to 3 requests per `window` (here, per 1 minutes).
+	windowMs: 1000 * 10, // 1 minutes
+	limit: 10, // Limit each IP to 10 requests per `window` (here, per 10 seconds).
 	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
   handler: (req, res, next, options) => res.status(400).json({errorRequest: "Daha fazla istek göndermeden lütfen biraz bekleyin."}),

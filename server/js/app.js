@@ -497,6 +497,7 @@ const answerQuestion = async (event) => {
         },
         body: JSON.stringify({
             answer: event.target.answer.value,
+            question_id: event.target.question_id.value
         })
     })
 

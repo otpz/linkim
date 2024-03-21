@@ -117,7 +117,7 @@
     .question-main .top,
     .question-main .bottom,
     .question-main .middle{
-        @apply p-4 py-3 w-full flex flex-col items-start
+        @apply p-4 w-full flex flex-col items-start
     }
 
     .question-main .bottom{

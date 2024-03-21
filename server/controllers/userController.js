@@ -1,7 +1,7 @@
 const {selectUser, selectUserLinks, selectUserStyles, selectExistStyles, selectUserQuestions} = require('../sql/selectSql')
 const {insertStyle, insertQuestion} = require('../sql/insertSql')
 const formatDate = require("../helpers/formatDate")
-const {editUser, editPassword, editStyle} = require('../sql/setSql')
+const {editUser, editPassword, editStyle, editQuestion} = require('../sql/setSql')
 const {schemaSettings, schemaResetPassword, schemaText} = require("../helpers/validation")
 const {comparePassword, hashPassword} = require("../helpers/auth")
 const dotenv = require('dotenv').config()
@@ -25,25 +25,19 @@ class UserController {
 
         for (const question of userQuestions) {
             const questionerUser = await selectUser(question.QuestionerId, "Id");
-        
             question.Questioner = {
                 QuestionerName: questionerUser.Name,
                 QuestionerSurname: questionerUser.Surname,
                 QuestionerUserName: questionerUser.UserName
-            };
-        
-            // console.log(question);
+            }
         }
-
-        console.log(userQuestions)
 
         user.Links = userLinks ? userLinks : []
         user.Styles = userStyles[0] ? userStyles[0] : []
         user.Questions = userQuestions ? userQuestions : []
-
         user.JoinDate = formatDate(user.JoinDate)
         
-        res.render('profile', {user})
+        res.render('profile', {user}) 
     } 
 
     async settingsController(req, res, next){
@@ -184,10 +178,23 @@ class UserController {
     }
 
     async answerQuestionController(req, res, next){
-        const {answer} = req.body
+        const {answer, question_id} = req.body
 
         try {
             await schemaText.validate({question: answer}, {abortEarly: false})
+
+            const question = await selectUserQuestions(question_id, "Id")
+
+            if (!question){
+                return res.json({error: "Soru bulunamadı"})
+            }
+
+            const result = await editQuestion(question_id, answer)
+            if (result.error){
+                return res.json({errorSql: "Bir hata oluştu. Lütfen tekrar deneyin."})
+            }
+            return res.json({message: "Cevabınız kaydedildi."})
+
         } catch (errors) {
             console.log(errors)
             next(errors)

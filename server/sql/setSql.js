@@ -45,4 +45,34 @@ const editStyle = async (userId, bgColor, borderStyle, linkBgColor) => {
     }
 }   
 
-module.exports = {editUser, editPassword, editStyle}
+const editQuestion = async (questionId, answer) => {
+    const query = `UPDATE UserQuestions set Answer = '${answer}', AnsweredDate = GETDATE() WHERE Id = '${questionId}'`
+    try {
+        const result = await sql.query(query)
+        if (result.rowsAffected[0]){
+            return {message: "success"}
+        } else {
+            return {error: "error"}
+        }
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
+const editQuestionLikes = async (likes) => {
+    const query = `UPDATE UserQuestions set Likes = '${likes}'`
+    try {
+        const result = await sql.query(query)
+        if (result.rowsAffected[0]){
+            return {message: "success"}
+        } else {
+            return {error: "error"}
+        }
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
+module.exports = {editUser, editPassword, editStyle, editQuestion, editQuestionLikes}
