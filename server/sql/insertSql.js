@@ -60,4 +60,20 @@ const insertQuestion = async (userId, questionerId, question) => {
     }
 }
 
-module.exports = {insertUser, insertLink, insertStyle, insertQuestion}
+const insertResetPassToken = async (token) => {
+    const query = `insert into ResetPassTokens (Token, ExpireStart, ExpireEnd) values ('${token}', GETDATE(), DATEADD(MINUTE, 1, GETDATE()))`;
+    try {
+        const result = await sql.query(query)
+        if (result.rowsAffected[0]){
+            return {message: "success"}
+        } else {
+            return {error: "error"}
+        }
+    } catch (error) {
+        console.log(error)
+        return {error: error}
+    }
+
+}
+
+module.exports = {insertUser, insertLink, insertStyle, insertQuestion, insertResetPassToken}

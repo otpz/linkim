@@ -1,4 +1,5 @@
-const {selectPages, selectUser} = require('../sql/selectSql')
+const {selectPages, selectUser, selectResetPassToken} = require('../sql/selectSql')
+const {deleteResetPassToken} = require('../sql/deleteSql')
 const {editPassword} = require('../sql/setSql')
 const {schemaEmail, schemaResetPassword, schemaSupport} = require('../helpers/validation')
 const generatePasswordResetToken = require('../helpers/generatePasswordResetToken')
@@ -94,8 +95,14 @@ class PageController{
             }
             
             const passwordResetToken = await generatePasswordResetToken()
+
+            if (passwordResetToken.error){
+                return res.json(passwordResetToken.error)
+            }
+
             req.session.passwordResetToken = passwordResetToken
             req.session.Email = email
+
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 host: "smtp.gmail.com",
@@ -136,10 +143,29 @@ class PageController{
     async getforgotPasswordController(req, res){
         const token = req.params.token
         const email = req.session.Email
+        const result = await selectResetPassToken(token)
+
+        if (!result){
+            return res.render("error")
+        }
+
+        const expireEnd = result.ExpireEnd.setHours(result.ExpireEnd.getHours()-3)
+        const now = new Date()
+        const diff = expireEnd - now
+
+        const deleteResult = await deleteResetPassToken(token)
+        if (deleteResult.error){
+            return res.json({message: "silinemedi"})
+        }
+    
+        if (diff <= 0){
+            return res.render("error")
+        }
 
         if(req.session.passwordResetToken === undefined || (req.session.passwordResetToken !== token)){
             return res.render("error")
         }
+
         return res.render("resetPassword", {email})
     }
 

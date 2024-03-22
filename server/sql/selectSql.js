@@ -87,5 +87,15 @@ const selectLinksLastMinutes = async () => {
     }
 }
 
+const selectResetPassToken = async (token) => {
+    const query = `select * from ResetPassTokens where Token = '${token}'`
+    try {
+        const result = await sql.query(query)
+        return result.recordset[0]
+    } catch (error) {
+        return error
+    }
+}
 
-module.exports = {selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions}
+
+module.exports = {selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions}

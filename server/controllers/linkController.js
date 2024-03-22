@@ -1,5 +1,5 @@
 const {insertLink} = require('../sql/insertSql')
-const deleteUserLink = require('../sql/deleteSql')
+const {deleteUserLink} = require('../sql/deleteSql')
 const {selectExistLinks, selectLinksLastMinutes} = require('../sql/selectSql')
 const {schemaLinkUrl} = require('../helpers/validation')
 const { comparePassword } = require('../helpers/auth')
