@@ -111,7 +111,7 @@
     }
 
     .question-main{
-        @apply my-5 w-full min-h-60 flex flex-col bg-gray-900 rounded-lg
+        @apply my-5 w-full min-h-52 flex flex-col bg-gray-900 rounded-lg
     }
 
     .question-main .top,
@@ -121,7 +121,7 @@
     }
 
     .question-main .bottom{
-        @apply bg-gray-800 rounded-lg
+        @apply bg-gray-800 rounded-lg h-full
     }
 
     .question-main .q-user-info{
@@ -177,7 +177,6 @@
     .question-main .likes span{
         @apply text-xs h-4 text-gray-400
     }
-
 
     /* Question middle */
 

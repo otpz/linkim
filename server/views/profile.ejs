@@ -194,12 +194,12 @@
                 <input class="hidden" type="hidden" id="csrfToken" name="csrfToken" value="<%= locals.csrfToken %>">
             <% } %>
             <div class="form-div w-full">
-                <label class="form-label" for="title">Başlık</label>
-                <input class="form-input py-2 px-3" type="text" placeholder="LinkedIn" name="title">
+                <label class="form-label text-gray-200" for="title">Başlık</label>
+                <input class="form-input py-2 px-3 text-gray-800" type="text" placeholder="LinkedIn" name="title">
             </div>
             <div class="form-div w-full">
-                <label class="form-label" for="url">URL Adresi</label>
-                <input class="form-input py-2 px-3" type="url" placeholder="" name="url">
+                <label class="form-label text-gray-200" for="url">URL Adresi</label>
+                <input class="form-input py-2 px-3 text-gray-800" type="url" placeholder="" name="url">
             </div>
             <div class="flex items-center justify-between w-full">
                 <button id="linkSubmit" class="w-2/5 h-10 border-1 border-gray-600 mt-2 hover:bg-gray-600 hover:text-white transition-all duration-200 rounded-md">
@@ -213,21 +213,24 @@
 
         <div class="w-full h-[0.5px] bg-gray-400 mt-6"></div>
 
-        <form class="form w-full items-start" action="" onsubmit="askQuestion(event)">
-            <textarea class="bg-transparent outline-none w-full mt-2 placeholder:text-gray-400 border-b-1 border-gray-400" name="question" id="question" rows="5" placeholder="Bana bir şey sor."></textarea>
-            <div class="flex items-center justify-between w-full">
-                <button id="sendQuestion" class="w-2/5 h-10 border-1 border-white mt-2 hover:bg-gray-800 hover:text-white transition-all duration-200 rounded-md">Gönder</button>
-                <div class="mt-2 flex w-2/5 h-10 items-center justify-center">
-                    <input id="anonymously" name="bgColor" class="form-input w-4 h-4" type="checkbox" value="anonymously">
-                    <label for="anonymously" class=" ml-3">Anonim olarak sor</label>
+        <% if (locals.verifiedUrl !== user.UserName) { %>
+            <form id="ask-question-form" class="form w-full items-start" action="" onsubmit="askQuestion(event)">
+                <textarea class="bg-transparent outline-none w-full mt-2 placeholder:text-gray-400 border-b-1 border-gray-400" name="question" id="question" rows="5" placeholder="Bana bir şey sor."></textarea>
+                <div class="flex items-center justify-between w-full">
+                    <button id="sendQuestion" class="w-2/5 h-10 border-1 border-white mt-2 hover:bg-gray-800 hover:text-white transition-all duration-200 rounded-md">Gönder</button>
+                    <div class="mt-2 flex w-2/5 h-10 items-center justify-center">
+                        <input id="anonymously" name="bgColor" class="form-input w-4 h-4" type="checkbox" value="anonymously">
+                        <label for="anonymously" class=" ml-3">Anonim olarak sor</label>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        <% } %>
+        
 
         <div id="questions" class="questions">
             <% if (user.Questions.length > 0) { %>
                     <% for (let i = 0; i < user.Questions.length; i++) { %>
-                        <% if (user.Questions[i].Answer || locals.verifiedUrl === user.UserName) { %>
+                        <% if (user.Questions[i].Answer || (locals.verifiedUrl === user.UserName) || ((user.Questions[i].Questioner.QuestionerUserName === locals.verifiedUrl) && locals.verifiedUrl)) { %>
                             <div id="<%= user.Questions[i].Id %>" class="question-main">
                                 <div class="top">
                                     <div class="q-user-info">
@@ -278,11 +281,17 @@
                                         <div class="question-stats">
                                             <button class="likes" onsubmit="like(event)">
                                                 <svg class="w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
-                                                <span><%= user.Questions[i].Likes %> likes</span>
+                                                <span><%= user.Questions[i].Likes %> favori</span>
                                             </button>
                                             <div class="time">
                                                 <span><%= user.Questions[i].AnsweredDate %></span>
                                             </div>
+                                        </div>
+                                    </div>
+                                <% } else if (user.Questions[i].Questioner.QuestionerUserName === locals.verifiedUrl) { %>
+                                    <div class="p-4 w-full flex flex-col items-start rounded-lg h-full">
+                                        <div class="user-text">
+                                            <p class="text-gray-400 select-none">Sorunuz henüz cevaplanmadı.</p>
                                         </div>
                                     </div>
                                 <% } %>  
