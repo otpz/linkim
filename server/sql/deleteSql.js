@@ -29,4 +29,18 @@ const deleteResetPassToken = async (token) => {
     }
 }
 
-module.exports = {deleteUserLink, deleteResetPassToken}
+const deleteUserQuestion = async (questionId) => {
+    const query = `delete from UserQuestions where Id = '${questionId}'`
+    try {
+        const result = await sql.query(query)
+        if (result.rowsAffected[0]){
+            return {message: "success"}
+        } else {
+            return {error: "error"}
+        }
+    } catch (error) {
+        return error
+    }
+}
+
+module.exports = {deleteUserLink, deleteResetPassToken, deleteUserQuestion}

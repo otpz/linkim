@@ -23,6 +23,17 @@ const selectExistLinks = async (userId, queryParam, id, Id) => {
     }
 }
 
+const selectExistQuestion = async (userId, questionId) => {
+    const query = `select count(*) as question from UserQuestions where UserId = '${userId}' and Id = '${questionId}'`
+    try {
+        const result = await sql.query(query)
+        return result.recordset[0]
+    } catch (error) {
+        return error
+    }
+}
+
+
 // queryParam = "UserId" - Kullanıcı daha önce style kaydetmiş mi
 const selectExistStyles = async (userId, queryParam) => {
     const query = `select count(*) as existStyle from UserStyles where ${queryParam} = '${userId}'`
@@ -98,4 +109,4 @@ const selectResetPassToken = async (token) => {
 }
 
 
-module.exports = {selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions}
+module.exports = {selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion}

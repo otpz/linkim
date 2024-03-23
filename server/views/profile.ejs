@@ -261,7 +261,7 @@
                                             <input type="hidden" name="question_id" value="<%= user.Questions[i].Id %>">
                                             <div class="mt-1 flex w-full h-10 items-start justify-start">
                                                 <button type="submit" class="mr-2 hover:text-blue-500">Gönder</button>
-                                                <button class="ml-2 hover:text-red-500" disabled>Sil</button>
+                                                <button id="<%= user.Questions[i].Id %>" class="ml-2 hover:text-red-500" onclick="deleteQuestion(event)" >Sil</button>
                                             </div>
                                         </form>
                                     </div>

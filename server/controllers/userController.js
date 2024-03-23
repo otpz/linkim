@@ -1,5 +1,6 @@
-const {selectUser, selectUserLinks, selectUserStyles, selectExistStyles, selectUserQuestions} = require('../sql/selectSql')
+const {selectUser, selectUserLinks, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion} = require('../sql/selectSql')
 const {insertStyle, insertQuestion} = require('../sql/insertSql')
+const {deleteUserQuestion} = require('../sql/deleteSql')
 const formatDate = require("../helpers/formatDate")
 const {editUser, editPassword, editStyle, editQuestion} = require('../sql/setSql')
 const {schemaSettings, schemaResetPassword, schemaText} = require("../helpers/validation")
@@ -199,6 +200,26 @@ class UserController {
             console.log(errors)
             next(errors)
         }
+    }
+
+    async deleteQuestionController(req, res, next){
+        
+        const id = req.params.id
+        const userId = req.session.user.Id
+
+        const exist = await selectExistQuestion(userId, id)
+
+        if (!exist.question){
+            return res.json({error: "Soru bulunamadı." })
+        }
+
+        const result = await deleteUserQuestion(id)
+
+        if (result.error){
+            return res.json({error: "Soru silinirken bir hata oluştu."})
+        }
+
+        return res.json({message: "Soru silindi."})
     }
 
 }
