@@ -245,7 +245,15 @@ const changeStyle = async (event) => {
     })
 
     const result = await data.json()
-    console.log(result)
+    
+    if (result.message){
+        toastr.success(result.message)
+        setTimeout(() => {
+            window.location.reload()
+        }, 200)
+    } else {
+        toastr.error(result.error)
+    }
 }
 
 const resetPassword = async (event) => {
@@ -336,7 +344,7 @@ const resetForgotPassword = async (event) => {
         event.target.confirmPassword.value = ""
         setTimeout(() => {
             window.location.href = "/login"
-        }, 500)
+        }, 200)
     } else if (result.passwordError){
         toastr.error(result.passwordError)
     } else if (result.passwordMatchError){
@@ -467,6 +475,9 @@ const askQuestion = async (event) => {
     
     if (result.message){
         toastr.success(result.message)
+        setTimeout(() => {
+            window.location.reload()
+        }, 200)
         // const questionsDOM = document.getElementById("questions")
         // questionsDOM.innerHTML += newQuestion
     } else if (result.errorValidation){
@@ -505,6 +516,9 @@ const answerQuestion = async (event) => {
 
     if (result.message){
         toastr.success(result.message)
+        setTimeout(() => {
+            window.location.reload()
+        }, 200)
     } else if (result.errorValidation){
         result.errorValidation.forEach(element => {
             toastr.error(element)
@@ -534,6 +548,9 @@ const deleteQuestion = async (event) => {
 
     if (result.message){
         toastr.success(result.message)
+        setTimeout(() => {
+            window.location.reload()
+        }, 200)
     } else {
         toastr.error(result.error)
     }
