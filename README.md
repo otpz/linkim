@@ -6,43 +6,10 @@ linkim is a social media referance landing page.
 ## Stage : Development
 
 ## Installation
-In order to install and use the project, you need to create a database in Microsoft SQL Server as follows.
-DB name: linkim
+In order to install and use the project, you need to import the following .sql file to your database.
 
-### DB Tables
+[Uploading script.sql…]()
 
-#### Users Table
-| **Column Name**  |  **Data Type**  | **Allow Nulls** |
-|:-----|:--------:|------:|
-| Id   |int| Unchecked |
-| Email   |nvarchar(150)|Unchecked|
-| Password   | nvarchar(512) |Unchecked|
-| UserName	| nvarchar(20) |Checked|
-| EmailVerificationDate	| datetime|Checked|
-| Name	| nvarchar(100) |Unchecked|
-| Surname	| nvarchar(30) |Unchecked|
-| Biography	| nvarchar(300) |Checked|
-| JoinDate	| datetime |Checked|
-
-#### Pages Table
-| **Column Name**  |  **Data Type**  | **Allow Nulls** |
-|:-----|:--------:|------:|
-| Id   |int| Unchecked |
-| Slug	|nvarchar(200)|Unchecked|
-| PageTitle	| nvarchar(200) |Unchecked|
-| PageContent	| text	 |Unchecked|
-| CreatedDate	| datetime	|Unchecked|
-
-#### Links Table
-| **Column Name**  |  **Data Type**  | **Allow Nulls** |
-|:-----|:--------:|------:|
-| Id   |int| Unchecked |
-| UserId	|int	| Unchecked|
-| Title| nvarchar(200) |Unchecked|
-| LinkUrl	| nvarchar(1000)	 |Unchecked|
-| CreatedDate	| datetime	|Unchecked|
-
-That's all the tables you need to create
 
 ### .env File
 You need to create a .env file into server file like;
