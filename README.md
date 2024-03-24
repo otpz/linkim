@@ -8,7 +8,7 @@ linkim is a social media referance landing page.
 ## Installation
 In order to install and use the project, you need to import the following .sql file to your database.
 
-[Uploading script.sql…]()
+https://www.file.io/SIR7/download/S11VOFcnzsOy
 
 ### .env File
 You need to create a .env file into server file like;
