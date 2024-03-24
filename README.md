@@ -10,7 +10,6 @@ In order to install and use the project, you need to import the following .sql f
 
 [Uploading script.sql…]()
 
-
 ### .env File
 You need to create a .env file into server file like;
 
