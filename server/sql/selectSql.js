@@ -57,7 +57,18 @@ const selectUserLinks = async (userId, queryParam) => {
 }
 
 const selectUserQuestions = async (userId, queryParam) => {
-    const query = `select * from UserQuestions where ${queryParam} = ${userId}`
+    const query = `select * from UserQuestions where ${queryParam} = ${userId} order by AnsweredDate desc`
+    try {
+        const result = await sql.query(query)
+        return result.recordset
+    } catch (error) {
+        return error
+    }
+}
+
+//keşfet için cevaplanmış sorular
+const selectUserAnsweredQuestions = async () => {
+    const query = `select * from UserQuestions where AnsweredDate is not null order by AnsweredDate desc`
     try {
         const result = await sql.query(query)
         return result.recordset
@@ -109,4 +120,4 @@ const selectResetPassToken = async (token) => {
 }
 
 
-module.exports = {selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion}
+module.exports = {selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion, selectUserAnsweredQuestions}

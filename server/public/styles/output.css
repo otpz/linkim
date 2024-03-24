@@ -1216,6 +1216,10 @@ html{
   height: 100%;
 }
 
+.h-125 {
+  height: 31.25rem;
+}
+
 .min-h-125 {
   min-height: 31.25rem;
 }

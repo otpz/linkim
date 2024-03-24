@@ -64,6 +64,8 @@ router.get('/forgot', (req, res) => {
   res.render('forgot')
 })
 
+router.get('/discover', authMiddleware, pageController.getDiscoverPageController)
+
 router.get("/forgot/:token", pageController.getforgotPasswordController)
 
 router.get('/settings' ,userController.getSettingsController)

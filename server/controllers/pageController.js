@@ -1,4 +1,4 @@
-const {selectPages, selectUser, selectResetPassToken} = require('../sql/selectSql')
+const {selectPages, selectUser, selectResetPassToken, selectUserAnsweredQuestions} = require('../sql/selectSql')
 const {deleteResetPassToken} = require('../sql/deleteSql')
 const {editPassword} = require('../sql/setSql')
 const {schemaEmail, schemaResetPassword, schemaSupport} = require('../helpers/validation')
@@ -195,6 +195,21 @@ class PageController{
         } catch (errors) {
             next(errors) // error middleware
         }
+    }
+
+    async getDiscoverPageController(req, res){
+
+        const questions = await selectUserAnsweredQuestions()
+
+        const auth = req.session.auth
+
+        if (!auth){
+            res.render("error")
+        }
+
+        console.log(questions)
+
+        res.render("discover", {questions})
     }
 }
 

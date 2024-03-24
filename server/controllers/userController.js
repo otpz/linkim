@@ -162,8 +162,6 @@ class UserController {
 
             const questionerId = !anonymously ? questioner.Id : null
 
-            console.log("questionerId", questionerId)
-
             const result = await insertQuestion(user.Id, questionerId, question)
 
             if (result.error){
