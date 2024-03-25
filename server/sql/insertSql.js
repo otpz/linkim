@@ -73,7 +73,21 @@ const insertResetPassToken = async (token) => {
         console.log(error)
         return {error: error}
     }
-
 }
 
-module.exports = {insertUser, insertLink, insertStyle, insertQuestion, insertResetPassToken}
+const insertQuestionLike = async (questionId, userId) => {
+    const query = `insert into Likes (QuestionId, UserId, LikedDate) values ('${questionId}', '${userId}', GETDATE())`
+    try {
+        const result = await sql.query(query)
+        if (result.rowsAffected[0]){
+            return {message: "success"}
+        } else {
+            return {error: "error"}
+        }
+    } catch (error) {
+        console.log(error)
+        return {error: error}
+    }
+}
+
+module.exports = {insertUser, insertLink, insertStyle, insertQuestion, insertResetPassToken, insertQuestionLike}

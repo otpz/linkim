@@ -557,3 +557,24 @@ const deleteQuestion = async (event) => {
     
 }
 
+const likeControl = async (event) => {
+    event.preventDefault()
+
+    const questionId = event.currentTarget.id
+
+    const data = await fetch(`${BACKEND_URL}/likecontrol/${questionId}`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+    })
+
+    const result = await data.json()
+
+    if (result.like){
+        toastr.success(result.like)
+    } else if (result.unlike){
+        toastr.warning(result.unlike)
+    }
+} 

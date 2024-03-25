@@ -43,4 +43,18 @@ const deleteUserQuestion = async (questionId) => {
     }
 }
 
-module.exports = {deleteUserLink, deleteResetPassToken, deleteUserQuestion}
+const deleteQuestionLike = async (questionId, userId) => {
+    const query = `delete from Likes where QuestionId = '${questionId}' and UserId = '${userId}'`
+    try {
+        const result = await sql.query(query)
+        if (result.rowsAffected[0]){
+            return {message: "success"}
+        } else {
+            return {error: "error"}
+        }
+    } catch (error) {
+        return error
+    }
+}
+
+module.exports = {deleteUserLink, deleteResetPassToken, deleteUserQuestion, deleteQuestionLike}

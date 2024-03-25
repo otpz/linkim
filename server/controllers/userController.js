@@ -1,6 +1,6 @@
-const {selectUser, selectUserLinks, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion} = require('../sql/selectSql')
-const {insertStyle, insertQuestion} = require('../sql/insertSql')
-const {deleteUserQuestion} = require('../sql/deleteSql')
+const {selectUser, selectUserLinks, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion, selectQuestionLikes, selectExistLike} = require('../sql/selectSql')
+const {insertStyle, insertQuestion, insertQuestionLike} = require('../sql/insertSql')
+const {deleteUserQuestion, deleteQuestionLike} = require('../sql/deleteSql')
 const formatDate = require("../helpers/formatDate")
 const {editUser, editPassword, editStyle, editQuestion} = require('../sql/setSql')
 const {schemaSettings, schemaResetPassword, schemaText} = require("../helpers/validation")
@@ -26,11 +26,21 @@ class UserController {
 
         for (const question of userQuestions) {
             const questionerUser = await selectUser(question.QuestionerId, "Id");
+
+            const questionLikes = await selectQuestionLikes(question.Id)
+
             question.Questioner = {
                 QuestionerName: questionerUser.Name,
                 QuestionerSurname: questionerUser.Surname,
                 QuestionerUserName: questionerUser.UserName
             }
+
+            question.LikeInfo = {
+                Likes: questionLikes.length,
+                UsersLiked: questionLikes.map(el => el.UserId)       
+            }
+
+            console.log("likes", question.LikeInfo)
         }
 
         user.Links = userLinks ? userLinks : []
@@ -220,6 +230,31 @@ class UserController {
         return res.json({message: "Soru silindi."})
     }
 
+    async likeQuestionController(req, res, next){
+        const questionId = req.params.id
+        const userId = req.session.user.Id
+        try {
+
+            const exist = await selectExistLike(questionId, userId)
+
+            if (exist.questionLike){
+                const result = await deleteQuestionLike(questionId, userId) // like'ı geri al
+                if (result.error){
+                    return res.json({error: "Bir sorun oluştu."})
+                }
+                return res.json({unliked: "Bepeni geri alındı."})
+            }
+
+            const result = await insertQuestionLike(questionId, userId)
+            if (result.error){
+                return res.json({error: "Bir sorun oluştu."})
+            }
+            res.json({liked: "Beğeni kaydedildi"})
+            
+        } catch (errors) {
+            next(errors)
+        }
+    }
 }
 
 module.exports = new UserController()

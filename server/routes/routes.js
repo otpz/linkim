@@ -46,7 +46,7 @@ router.post("/resetforgotpassword", pageController.resetForgotPasswordController
 router.post("/ask/:username", limiter, authMiddleware, userController.sendQuestionController)
 router.post("/answer/:username", limiter, authMiddleware, userController.answerQuestionController)
 router.post("/deletequestion/:id", authMiddleware, userController.deleteQuestionController)
-
+router.post("/likecontrol/:id", userController.likeQuestionController)
 //GET routes
 router.get('/', (req, res) => {
   res.render('main')

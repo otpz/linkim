@@ -33,7 +33,6 @@ const selectExistQuestion = async (userId, questionId) => {
     }
 }
 
-
 // queryParam = "UserId" - Kullanıcı daha önce style kaydetmiş mi
 const selectExistStyles = async (userId, queryParam) => {
     const query = `select count(*) as existStyle from UserStyles where ${queryParam} = '${userId}'`
@@ -119,5 +118,26 @@ const selectResetPassToken = async (token) => {
     }
 }
 
+const selectExistLike = async (questionId, userId) => {
+    const query = `select count(*) as questionLike from Likes where QuestionId = '${questionId}' and userId = '${userId}'` 
+    try {
+        const result = await sql.query(query)
+        return result.recordset[0]
+    } catch (error) {
+        console.log("error sql:", error)
+        return error
+    }
+}
 
-module.exports = {selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion, selectUserAnsweredQuestions}
+const selectQuestionLikes = async (questionId) => {
+    const query = `select * from Likes where QuestionId = '${questionId}'` 
+    try {
+        const result = await sql.query(query)
+        return result.recordset
+    } catch (error) {
+        return error
+    }
+}
+
+
+module.exports = {selectExistLike, selectQuestionLikes, selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion, selectUserAnsweredQuestions}

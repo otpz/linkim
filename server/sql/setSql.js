@@ -60,19 +60,4 @@ const editQuestion = async (questionId, answer) => {
     }
 }
 
-const editQuestionLikes = async (likes) => {
-    const query = `UPDATE UserQuestions set Likes = '${likes}'`
-    try {
-        const result = await sql.query(query)
-        if (result.rowsAffected[0]){
-            return {message: "success"}
-        } else {
-            return {error: "error"}
-        }
-    } catch (error) {
-        console.log(error)
-        return error
-    }
-}
-
-module.exports = {editUser, editPassword, editStyle, editQuestion, editQuestionLikes}
+module.exports = {editUser, editPassword, editStyle, editQuestion}
