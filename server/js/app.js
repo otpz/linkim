@@ -562,6 +562,9 @@ const likeControl = async (event) => {
 
     const questionId = event.currentTarget.id
 
+    const likeButton = event.currentTarget
+    const likeValueSpan = event.currentTarget.querySelector(".value")
+
     const data = await fetch(`${BACKEND_URL}/likecontrol/${questionId}`, {
         method: "POST",
         headers: {
@@ -572,9 +575,19 @@ const likeControl = async (event) => {
 
     const result = await data.json()
 
-    if (result.like){
-        toastr.success(result.like)
-    } else if (result.unlike){
-        toastr.warning(result.unlike)
+    if (result.liked){
+        toastr.success(result.liked)
+        likeValueSpan.innerHTML = parseInt(likeValueSpan.innerHTML) + 1
+        likeButton.classList.remove("unliked")
+        likeButton.classList.add("liked")
+        console.log(likeButton.classList)
+    } else if (result.unliked){
+        toastr.warning(result.unliked)
+        likeValueSpan.innerHTML = parseInt(likeValueSpan.innerHTML) - 1
+        likeButton.classList.remove("liked")
+        likeButton.classList.add("unliked")
+        console.log(likeButton.classList)
+    } else if (result.error){
+        toastr.error(result.error)
     }
 } 

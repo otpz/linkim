@@ -15,6 +15,8 @@ class UserController {
 
         const user = await selectUser(urlUserName, "UserName")
 
+        const authUserId = req.session.user ? req.session.user.Id : null
+
         if (user === undefined){
             res.render('error')
             return
@@ -23,6 +25,17 @@ class UserController {
         const userLinks = await selectUserLinks(user.Id, "UserId")
         const userStyles = await selectUserStyles(user.Id, "UserId")
         const userQuestions = await selectUserQuestions(user.Id, "UserId")
+
+        const amILiked = (questionLikes) => {
+            let yes = 0
+            questionLikes.forEach(el => {
+                console.log("Soruyu beğenen kullanıcı->", el.UserId)
+                if (el.UserId === authUserId){
+                    yes = 1
+                }
+            })
+            return yes
+        }
 
         for (const question of userQuestions) {
             const questionerUser = await selectUser(question.QuestionerId, "Id");
@@ -37,10 +50,11 @@ class UserController {
 
             question.LikeInfo = {
                 Likes: questionLikes.length,
-                UsersLiked: questionLikes.map(el => el.UserId)       
+                //UsersLiked: questionLikes.map(el => el.UserId)       
+                ILiked: amILiked(questionLikes)
             }
 
-            console.log("likes", question.LikeInfo)
+            console.log("gönderilen: ", question.LikeInfo.ILiked)
         }
 
         user.Links = userLinks ? userLinks : []
@@ -232,9 +246,13 @@ class UserController {
 
     async likeQuestionController(req, res, next){
         const questionId = req.params.id
-        const userId = req.session.user.Id
+        const userId = req.session.user ? req.session.user.Id : null
+        
+        if (!userId){
+            res.render("error")
+        }
+        
         try {
-
             const exist = await selectExistLike(questionId, userId)
 
             if (exist.questionLike){
@@ -242,7 +260,7 @@ class UserController {
                 if (result.error){
                     return res.json({error: "Bir sorun oluştu."})
                 }
-                return res.json({unliked: "Bepeni geri alındı."})
+                return res.json({unliked: "Beğeni geri alındı."})
             }
 
             const result = await insertQuestionLike(questionId, userId)

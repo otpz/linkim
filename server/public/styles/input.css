@@ -161,7 +161,7 @@
     }   
 
     .question-main .likes{
-        @apply min-w-32 h-6 flex items-center
+        @apply min-w-16 h-6 flex items-center
     }
 
     .question-main .likes svg{
@@ -171,7 +171,7 @@
     .question-main .likes:hover svg,
     .question-main .likes:hover span
     {
-        @apply text-gray-500 transition-all duration-200 fill-gray-500
+        @apply text-gray-500 fill-gray-500
     }
 
     .question-main .likes span{
@@ -193,21 +193,17 @@
     }
 
 
+    /* like button class */
 
+    .likes.liked span,
+    .likes.liked path{
+        @apply text-red-500 fill-red-500
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    .likes.liked:hover span,
+    .likes.liked:hover path{
+        @apply text-red-700 fill-red-700 transition-all duration-100
+    }
 
 
     /******* USER CUSTOM STYLES *******/

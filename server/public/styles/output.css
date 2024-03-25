@@ -872,7 +872,7 @@ html{
 .question-main .likes {
   display: flex;
   height: 1.5rem;
-  min-width: 8rem;
+  min-width: 4rem;
   align-items: center;
 }
 
@@ -885,9 +885,6 @@ html{
   fill: #6b7280;
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 200ms;
 }
 
 .question-main .likes span {
@@ -937,6 +934,25 @@ html{
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
+}
+
+/* like button class */
+
+.likes.liked span,
+    .likes.liked path {
+  fill: #ef4444;
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
+.likes.liked:hover span,
+    .likes.liked:hover path {
+  fill: #b91c1c;
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity));
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 100ms;
 }
 
 /******* USER CUSTOM STYLES *******/
@@ -1216,10 +1232,6 @@ html{
   height: 100%;
 }
 
-.h-125 {
-  height: 31.25rem;
-}
-
 .min-h-125 {
   min-height: 31.25rem;
 }
@@ -1401,10 +1413,6 @@ html{
 
 .border-b-1 {
   border-bottom-width: 1px;
-}
-
-.border-r-1 {
-  border-right-width: 1px;
 }
 
 .border-dashed {

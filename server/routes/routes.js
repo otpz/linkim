@@ -46,14 +46,15 @@ router.post("/resetforgotpassword", pageController.resetForgotPasswordController
 router.post("/ask/:username", limiter, authMiddleware, userController.sendQuestionController)
 router.post("/answer/:username", limiter, authMiddleware, userController.answerQuestionController)
 router.post("/deletequestion/:id", authMiddleware, userController.deleteQuestionController)
-router.post("/likecontrol/:id", userController.likeQuestionController)
+router.post("/likecontrol/:id", authMiddleware, userController.likeQuestionController)
+
 //GET routes
 router.get('/', (req, res) => {
   res.render('main')
 })
 
 router.get('/register', (req, res) => {
-    res.render('register')
+  res.render('register')
 })
 
 router.get('/login', (req, res) => {
