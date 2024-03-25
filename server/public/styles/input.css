@@ -192,6 +192,9 @@
         @apply w-1/4 bg-gray-800 h-10 transition-all duration-200
     }
 
+    .order-top {
+        @apply order-first
+    }
 
     /* like button class */
 

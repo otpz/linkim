@@ -2,6 +2,7 @@ const {selectUser, selectUserLinks, selectUserStyles, selectExistStyles, selectU
 const {insertStyle, insertQuestion, insertQuestionLike} = require('../sql/insertSql')
 const {deleteUserQuestion, deleteQuestionLike} = require('../sql/deleteSql')
 const formatDate = require("../helpers/formatDate")
+const calculateTimeElapsed = require("../helpers/calculateTimeElapsed")
 const {editUser, editPassword, editStyle, editQuestion} = require('../sql/setSql')
 const {schemaSettings, schemaResetPassword, schemaText} = require("../helpers/validation")
 const {comparePassword, hashPassword} = require("../helpers/auth")
@@ -26,10 +27,9 @@ class UserController {
         const userStyles = await selectUserStyles(user.Id, "UserId")
         const userQuestions = await selectUserQuestions(user.Id, "UserId")
 
-        const amILiked = (questionLikes) => {
+        const didILiked = (questionLikes) => {
             let yes = 0
             questionLikes.forEach(el => {
-                console.log("Soruyu beğenen kullanıcı->", el.UserId)
                 if (el.UserId === authUserId){
                     yes = 1
                 }
@@ -50,11 +50,13 @@ class UserController {
 
             question.LikeInfo = {
                 Likes: questionLikes.length,
-                //UsersLiked: questionLikes.map(el => el.UserId)       
-                ILiked: amILiked(questionLikes)
+                ILiked: didILiked(questionLikes)
             }
 
-            console.log("gönderilen: ", question.LikeInfo.ILiked)
+            if (question.AnsweredDate){
+                const now = new Date()
+                question.TimeElapsed = calculateTimeElapsed(now, question.AnsweredDate)
+            }
         }
 
         user.Links = userLinks ? userLinks : []
