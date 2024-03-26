@@ -799,10 +799,85 @@ html{
   width: 100%;
   flex-direction: column;
   align-items: flex-start;
+  overflow: hidden;
   padding: 1rem;
 }
 
+.question-main .top-row {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+
+.question-main .top-row .question-settings {
+  margin-top: 0.5rem;
+  display: flex;
+  height: 1.5rem;
+  width: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 75ms;
+}
+
+.question-main .top-row .question-settings:hover {
+  cursor: pointer;
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 75ms;
+}
+
+.question-main .top-row .settings {
+  position: absolute;
+  right: 1.75rem;
+  top: 0px;
+  display: flex;
+  width: 4rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 0.125rem;
+  border-top-right-radius: 0px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 75ms;
+}
+
+.question-main .top-row .settings li {
+  display: grid;
+  height: 1rem;
+  width: 3.5rem;
+  place-items: center;
+  border-radius: 0.125rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+  font-size: .625rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 75ms;
+}
+
+.question-main .top-row .settings li:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
+.question-main .top-row .settings.bottom-hidden {
+  top: -80px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .question-main .bottom {
+  z-index: 10;
   height: 100%;
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
@@ -1098,6 +1173,10 @@ html{
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
 }
 
 .mb-10 {
@@ -1481,6 +1560,10 @@ html{
 
 .fill-\[\#FFBF00\] {
   fill: #FFBF00;
+}
+
+.fill-white {
+  fill: #fff;
 }
 
 .p-4 {

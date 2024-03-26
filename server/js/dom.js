@@ -130,6 +130,19 @@ if (deleteButtons){
 //     }, { offset: Number.NEGATIVE_INFINITY }).element
 // }
 
+// ** settings dropdown toggle button
+
+const showSettingsDropdown = (event) => {
+    const id = event.currentTarget.id
+    const settingsMenu = document.querySelector(`#menu-${id}`)
+   
+    if (settingsMenu.classList.contains("bottom-hidden")){
+        settingsMenu.classList.remove("bottom-hidden")
+    } else{
+        settingsMenu.classList.add("bottom-hidden")
+    }
+}
+
 
 
 

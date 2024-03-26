@@ -117,11 +117,34 @@
     .question-main .top,
     .question-main .bottom,
     .question-main .middle{
-        @apply p-4 w-full flex flex-col items-start
+        @apply p-4 w-full flex flex-col items-start overflow-hidden
+    }
+    .question-main .top-row{
+        @apply w-full flex flex-row relative
+    }
+
+    .question-main .top-row .question-settings{
+        @apply mt-2 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-75
+    }
+
+    .question-main .top-row .question-settings:hover{
+        @apply cursor-pointer bg-gray-700 transition-all duration-75
+    }
+
+    .question-main .top-row .settings{
+        @apply absolute right-7 top-0 w-16 flex flex-col items-center justify-start bg-gray-800 rounded-sm rounded-tr-none transition-all duration-75
+    }
+
+    .question-main .top-row .settings li {
+        @apply w-14 h-4 bg-gray-600 grid place-items-center rounded-sm hover:bg-gray-700 text-xxs transition-all duration-75 
+    }
+
+    .question-main .top-row .settings.bottom-hidden{
+        @apply top-[-80px] transition-all duration-150
     }
 
     .question-main .bottom{
-        @apply bg-gray-800 rounded-lg h-full
+        @apply bg-gray-800 rounded-lg h-full z-10
     }
 
     .question-main .q-user-info{
@@ -189,7 +212,7 @@
     }
 
     .question-main .middle button{
-        @apply w-1/4 bg-gray-800 h-10 transition-all duration-200
+        @apply w-1/4 bg-gray-800 h-10 transition-all duration-200 
     }
 
     .order-top {

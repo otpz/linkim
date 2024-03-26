@@ -39,7 +39,6 @@ class UserController {
 
         for (const question of userQuestions) {
             const questionerUser = await selectUser(question.QuestionerId, "Id");
-
             const questionLikes = await selectQuestionLikes(question.Id)
 
             question.Questioner = {

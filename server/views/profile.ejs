@@ -239,23 +239,54 @@
                         <% if (user.Questions[i].Answer || (locals.verifiedUrl === user.UserName) || ((user.Questions[i].Questioner.QuestionerUserName === locals.verifiedUrl) && locals.verifiedUrl)) { %>
                             <div class=" question-main <%= !user.Questions[i].Answer ? 'order-top' : 'order-last' %>">
                                 <div class="top">
-                                    <div class="q-user-info">
-                                        <% if (user.Questions[i].QuestionerId) { %>
-                                            <img class="avatar" src="/public/assets/img/avatar.png" alt="">
-                                        <% } else { %>
-                                            <div class="avatar grid place-items-center border-dashed border-1"> ? </div>
-                                        <% } %>
-                                        <div class="info"> 
-                                            <% if (user.Questions[i].QuestionerId) { %>
-                                                <a href="/@<%=user.Questions[i].Questioner.QuestionerUserName%>" class="name"><%= user.Questions[i].Questioner.QuestionerName %> <%= user.Questions[i].Questioner.QuestionerSurname %></a>
-                                            <% } else { %>
-                                                <span class="name">Anonim</span>
-                                            <% } %>
-                                            <% if (user.Questions[i].QuestionerId) { %>
-                                                <a href="/@<%=user.Questions[i].Questioner.QuestionerUserName%>" class="username">@<%= user.Questions[i].Questioner.QuestionerUserName %></a>
+                                    <% if (locals.verifiedUrl === user.UserName) { %> 
+                                        <div class="top-row">
+                                            <div class="q-user-info">
+                                                <% if (user.Questions[i].QuestionerId) { %>
+                                                    <img class="avatar" src="/public/assets/img/avatar.png" alt="">
+                                                <% } else { %>
+                                                    <div class="avatar grid place-items-center border-dashed border-1"> ? </div>
+                                                <% } %>
+                                                <div class="info"> 
+                                                    <% if (user.Questions[i].QuestionerId) { %>
+                                                        <a href="/@<%=user.Questions[i].Questioner.QuestionerUserName%>" class="name"><%= user.Questions[i].Questioner.QuestionerName %> <%= user.Questions[i].Questioner.QuestionerSurname %></a>
+                                                    <% } else { %>
+                                                        <span class="name">Anonim</span>
+                                                    <% } %>
+                                                    <% if (user.Questions[i].QuestionerId) { %>
+                                                        <a href="/@<%=user.Questions[i].Questioner.QuestionerUserName%>" class="username">@<%= user.Questions[i].Questioner.QuestionerUserName %></a>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                            <% if (user.Questions[i].Answer) { %>
+                                                <button onclick="showSettingsDropdown(event)" id="<%= user.Questions[i].Id %>" class="question-settings">
+                                                    <svg class="h-4 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#fff" d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z"/></svg>
+                                                </button>
+                                                <ul id="menu-<%= user.Questions[i].Id %>" class="settings bottom-hidden">
+                                                    <li onclick="deleteQuestion(event)" class="mt-1" id="<%= user.Questions[i].Id %>">Sil</li>
+                                                    <li onclick="" class="mt-1 mb-1" id="<%= user.Questions[i].Id %>">Raporla</li>
+                                                </ul>
                                             <% } %>
                                         </div>
-                                    </div>
+                                    <% } else { %>
+                                        <div class="q-user-info">
+                                            <% if (user.Questions[i].QuestionerId) { %>
+                                                <img class="avatar" src="/public/assets/img/avatar.png" alt="">
+                                            <% } else { %>
+                                                <div class="avatar grid place-items-center border-dashed border-1"> ? </div>
+                                            <% } %>
+                                            <div class="info"> 
+                                                <% if (user.Questions[i].QuestionerId) { %>
+                                                    <a href="/@<%=user.Questions[i].Questioner.QuestionerUserName%>" class="name"><%= user.Questions[i].Questioner.QuestionerName %> <%= user.Questions[i].Questioner.QuestionerSurname %></a>
+                                                <% } else { %>
+                                                    <span class="name">Anonim</span>
+                                                <% } %>
+                                                <% if (user.Questions[i].QuestionerId) { %>
+                                                    <a href="/@<%=user.Questions[i].Questioner.QuestionerUserName%>" class="username">@<%= user.Questions[i].Questioner.QuestionerUserName %></a>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    <% } %>
                                     <div class="user-text">
                                         <p><%= user.Questions[i].Question %></p>
                                     </div>

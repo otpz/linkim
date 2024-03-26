@@ -39,6 +39,7 @@ module.exports = {
         '240': '60rem',
       },
       borderWidth: {
+        '-3': '-3px',
         '0.5': '0.5px',
         '1': '1px',
       },
