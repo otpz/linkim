@@ -145,7 +145,7 @@
     }
 
     .question-main .user-text{
-        @apply w-full
+        @apply w-full 
     }
 
     .question-main .user-text p{

@@ -46,7 +46,7 @@ const insertStyle = async (userId, bgColor, borderStyle, linkBgColor) => {
 }
 
 const insertQuestion = async (userId, questionerId, question) => {
-    const query = `insert into UserQuestions (UserId, QuestionerId, Question, Answer, AnsweredDate, Likes) values ('${userId}', ${questionerId}, '${question}', null, null, 0)`
+    const query = `insert into UserQuestions (UserId, QuestionerId, Question, Answer, AnsweredDate) values ('${userId}', ${questionerId}, '${question}', null, null)`
     try {
         const result = await sql.query(query)
         if (result.rowsAffected[0]){

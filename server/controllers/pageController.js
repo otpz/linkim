@@ -1,4 +1,4 @@
-const {selectPages, selectUser, selectResetPassToken, selectUserAnsweredQuestions} = require('../sql/selectSql')
+const {selectPages, selectUser, selectResetPassToken, selectUserAnsweredQuestions, selectQuestionLikes} = require('../sql/selectSql')
 const {deleteResetPassToken} = require('../sql/deleteSql')
 const {editPassword} = require('../sql/setSql')
 const {schemaEmail, schemaResetPassword, schemaSupport} = require('../helpers/validation')
@@ -6,6 +6,7 @@ const generatePasswordResetToken = require('../helpers/generatePasswordResetToke
 const dotenv = require('dotenv').config()
 const nodemailer = require("nodemailer")
 const {hashPassword} = require("../helpers/auth")
+const calculateTimeElapsed = require("../helpers/calculateTimeElapsed")
 
 class PageController{
 
@@ -202,12 +203,50 @@ class PageController{
         const questions = await selectUserAnsweredQuestions()
 
         const auth = req.session.auth
+        const authUserId = req.session.user.Id
 
         if (!auth){
             res.render("error")
         }
 
-        console.log(questions)
+        const didILiked = (questionLikes) => {
+            let yes = 0
+            questionLikes.forEach(el => {
+                if (el.UserId === authUserId){
+                    yes = 1
+                }
+            })
+            return yes
+        }
+
+        for (const question of questions) {
+            const questionerUser = await selectUser(question.QuestionerId, "Id");
+            const questionLikes = await selectQuestionLikes(question.Id)
+            const user = await selectUser(question.UserId, "Id")
+
+            question.Questioner = {
+                QuestionerName: questionerUser.Name,
+                QuestionerSurname: questionerUser.Surname,
+                QuestionerUserName: questionerUser.UserName
+            }
+
+            question.User = {
+                Name: user.Name,
+                Surname: user.Surname,
+                UserName: user.UserName,
+            }
+
+            question.LikeInfo = {
+                Likes: questionLikes.length,
+                ILiked: didILiked(questionLikes)
+            }
+
+            if (question.AnsweredDate){
+                const now = new Date()
+                question.TimeElapsed = calculateTimeElapsed(now, question.AnsweredDate)
+            }
+        }
+
 
         res.render("discover", {questions})
     }
