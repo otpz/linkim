@@ -2,7 +2,7 @@ const toggleAddNewLinkDOM = document.querySelector('#add-new-link')
 const toggleStyleFormDOM = document.querySelector('#profile-style-button')
 const toggleStyleForm = document.querySelector('#user-style-form')
 const toggleLinkForm = document.querySelector('#new-link-form')
-const cancelLinkForm = document.querySelector('#cancel-form')
+const cancelLinkForm = document.querySelectorAll('#cancel-form')
 
 const toggleAddLinkFormVisibility = () => {
     if (toggleLinkForm.classList.contains('hidden')){
@@ -28,6 +28,13 @@ const toggleStyleFormVisibility = () => {
     }
 }
 
+const closeAllForms = () => {
+    toggleLinkForm.classList.remove('flex')
+    toggleStyleForm.classList.remove('flex')
+    toggleStyleForm.classList.add('hidden')
+    toggleLinkForm.classList.add('hidden')
+}
+
 if(toggleStyleFormDOM) {
     toggleStyleFormDOM.addEventListener('click', toggleStyleFormVisibility)
 }
@@ -38,7 +45,7 @@ if (toggleAddNewLinkDOM){
 }
 
 if (cancelLinkForm){
-    cancelLinkForm.addEventListener('click', toggleAddLinkFormVisibility)
+    cancelLinkForm.forEach(el => el.addEventListener('click', closeAllForms))
 }
 
 const deleteLink = async (deleteButton, event) => {
