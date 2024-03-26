@@ -135,14 +135,28 @@ if (deleteButtons){
 const showSettingsDropdown = (event) => {
     const id = event.currentTarget.id
     const settingsMenu = document.querySelector(`#menu-${id}`)
-   
-    if (settingsMenu.classList.contains("bottom-hidden")){
+
+    if (settingsMenu.classList.contains("bottom-hidden")) {
         settingsMenu.classList.remove("bottom-hidden")
-    } else{
+    } else {
         settingsMenu.classList.add("bottom-hidden")
     }
 }
 
+document.addEventListener("click", (event) => {
+    const settingsMenus = document.querySelectorAll(".settings")
+
+    if (event.target.closest(".question-settings")) {
+        return
+    }
+
+    // tüm menüleri gizle
+    settingsMenus.forEach((menu) => {
+        if (!menu.classList.contains("bottom-hidden")) {
+            menu.classList.add("bottom-hidden")
+        }
+    })
+})
 
 
 
