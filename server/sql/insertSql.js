@@ -90,4 +90,19 @@ const insertQuestionLike = async (questionId, userId) => {
     }
 }
 
-module.exports = {insertUser, insertLink, insertStyle, insertQuestion, insertResetPassToken, insertQuestionLike}
+const insertQuestionReport = async (questionId, reportMessage) => {
+    const query = `insert into QuestionReports (QuestionId, ReportMessage, CreatedDate) values ('${questionId}', '${reportMessage}', GETDATE())`
+    try {
+        const result = await sql.query(query)
+        if (result.rowsAffected[0]){
+            return {message: "success"}
+        } else {
+            return {error: "error"}
+        }
+    } catch (error) {
+        console.log(error)
+        return {error: error}
+    }
+}
+
+module.exports = {insertUser, insertLink, insertStyle, insertQuestion, insertResetPassToken, insertQuestionLike, insertQuestionReport}

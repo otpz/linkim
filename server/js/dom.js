@@ -165,6 +165,8 @@ document.addEventListener("click", (event) => {
     })
 })
 
-
+const showReportForm = (event) => {
+    console.log("report form")
+}
 
 

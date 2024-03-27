@@ -1,5 +1,5 @@
 const {selectUser, selectUserQuestions, selectExistQuestion, selectExistLike, selectLikedQuestion} = require('../sql/selectSql')
-const {insertQuestion, insertQuestionLike} = require('../sql/insertSql')
+const {insertQuestion, insertQuestionLike, insertQuestionReport} = require('../sql/insertSql')
 const {deleteUserQuestion, deleteQuestionLike, deleteQuestionAllLikes} = require('../sql/deleteSql')
 const {editQuestion} = require('../sql/setSql')
 const {schemaText} = require("../helpers/validation")
@@ -118,6 +118,20 @@ class QuestionController {
 
             res.json({liked: "Beğeni kaydedildi"})
             
+        } catch (errors) {
+            next(errors)
+        }
+    }
+
+    async reportQuestionController(req, res, next){
+        const questionId = req.params.id
+        const reportMessage = "sss mesaj."
+        try {
+            const result = await insertQuestionReport(questionId, reportMessage)
+            if (result.error){
+                return res.json({error: "Rapor gönderirken bir sorun oluştu."})
+            }
+            return res.json({message: "Raporunuz gönderildi."})
         } catch (errors) {
             next(errors)
         }

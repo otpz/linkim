@@ -544,8 +544,6 @@ const deleteQuestion = async (event) => {
 
     const result = await data.json()
 
-    console.log(" delete question result - app.js", result)
-
     if (result.message){
         toastr.success(result.message)
         setTimeout(() => {
@@ -596,4 +594,24 @@ const deleteAlert = async (event) => {
     if (confirm("Silmek istiyor musunuz?")) {
         deleteQuestion(event)
     }
+}
+
+const reportQuestion = async (event) => {
+    const questionId = event.currentTarget.id
+
+    const data = await fetch(`${BACKEND_URL}/report/${questionId}`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    })
+
+    const result = await data.json()
+
+    if (result.message){
+        toastr.success(result.message)
+    } else {
+        toastr.error(result.error)
+    } 
 }

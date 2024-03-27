@@ -263,8 +263,8 @@
                                                     <svg class="h-4 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#fff" d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z"/></svg>
                                                 </button>
                                                 <ul id="menu-<%= user.Questions[i].Id %>" class="settings bottom-hidden">
-                                                    <li onclick="deleteAlert(event)" class="mt-1" id="<%= user.Questions[i].Id %>">Sil</li>
-                                                    <li onclick="" class="mt-1 mb-1" id="<%= user.Questions[i].Id %>">Raporla</li>
+                                                    <li onclick="deleteAlert(event)" class="mt-1 cursor-pointer" id="<%= user.Questions[i].Id %>">Sil</li>
+                                                    <li onclick="reportQuestion(event)" class="mt-1 mb-1 cursor-pointer" id="<%= user.Questions[i].Id %>">Raporla</li>
                                                 </ul>
                                             <% } %>
                                         </div>
