@@ -139,5 +139,15 @@ const selectQuestionLikes = async (questionId) => {
     }
 }
 
+const selectLikedQuestion = async (questionId) => {
+    const query = `select * from UserQuestions where Id = '${questionId}'`
+    try {
+        const result = await sql.query(query)
+        return result.recordset
+    } catch (error) {
+        return error
+    }
+}
 
-module.exports = {selectExistLike, selectQuestionLikes, selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion, selectUserAnsweredQuestions}
+
+module.exports = {selectLikedQuestion, selectExistLike, selectQuestionLikes, selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion, selectUserAnsweredQuestions}

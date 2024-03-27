@@ -1,8 +1,9 @@
-const {selectUser, selectUserQuestions, selectExistQuestion, selectExistLike} = require('../sql/selectSql')
+const {selectUser, selectUserQuestions, selectExistQuestion, selectExistLike, selectLikedQuestion} = require('../sql/selectSql')
 const {insertQuestion, insertQuestionLike} = require('../sql/insertSql')
 const {deleteUserQuestion, deleteQuestionLike} = require('../sql/deleteSql')
 const {editQuestion} = require('../sql/setSql')
 const {schemaText} = require("../helpers/validation")
+
 class QuestionController {
 
     async sendQuestionController(req, res, next){
@@ -87,8 +88,15 @@ class QuestionController {
         }
         
         try {
-            const exist = await selectExistLike(questionId, userId)
+            
+            const question = await selectLikedQuestion(questionId)
 
+            if (question[0].Answer === null){
+                return res.json({error: "Soru bulunamadı"})
+            }
+
+            const exist = await selectExistLike(questionId, userId)
+            
             if (exist.questionLike){
                 const result = await deleteQuestionLike(questionId, userId) // like'ı geri al
                 if (result.error){
@@ -101,6 +109,7 @@ class QuestionController {
             if (result.error){
                 return res.json({error: "Bir sorun oluştu."})
             }
+
             res.json({liked: "Beğeni kaydedildi"})
             
         } catch (errors) {
