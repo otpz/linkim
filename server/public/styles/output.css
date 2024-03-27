@@ -777,7 +777,9 @@ html{
 /* questions */
 
 .questions {
+  display: flex;
   width: 100%;
+  flex-direction: column;
 }
 
 .question-main {
@@ -1012,7 +1014,7 @@ html{
 }
 
 .order-top {
-  order: -9999;
+  order: 1;
 }
 
 /* like button class */
@@ -1157,8 +1159,8 @@ html{
   left: 2.5rem;
 }
 
-.order-last {
-  order: 9999;
+.order-2 {
+  order: 2;
 }
 
 .m-auto {

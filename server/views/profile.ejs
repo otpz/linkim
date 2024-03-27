@@ -237,7 +237,7 @@
             <% if (user.Questions.length > 0) { %>
                     <% for (let i = 0; i < user.Questions.length; i++) { %>
                         <% if (user.Questions[i].Answer || (locals.verifiedUrl === user.UserName) || ((user.Questions[i].Questioner.QuestionerUserName === locals.verifiedUrl) && locals.verifiedUrl)) { %>
-                            <div class=" question-main <%= !user.Questions[i].Answer ? 'order-top' : 'order-last' %>">
+                            <div class=" question-main <%= !user.Questions[i].Answer ? 'order-top' : 'order-2' %>">
                                 <div class="top">
                                     <% if (locals.verifiedUrl === user.UserName) { %> 
                                         <div class="top-row">
@@ -359,6 +359,7 @@
                     </form>
                 </div>
             </div>
+            
         </div>
 
     </main>

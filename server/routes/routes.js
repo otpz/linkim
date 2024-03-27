@@ -14,6 +14,7 @@ const userController = require('../controllers/userController')
 const pageController = require('../controllers/pageController') 
 const linkController = require('../controllers/linkController')
 const authController = require('../controllers/authController')
+const questionController = require('../controllers/questionController')
 
 const limiter = rateLimit({
 	windowMs: 1000 * 10, // 1 minutes
@@ -43,10 +44,10 @@ router.post("/changestyle", authMiddleware, userController.changeStyleController
 router.post("/support", pageController.supportFormController)
 router.post("/sendmail", pageController.sendMailController)
 router.post("/resetforgotpassword", pageController.resetForgotPasswordController)
-router.post("/ask/:username", limiter, authMiddleware, userController.sendQuestionController)
-router.post("/answer/:username", limiter, authMiddleware, userController.answerQuestionController)
-router.post("/deletequestion/:id", authMiddleware, userController.deleteQuestionController)
-router.post("/likecontrol/:id", authMiddleware, userController.likeQuestionController)
+router.post("/ask/:username", limiter, authMiddleware, questionController.sendQuestionController)
+router.post("/answer/:username", limiter, authMiddleware, questionController.answerQuestionController)
+router.post("/deletequestion/:id", authMiddleware, questionController.deleteQuestionController)
+router.post("/likecontrol/:id", authMiddleware, questionController.likeQuestionController)
 
 //GET routes
 router.get('/', (req, res) => {

@@ -107,7 +107,7 @@
     /* questions */
 
     .questions{
-        @apply w-full
+        @apply w-full flex flex-col
     }
 
     .question-main{
@@ -216,7 +216,7 @@
     }
 
     .order-top {
-        @apply order-first
+        @apply order-1
     }
 
     /* like button class */
