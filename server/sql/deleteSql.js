@@ -43,6 +43,20 @@ const deleteUserQuestion = async (questionId) => {
     }
 }
 
+const deleteQuestionAllLikes = async (questionId) => {
+    const query = `delete from Likes where QuestionId = '${questionId}'`
+    try {
+        const result = await sql.query(query)
+        if (result.rowsAffected[0]){
+            return {message: "success"}
+        } else {
+            return {error: "error"}
+        }
+    } catch (error) {
+        return error
+    }
+}
+
 const deleteQuestionLike = async (questionId, userId) => {
     const query = `delete from Likes where QuestionId = '${questionId}' and UserId = '${userId}'`
     try {
@@ -57,4 +71,4 @@ const deleteQuestionLike = async (questionId, userId) => {
     }
 }
 
-module.exports = {deleteUserLink, deleteResetPassToken, deleteUserQuestion, deleteQuestionLike}
+module.exports = {deleteUserLink, deleteResetPassToken, deleteUserQuestion, deleteQuestionLike, deleteQuestionAllLikes}

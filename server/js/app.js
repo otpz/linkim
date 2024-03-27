@@ -591,3 +591,9 @@ const likeControl = async (event) => {
         toastr.error(result.error)
     }
 } 
+
+const deleteAlert = async (event) => {
+    if (confirm("Silmek istiyor musunuz?")) {
+        deleteQuestion(event)
+    }
+}

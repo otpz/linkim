@@ -149,5 +149,4 @@ const selectLikedQuestion = async (questionId) => {
     }
 }
 
-
 module.exports = {selectLikedQuestion, selectExistLike, selectQuestionLikes, selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion, selectUserAnsweredQuestions}
