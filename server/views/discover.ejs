@@ -41,12 +41,12 @@
                                     <% } %>
                                     <div class="info"> 
                                         <% if (questions[i].QuestionerId) { %>
-                                            <a href="/@<%=questions[i].QuestionerUserName%>" class="name w-75 truncate"><%= questions[i].QuestionerName %> <%= questions[i].QuestionerSurname %></a>
+                                            <a href="/@<%=questions[i].QuestionerUserName%>" class="name max-w-90 truncate"><%= questions[i].QuestionerName %> <%= questions[i].QuestionerSurname %></a>
                                         <% } else { %>
                                             <span class="name">Anonim</span>
                                         <% } %>
                                         <% if (questions[i].QuestionerId) { %>
-                                            <a href="/@<%=questions[i].QuestionerUserName%>" class="username w-75 truncate">@<%= questions[i].QuestionerUserName %></a>
+                                            <a href="/@<%=questions[i].QuestionerUserName%>" class="username max-w-90 truncate">@<%= questions[i].QuestionerUserName %></a>
                                         <% } %>
                                     </div>
                                 </div>
@@ -58,8 +58,8 @@
                                 <div class="q-user-info">
                                     <img class="avatar" src="/public/assets/img/avatar.png" alt="">
                                     <div class="info">
-                                        <a href="/@<%= questions[i].UserUserName %>" class="name w-90 truncate"><%= questions[i].UserName %> <%= questions[i].UserSurname %></a>
-                                        <a href="/@<%= questions[i].UserUserName %>" class="username w-90 truncate">@<%= questions[i].UserUserName %></a>
+                                        <a href="/@<%= questions[i].UserUserName %>" class="name max-w-90 truncate"><%= questions[i].UserName %> <%= questions[i].UserSurname %></a>
+                                        <a href="/@<%= questions[i].UserUserName %>" class="username max-w-90 truncate">@<%= questions[i].UserUserName %></a>
                                     </div>
                                 </div>
                                 <div class="user-text text-white">

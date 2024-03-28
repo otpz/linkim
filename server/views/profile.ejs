@@ -249,12 +249,12 @@
                                                 <% } %>
                                                 <div class="info"> 
                                                     <% if (user.Questions[i].QuestionerId) { %>
-                                                        <a href="/@<%=user.Questions[i].QuestionerUserName%>" class="name w-75 truncate w-3/4"><%= user.Questions[i].QuestionerName %> <%= user.Questions[i].QuestionerSurname %></a>
+                                                        <a href="/@<%=user.Questions[i].QuestionerUserName%>" class="name max-w-75 truncate"><%= user.Questions[i].QuestionerName %> <%= user.Questions[i].QuestionerSurname %></a>
                                                     <% } else { %>
                                                         <span class="name">Anonim</span>
                                                     <% } %>
                                                     <% if (user.Questions[i].QuestionerId) { %>
-                                                        <a href="/@<%=user.Questions[i].QuestionerUserName%>" class="username w-75 truncate w-3/4">@<%= user.Questions[i].QuestionerUserName %></a>
+                                                        <a href="/@<%=user.Questions[i].QuestionerUserName%>" class="username max-w-75 truncate">@<%= user.Questions[i].QuestionerUserName %></a>
                                                     <% } %>
                                                 </div>
                                             </div>
@@ -277,12 +277,12 @@
                                             <% } %>
                                             <div class="info"> 
                                                 <% if (user.Questions[i].QuestionerId) { %>
-                                                    <a href="/@<%=user.Questions[i].QuestionerUserName%>" class="name"><%= user.Questions[i].QuestionerName %> <%= user.Questions[i].QuestionerSurname %></a>
+                                                    <a href="/@<%=user.Questions[i].QuestionerUserName%>" class="name max-w-75 truncate"><%= user.Questions[i].QuestionerName %> <%= user.Questions[i].QuestionerSurname %></a>
                                                 <% } else { %>
                                                     <span class="name">Anonim</span>
                                                 <% } %>
                                                 <% if (user.Questions[i].QuestionerId) { %>
-                                                    <a href="/@<%=user.Questions[i].QuestionerUserName%>" class="username">@<%= user.Questions[i].QuestionerUserName %></a>
+                                                    <a href="/@<%=user.Questions[i].QuestionerUserName%>" class="username max-max-w-75 truncate">@<%= user.Questions[i].QuestionerUserName %></a>
                                                 <% } %>
                                             </div>
                                         </div>
@@ -307,8 +307,8 @@
                                         <div class="q-user-info">
                                             <img class="avatar" src="/public/assets/img/avatar.png" alt="">
                                             <div class="info">
-                                                <a href="/@<%= user.UserName %>" class="name truncate w-75"><%= user.Name %> <%= user.Surname %></a>
-                                                <a href="/@<%= user.UserName %>" class="username truncate w-75">@<%= user.UserName %></a>
+                                                <a href="/@<%= user.UserName %>" class="name truncate max-w-75"><%= user.Name %> <%= user.Surname %></a>
+                                                <a href="/@<%= user.UserName %>" class="username truncate max-w-75">@<%= user.UserName %></a>
                                             </div>
                                         </div>
                                         <div class="user-text">

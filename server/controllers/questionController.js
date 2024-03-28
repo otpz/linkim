@@ -1,4 +1,4 @@
-const {selectUser, selectUserQuestions, selectExistQuestion, selectExistLike, selectLikedQuestion} = require('../sql/selectSql')
+const {selectUser, selectUserQuestions, selectExistQuestion, selectExistLike, selectLikedQuestion, selectQuestionLikes} = require('../sql/selectSql')
 const {insertQuestion, insertQuestionLike, insertQuestionReport} = require('../sql/insertSql')
 const {deleteUserQuestion, deleteQuestionLike, deleteQuestionAllLikes} = require('../sql/deleteSql')
 const {editQuestion} = require('../sql/setSql')
@@ -76,7 +76,15 @@ class QuestionController {
             return res.json({error: "Soru silinirken bir hata oluştu."})
         }
 
+        const existLike = await selectQuestionLikes(questionId)
+
+        if (!existLike[0]){
+            return res.json({message: "Soru silindi."})
+        }
+
         const deleteResult = await deleteQuestionAllLikes(questionId)
+
+        console.log("delete result", deleteResult)
 
         if (deleteResult.error){
             return res.json({error: "Sorunun etkileşimleri silinemedi."})
