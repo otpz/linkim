@@ -143,7 +143,7 @@
     }
 
     .question-main .bottom{
-        @apply bg-gray-800 rounded-lg h-full z-10
+        @apply bg-gray-800 rounded-lg h-full
     }
 
     .question-main .q-user-info{
@@ -230,6 +230,17 @@
         @apply text-red-700 fill-red-700 transition-all duration-100
     }
 
+    .active-form{
+        @apply pointer-events-none select-none blur-sm opacity-50
+    }
+
+    #popular:hover span{
+        @apply transition-all duration-700 block
+    }
+
+    #popular:hover{
+        @apply bg-gray-600 rounded-md
+    }
 
     /******* USER CUSTOM STYLES *******/
 

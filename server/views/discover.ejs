@@ -8,8 +8,27 @@
 
     <%- include('./partials/navbar'); %>
 
-    <main class="w-110 flex flex-col items-center p-4 m-auto">
+    <main class="w-125 flex flex-col items-center p-4 m-auto">
+
+        <div class="w-full my-5">
+            <h1 class="text-2xl font-bold tracking-tight mb-5">En Popüler Kullanıcılar</h1>
+            <ul class="w-full h-24 flex items-center rounded-lg bg-gray-800">
+                <% for(let i = 0; i < 6; i++) { %>
+                    <% if (populars[i]) { %>
+                    <a id="popular" href="@<%= populars[i].UserName%>" class="<%=  %>">
+                        <li class="w-[78px] h-24 rounded-md flex flex-col items-center justify-evenly relative">
+                            <span class="truncate hidden absolute top-[-18px] bg-gray-900 rounded-md text-gray-300 text-xxs p-1 transition-all duration-700 max-w-18"><%= populars[i].Name %> <%= populars[i].Surname %></span>
+                            <img class="w-12 h-12 rounded-full" src="/public/assets/img/avatar.png" alt="">
+                            <span class="mt-[-1px] text-xs text-gray-400 truncate"> @<%=populars[i].UserName%> </span>
+                        </li>
+                    </a>
+                    <% } %>
+                <% } %>
+            </ul>
+        </div>
+
         <div id="questions" class="questions">
+            <h1 class="text-2xl font-bold tracking-tight">Keşfet</h1>
             <% if (questions.length > 0) { %>
                     <% for (let i = 0; i < questions.length; i++) { %>
                         <div id="<%= questions.Id %>" class="question-main">
@@ -22,12 +41,12 @@
                                     <% } %>
                                     <div class="info"> 
                                         <% if (questions[i].QuestionerId) { %>
-                                            <a href="/@<%=questions[i].Questioner.QuestionerUserName%>" class="name"><%= questions[i].Questioner.QuestionerName %> <%= questions[i].Questioner.QuestionerSurname %></a>
+                                            <a href="/@<%=questions[i].Questioner.QuestionerUserName%>" class="name w-75 truncate"><%= questions[i].Questioner.QuestionerName %> <%= questions[i].Questioner.QuestionerSurname %></a>
                                         <% } else { %>
                                             <span class="name">Anonim</span>
                                         <% } %>
                                         <% if (questions[i].QuestionerId) { %>
-                                            <a href="/@<%=questions[i].Questioner.QuestionerUserName%>" class="username">@<%= questions[i].Questioner.QuestionerUserName %></a>
+                                            <a href="/@<%=questions[i].Questioner.QuestionerUserName%>" class="username w-75 truncate">@<%= questions[i].Questioner.QuestionerUserName %></a>
                                         <% } %>
                                     </div>
                                 </div>
@@ -39,8 +58,8 @@
                                 <div class="q-user-info">
                                     <img class="avatar" src="/public/assets/img/avatar.png" alt="">
                                     <div class="info">
-                                        <a href="/@<%= questions[i].User.UserName %>" class="name"><%= questions[i].User.Name %> <%= questions[i].User.Surname %></a>
-                                        <a href="/@<%= questions[i].User.UserName %>" class="username">@<%= questions[i].User.UserName %></a>
+                                        <a href="/@<%= questions[i].User.UserName %>" class="name w-90 truncate"><%= questions[i].User.Name %> <%= questions[i].User.Surname %></a>
+                                        <a href="/@<%= questions[i].User.UserName %>" class="username w-90 truncate">@<%= questions[i].User.UserName %></a>
                                     </div>
                                 </div>
                                 <div class="user-text text-white">

@@ -125,8 +125,11 @@ class QuestionController {
 
     async reportQuestionController(req, res, next){
         const questionId = req.params.id
-        const reportMessage = "sss mesaj."
+        const reportMessage = req.body.reportMessage
+
         try {
+            await schemaText.validate({question: reportMessage}, {abortEarly: false})
+
             const result = await insertQuestionReport(questionId, reportMessage)
             if (result.error){
                 return res.json({error: "Rapor gönderirken bir sorun oluştu."})

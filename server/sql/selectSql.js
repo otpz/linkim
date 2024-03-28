@@ -149,4 +149,19 @@ const selectLikedQuestion = async (questionId) => {
     }
 }
 
-module.exports = {selectLikedQuestion, selectExistLike, selectQuestionLikes, selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion, selectUserAnsweredQuestions}
+const selectPopularUsers = async () => {
+    const query = `SELECT UserId, u.Name, u.Surname, u.UserName, COUNT(*) AS QuestionCount
+    FROM UserQuestions
+    INNER JOIN Users u on u.Id = UserId
+    WHERE AnsweredDate >= DATEADD(HOUR, -24, GETDATE())
+    GROUP BY UserId, u.Name, u.Surname, u.UserName
+    ORDER BY COUNT(*) DESC`
+    try {
+        const result = await sql.query(query)
+        return result.recordset
+    } catch (error) {
+        return error
+    }
+}
+
+module.exports = {selectPopularUsers, selectLikedQuestion, selectExistLike, selectQuestionLikes, selectResetPassToken, selectUser, selectUserLinks, selectPages, selectExistLinks, selectLinksLastMinutes, selectUserStyles, selectExistStyles, selectUserQuestions, selectExistQuestion, selectUserAnsweredQuestions}

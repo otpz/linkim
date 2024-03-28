@@ -597,20 +597,37 @@ const deleteAlert = async (event) => {
 }
 
 const reportQuestion = async (event) => {
-    const questionId = event.currentTarget.id
+
+    event.preventDefault()
+
+    const reportFormDOM = document.querySelector("#report-form")
+    const mainDivDOM = document.querySelector("#profile-main")
+
+    const questionId = event.target.parentElement.querySelector('#question-id-span').innerText
 
     const data = await fetch(`${BACKEND_URL}/report/${questionId}`, {
         method: "POST",
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+            reportMessage: event.target["report-text"].value
+        })
     })
 
     const result = await data.json()
 
     if (result.message){
         toastr.success(result.message)
+        mainDivDOM.classList.remove("active-form")
+        reportFormDOM.classList.add("hidden")
+        event.target["report-text"].value = ""
+    }
+    else if(result.errorValidation){
+        result.errorValidation.forEach(element => {
+            toastr.error(element)
+        })
     } else {
         toastr.error(result.error)
     } 

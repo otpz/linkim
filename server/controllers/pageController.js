@@ -1,4 +1,4 @@
-const {selectPages, selectUser, selectResetPassToken, selectUserAnsweredQuestions, selectQuestionLikes} = require('../sql/selectSql')
+const {selectPages, selectUser, selectResetPassToken, selectUserAnsweredQuestions, selectQuestionLikes, selectPopularUsers} = require('../sql/selectSql')
 const {deleteResetPassToken} = require('../sql/deleteSql')
 const {editPassword} = require('../sql/setSql')
 const {schemaEmail, schemaResetPassword, schemaSupport} = require('../helpers/validation')
@@ -202,6 +202,7 @@ class PageController{
 
         const questions = await selectUserAnsweredQuestions()
 
+        const popularUsers = await selectPopularUsers()
         const auth = req.session.auth
         const authUserId = req.session.user.Id
 
@@ -218,6 +219,8 @@ class PageController{
             })
             return yes
         }
+
+        
 
         for (const question of questions) {
             const questionerUser = await selectUser(question.QuestionerId, "Id");
@@ -247,8 +250,7 @@ class PageController{
             }
         }
 
-
-        res.render("discover", {questions})
+        res.render("discover", {questions: questions, populars: popularUsers})
     }
 }
 

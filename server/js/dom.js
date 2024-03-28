@@ -165,8 +165,52 @@ document.addEventListener("click", (event) => {
     })
 })
 
-const showReportForm = (event) => {
-    console.log("report form")
+const toggleReportForm = (event) => {
+
+    const questionId = event.target.id
+
+    const reportFormDOM = document.querySelector("#report-form")
+    const questionIdSpanDOM = document.querySelector("#question-id-span")
+    const mainDivDOM = document.querySelector("#profile-main")
+
+    questionIdSpanDOM.innerText = questionId
+
+    if (!mainDivDOM.classList.contains("active-form")){
+        mainDivDOM.classList.add("active-form")
+        reportFormDOM.classList.remove("hidden")
+    } else {
+        mainDivDOM.classList.remove("active-form")
+        reportFormDOM.classList.add("hidden")
+    }
+    
 }
+
+const closeReportForm = document.querySelector("#close-report-form")
+
+closeReportForm.addEventListener('click', () => {
+    const reportFormDOM = document.querySelector("#report-form")
+    const mainDivDOM = document.querySelector("#profile-main")
+
+    mainDivDOM.classList.remove("active-form")
+    reportFormDOM.classList.add("hidden")
+})
+
+document.addEventListener('click', function(event) {
+    const reportFormDOM = document.querySelector("#report-form");
+    const mainDivDOM = document.querySelector("#profile-main");
+    const targetElement = event.target; // Tıklanan elementi al
+
+    // Tıklanan element form veya formun içinde mi diye kontrol et
+    const isClickInsideForm = reportFormDOM.contains(targetElement);
+    const isClickInsideMainDiv = mainDivDOM.contains(targetElement);
+
+    // Eğer tıklanan element form dışında ise ve form açıksa, formu kapat
+    if (!isClickInsideForm && !isClickInsideMainDiv && mainDivDOM.classList.contains("active-form")) {
+        mainDivDOM.classList.remove("active-form");
+        reportFormDOM.classList.add("hidden");
+    }
+});
+
+// active-form
 
 

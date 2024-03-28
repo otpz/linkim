@@ -8,7 +8,7 @@
 
     <%- include('./partials/navbar'); %>
     
-    <main class="w-110 min-h-125 flex flex-col items-center p-4 mt-28">
+    <main id="profile-main" class="w-110 min-h-125 flex flex-col items-center p-4 mt-28">
 
         <div class="user-avatar">
             <img src="/public/assets/img/avatar.png" alt="">
@@ -105,28 +105,28 @@
                     <div class="my-2 flex w-full h-8 items-center">
                         <input id="square" name="borderStyle" class="form-input w-4 h-4" type="radio" value="square">
                         <label for="square" class="form-label ml-2 text-base text-white flex justify-center items-center">
-                            <div class="w-5 h-5 border-white border-1 mr-2 square"></div>
+                            <div class="w-10 h-5 border-white border-1 mr-2 square"></div>
                             Kare
                         </label>
                     </div>
                     <div class="my-2 flex w-full h-8 items-center">
                         <input id="smooth" name="borderStyle" class="form-input w-4 h-4" type="radio" value="smooth">
                         <label for="smooth" class="form-label ml-2 text-base text-white flex justify-center items-center">
-                            <div class="w-5 h-5 border-white border-1 mr-2 smooth"></div>
+                            <div class="w-10 h-5 border-white border-1 mr-2 smooth"></div>
                             Yumuşak
                         </label>
                     </div>
                     <div class="my-2 flex w-full h-8 items-center">
                         <input id="round" name="borderStyle" class="form-input w-4 h-4" type="radio" value="round">
                         <label for="round" class="form-label ml-2 text-base text-white flex justify-center items-center">
-                            <div class="w-5 h-5 border-white border-1 mr-2 rounded-lg"></div>
+                            <div class="w-10 h-5 border-white border-1 mr-2 rounded-lg"></div>
                             Yuvarlak
                         </label>
                     </div>
                     <div class="my-2 flex w-full h-8 items-center">
                         <input id="extraRounded" name="borderStyle" class="form-input w-4 h-4" type="radio" value="extraRounded">
                         <label for="extraRounded" class="form-label ml-2 text-base text-white flex justify-center items-center">
-                            <div class="w-5 h-5 border-white border-1 mr-2 extraRounded"></div>
+                            <div class="w-10 h-5 border-white border-1 mr-2 extraRounded"></div>
                             Ekstra Yuvarlak
                         </label>
                     </div>
@@ -249,12 +249,12 @@
                                                 <% } %>
                                                 <div class="info"> 
                                                     <% if (user.Questions[i].QuestionerId) { %>
-                                                        <a href="/@<%=user.Questions[i].Questioner.QuestionerUserName%>" class="name"><%= user.Questions[i].Questioner.QuestionerName %> <%= user.Questions[i].Questioner.QuestionerSurname %></a>
+                                                        <a href="/@<%=user.Questions[i].Questioner.QuestionerUserName%>" class="name w-75 truncate"><%= user.Questions[i].Questioner.QuestionerName %> <%= user.Questions[i].Questioner.QuestionerSurname %></a>
                                                     <% } else { %>
                                                         <span class="name">Anonim</span>
                                                     <% } %>
                                                     <% if (user.Questions[i].QuestionerId) { %>
-                                                        <a href="/@<%=user.Questions[i].Questioner.QuestionerUserName%>" class="username">@<%= user.Questions[i].Questioner.QuestionerUserName %></a>
+                                                        <a href="/@<%=user.Questions[i].Questioner.QuestionerUserName%>" class="username w-75 truncate">@<%= user.Questions[i].Questioner.QuestionerUserName %></a>
                                                     <% } %>
                                                 </div>
                                             </div>
@@ -264,7 +264,7 @@
                                                 </button>
                                                 <ul id="menu-<%= user.Questions[i].Id %>" class="settings bottom-hidden">
                                                     <li onclick="deleteAlert(event)" class="mt-1 cursor-pointer" id="<%= user.Questions[i].Id %>">Sil</li>
-                                                    <li onclick="reportQuestion(event)" class="mt-1 mb-1 cursor-pointer" id="<%= user.Questions[i].Id %>">Raporla</li>
+                                                    <li onclick="toggleReportForm(event)" class="mt-1 mb-1 cursor-pointer" id="<%= user.Questions[i].Id %>">Raporla</li>
                                                 </ul>
                                             <% } %>
                                         </div>
@@ -307,8 +307,8 @@
                                         <div class="q-user-info">
                                             <img class="avatar" src="/public/assets/img/avatar.png" alt="">
                                             <div class="info">
-                                                <a href="/@<%= user.UserName %>" class="name"><%= user.Name %> <%= user.Surname %></a>
-                                                <a href="/@<%= user.UserName %>" class="username">@<%= user.UserName %></a>
+                                                <a href="/@<%= user.UserName %>" class="name truncate w-75"><%= user.Name %> <%= user.Surname %></a>
+                                                <a href="/@<%= user.UserName %>" class="username truncate w-75">@<%= user.UserName %></a>
                                             </div>
                                         </div>
                                         <div class="user-text">
@@ -336,7 +336,7 @@
                     <% } %>
             <% } %>
 
-            <div id="question-id" class="question-main hidden">
+            <div id="question-id" class="question-main hidden active-form">
                 <div class="top">
                     <div class="q-user-info">
                         <img class="avatar" src="/public/assets/img/pp.jpg" alt="">
@@ -361,8 +361,22 @@
             </div>
             
         </div>
-
     </main>
+
+    <form id="report-form" class="fixed top-1/3 form w-110 rounded-md p-3 bg-gray-800 border-gray-400 border-1 hidden" onsubmit="reportQuestion(event)">
+        <h1>Rapor Formu #<span id="question-id-span"></span></h1>
+        <div id="close-report-form" class="cursor-pointer absolute top-3 right-3 w-4 h-4 rounded-full flex items-center justify-center text-sm p-0">
+            <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>
+        </div>
+        <div class="form-div w-full">
+            <label class="form-label text-gray-200" for="report-text">Şikayet</label>
+            <textarea class="rounded-md p-2 border-1 bg-transparent outline-none w-full mt-1 placeholder:text-gray-400 border-gray-600" name="report-text" id="report-text" rows="5" placeholder="Şikayet nedenim..."></textarea>
+        </div>
+        <button id="linkSubmit" class="w-full h-10 border-1 hover:text-red-600 border-gray-600 mt-2 transition-all duration-200 rounded-md">Gönder</button>
+    </form>
+
+    
+    
 
     <script type="text/javascript" src="/js/app.js"></script>
     <script type="text/javascript" src="/js/dom.js"></script>

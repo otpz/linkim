@@ -48,7 +48,7 @@ router.post("/ask/:username", limiter, authMiddleware, questionController.sendQu
 router.post("/answer/:username", limiter, authMiddleware, questionController.answerQuestionController)
 router.post("/deletequestion/:id", authMiddleware, questionController.deleteQuestionController)
 router.post("/likecontrol/:id", authMiddleware, questionController.likeQuestionController)
-router.post("/report/:id", authMiddleware, questionController.reportQuestionController)
+router.post("/report/:id", limiter, authMiddleware, questionController.reportQuestionController)
 //GET routes
 router.get('/', (req, res) => {
   res.render('main')
