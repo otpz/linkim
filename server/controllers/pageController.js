@@ -220,37 +220,49 @@ class PageController{
             return yes
         }
 
-        
-
-        for (const question of questions) {
-            const questionerUser = await selectUser(question.QuestionerId, "Id");
+        for (const question of questions){
             const questionLikes = await selectQuestionLikes(question.Id)
-            const user = await selectUser(question.UserId, "Id")
 
-            question.Questioner = {
-                QuestionerName: questionerUser.Name,
-                QuestionerSurname: questionerUser.Surname,
-                QuestionerUserName: questionerUser.UserName
-            }
-
-            question.User = {
-                Name: user.Name,
-                Surname: user.Surname,
-                UserName: user.UserName,
-            }
-
-            question.LikeInfo = {
-                Likes: questionLikes.length,
-                ILiked: didILiked(questionLikes)
-            }
-
+            question.LikeInfo = didILiked(questionLikes)
+            
             if (question.AnsweredDate){
                 const now = new Date()
                 question.TimeElapsed = calculateTimeElapsed(now, question.AnsweredDate)
             }
         }
 
-        res.render("discover", {questions: questions, populars: popularUsers})
+        // for (const question of questions) {
+        //     const questionerUser = await selectUser(question.QuestionerId, "Id");
+        //     const questionLikes = await selectQuestionLikes(question.Id)
+        //     const user = await selectUser(question.UserId, "Id")
+
+        //     question.Questioner = {
+        //         QuestionerName: questionerUser.Name,
+        //         QuestionerSurname: questionerUser.Surname,
+        //         QuestionerUserName: questionerUser.UserName
+        //     }
+
+        //     question.User = {
+        //         Name: user.Name,
+        //         Surname: user.Surname,
+        //         UserName: user.UserName,
+        //     }
+
+        //     question.LikeInfo = {
+        //         Likes: questionLikes.length,
+        //         ILiked: didILiked(questionLikes)
+        //     }
+
+        //     if (question.AnsweredDate){
+        //         const now = new Date()
+        //         question.TimeElapsed = calculateTimeElapsed(now, question.AnsweredDate)
+        //     }
+        // }
+
+        res.render("discover", {
+            questions: questions, 
+            populars: popularUsers
+        })
     }
 }
 

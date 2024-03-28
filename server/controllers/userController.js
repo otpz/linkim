@@ -26,8 +26,6 @@ class UserController {
         const userStyles = await selectUserStyles(user.Id, "UserId")
         const userQuestions = await selectUserQuestions(user.Id)
 
-        console.log(userQuestions)
-
         const didILiked = (questionLikes) => {
             let yes = 0
             questionLikes.forEach(el => {

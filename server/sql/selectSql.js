@@ -76,7 +76,16 @@ const selectUserQuestions = async (userId) => {
 
 //keşfet için cevaplanmış sorular
 const selectUserAnsweredQuestions = async () => {
-    const query = `select * from UserQuestions where AnsweredDate is not null order by AnsweredDate desc`
+    
+    const query = `select uq.Id, u.Id as QuestionerId, u.Name as QuestionerName, u.Surname as QuestionerSurname, u.UserName as QuestionerUserName, uq.Question,
+    u2.Id as UserId, u2.Name as UserName, u2.Surname as UserSurname, u2.UserName as UserUserName, uq.Answer, uq.AnsweredDate  ,count(l.Id) as Likes from UserQuestions uq
+    inner join Users u on uq.QuestionerId = u.Id
+    left join Likes l on l.QuestionId = uq.Id
+    inner join Users u2 on uq.UserId = u2.Id
+    where uq.AnsweredDate is not null
+    group by uq.Id, Question, u.Name, u2.Id, u.Id, u2.Name, u.Surname, u.UserName, u2.Surname, u2.UserName, uq.Answer, uq.AnsweredDate
+    order by uq.AnsweredDate desc`
+
     try {
         const result = await sql.query(query)
         return result.recordset
