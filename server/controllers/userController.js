@@ -21,10 +21,12 @@ class UserController {
             res.render('error')
             return
         }
-    
+
         const userLinks = await selectUserLinks(user.Id, "UserId")
         const userStyles = await selectUserStyles(user.Id, "UserId")
-        const userQuestions = await selectUserQuestions(user.Id, "UserId")
+        const userQuestions = await selectUserQuestions(user.Id)
+
+        console.log(userQuestions)
 
         const didILiked = (questionLikes) => {
             let yes = 0
@@ -36,32 +38,43 @@ class UserController {
             return yes
         }
 
-        for (const question of userQuestions) {
-            const questionerUser = await selectUser(question.QuestionerId, "Id");
+        for (const question of userQuestions){
             const questionLikes = await selectQuestionLikes(question.Id)
 
-            question.Questioner = {
-                QuestionerName: questionerUser.Name,
-                QuestionerSurname: questionerUser.Surname,
-                QuestionerUserName: questionerUser.UserName
-            }
-
-            question.LikeInfo = {
-                Likes: questionLikes.length,
-                ILiked: didILiked(questionLikes)
-            }
-
+            question.LikeInfo = didILiked(questionLikes)
+            
             if (question.AnsweredDate){
                 const now = new Date()
                 question.TimeElapsed = calculateTimeElapsed(now, question.AnsweredDate)
-            }
+            } 
         }
+
+        // for (const question of userQuestions) {
+        //     const questionerUser = await selectUser(question.QuestionerId, "Id");
+        //     const questionLikes = await selectQuestionLikes(question.Id)
+
+        //     question.Questioner = {
+        //         QuestionerName: questionerUser.Name,
+        //         QuestionerSurname: questionerUser.Surname,
+        //         QuestionerUserName: questionerUser.UserName
+        //     }
+
+        //     question.LikeInfo = {
+        //         Likes: questionLikes.length,
+        //         ILiked: didILiked(questionLikes)
+        //     }
+
+        //     if (question.AnsweredDate){
+        //         const now = new Date()
+        //         question.TimeElapsed = calculateTimeElapsed(now, question.AnsweredDate)
+        //     }
+        // }
 
         user.Links = userLinks ? userLinks : []
         user.Styles = userStyles[0] ? userStyles[0] : []
         user.Questions = userQuestions ? userQuestions : []
         user.JoinDate = formatDate(user.JoinDate)
-        
+
         res.render('profile', {user}) 
     } 
 
