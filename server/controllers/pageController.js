@@ -200,64 +200,23 @@ class PageController{
 
     async getDiscoverPageController(req, res){
 
-        const questions = await selectUserAnsweredQuestions()
+        const userId = req.session.user.Id
+
+        const questions = await selectUserAnsweredQuestions(userId)
 
         const popularUsers = await selectPopularUsers()
         const auth = req.session.auth
-        const authUserId = req.session.user.Id
 
         if (!auth){
             res.render("error")
         }
 
-        const didILiked = (questionLikes) => {
-            let yes = 0
-            questionLikes.forEach(el => {
-                if (el.UserId === authUserId){
-                    yes = 1
-                }
-            })
-            return yes
-        }
-
         for (const question of questions){
-            const questionLikes = await selectQuestionLikes(question.Id)
-
-            question.LikeInfo = didILiked(questionLikes)
-            
             if (question.AnsweredDate){
                 const now = new Date()
                 question.TimeElapsed = calculateTimeElapsed(now, question.AnsweredDate)
             }
         }
-
-        // for (const question of questions) {
-        //     const questionerUser = await selectUser(question.QuestionerId, "Id");
-        //     const questionLikes = await selectQuestionLikes(question.Id)
-        //     const user = await selectUser(question.UserId, "Id")
-
-        //     question.Questioner = {
-        //         QuestionerName: questionerUser.Name,
-        //         QuestionerSurname: questionerUser.Surname,
-        //         QuestionerUserName: questionerUser.UserName
-        //     }
-
-        //     question.User = {
-        //         Name: user.Name,
-        //         Surname: user.Surname,
-        //         UserName: user.UserName,
-        //     }
-
-        //     question.LikeInfo = {
-        //         Likes: questionLikes.length,
-        //         ILiked: didILiked(questionLikes)
-        //     }
-
-        //     if (question.AnsweredDate){
-        //         const now = new Date()
-        //         question.TimeElapsed = calculateTimeElapsed(now, question.AnsweredDate)
-        //     }
-        // }
 
         res.render("discover", {
             questions: questions, 

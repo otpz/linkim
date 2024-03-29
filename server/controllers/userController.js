@@ -15,8 +15,6 @@ class UserController {
 
         const user = await selectUser(urlUserName, "UserName")
 
-        const authUserId = req.session.user ? req.session.user.Id : null
-
         if (user === undefined){
             res.render('error')
             return
@@ -26,47 +24,12 @@ class UserController {
         const userStyles = await selectUserStyles(user.Id, "UserId")
         const userQuestions = await selectUserQuestions(user.Id)
 
-        const didILiked = (questionLikes) => {
-            let yes = 0
-            questionLikes.forEach(el => {
-                if (el.UserId === authUserId){
-                    yes = 1
-                }
-            })
-            return yes
-        }
-
         for (const question of userQuestions){
-            const questionLikes = await selectQuestionLikes(question.Id)
-
-            question.LikeInfo = didILiked(questionLikes)
-            
             if (question.AnsweredDate){
                 const now = new Date()
                 question.TimeElapsed = calculateTimeElapsed(now, question.AnsweredDate)
             } 
         }
-
-        // for (const question of userQuestions) {
-        //     const questionerUser = await selectUser(question.QuestionerId, "Id");
-        //     const questionLikes = await selectQuestionLikes(question.Id)
-
-        //     question.Questioner = {
-        //         QuestionerName: questionerUser.Name,
-        //         QuestionerSurname: questionerUser.Surname,
-        //         QuestionerUserName: questionerUser.UserName
-        //     }
-
-        //     question.LikeInfo = {
-        //         Likes: questionLikes.length,
-        //         ILiked: didILiked(questionLikes)
-        //     }
-
-        //     if (question.AnsweredDate){
-        //         const now = new Date()
-        //         question.TimeElapsed = calculateTimeElapsed(now, question.AnsweredDate)
-        //     }
-        // }
 
         user.Links = userLinks ? userLinks : []
         user.Styles = userStyles[0] ? userStyles[0] : []
